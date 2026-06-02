@@ -11,7 +11,6 @@ import 'package:sns_server/domain/core/enum.dart';
 import 'package:sns_server/domain/core/game_context.dart';
 import 'package:sns_server/domain/core/game_event.dart';
 import 'package:sns_server/domain/core/register.dart';
-import 'package:sns_server/domain/data/assets.dart';
 
 //final Assets assets = Assets();
 

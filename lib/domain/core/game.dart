@@ -8,17 +8,19 @@ import 'package:sns_server/domain/core/game_state.dart';
 import 'package:sns_server/domain/core/register.dart';
 import 'package:sns_server/domain/data/assets.dart';
 
+/// 游戏引擎
 class GameEngine {
-  final GameState _state;
-  final GameContext _context;
-  final EventBus _eventBus;
-  //final Assets assets = Assets();
-  
   GameEngine(GameState state) 
     : _state = state,
       _context = _GameContextImpl(state),
       _eventBus = state.eventBus;
 
+  final GameState _state;
+  final GameContext _context;
+  final EventBus _eventBus;
+  //final Assets assets = Assets();
+
+  /// 初始化
   Future<void> initEngine() async {
     //assets.loadRacesJson();
     //assets.loadTemplatesJson();
@@ -100,9 +102,6 @@ class GameEngine {
     return false;
   }
 }
-
-/// 动作类型
-enum ActionType { attack, useCard, useSkill, useTrait, endTurn }
 
 /// 游戏上下文实现
 class _GameContextImpl implements GameContext {

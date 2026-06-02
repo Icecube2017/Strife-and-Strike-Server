@@ -1,4 +1,6 @@
-import 'package:sns_server/domain/core/ids.dart';
+// ignore_for_file: public_member_api_docs
+
+import 'package:sns_server/domain/data/ids.dart';
 
 // 模板
 enum PanelType {
@@ -11,11 +13,11 @@ enum PanelType {
   vital(1600, 75, 45),
   defen5(0, 105, 25);
 
+  const PanelType(this.maxHealth, this.attack, this.defence);
+
   final int maxHealth;
   final int attack;
   final int defence;
-
-  const PanelType(this.maxHealth, this.attack, this.defence);
 }
 
 // 种族（行动点回复）
@@ -39,7 +41,7 @@ enum RegenType {
   oni(5, 0, 3, 1),
   anima(20, 1, 4, 2),
   pseudosacra(10, 10, 0, 3),
-  elf(8, 2, 0, 1),  
+  elf(8, 2, 0, 1),
   froth(7, 4, 0, 1),
   nyxumbra(8, 6, 0, 2),
   tinXingyu(5, 0, 2, 1),
@@ -47,22 +49,22 @@ enum RegenType {
   engine4(100, 0, 5, 1),
   ennoia(9, 1, 0, 1);
 
+  const RegenType(this.maxMove, this.moveRegen, this.regenType, this.regenTurn);
+
   final int maxMove;
   final int moveRegen;
   final int regenType;
   final int regenTurn;
-
-  const RegenType(this.maxMove, this.moveRegen, this.regenType, this.regenTurn);
 }
 
-class CharacterType {
-  final PanelType panelType;
-  final RegenType regenType;
-
+class CharacterType { 
   CharacterType({
     required this.panelType,
     required this.regenType,
   });
+
+  final PanelType panelType;
+  final RegenType regenType;
 }
 
 Map<String, CharacterType> characterToPanel = {
@@ -146,14 +148,14 @@ Map<String, CharacterType> characterToPanel = {
   CharacterId.lanWenxi.id: CharacterType(panelType: PanelType.balanced, regenType: RegenType.human),
 };
 
-class SkillType {  
-  final int cooldown;
-  final bool isExclusive;
-
+class SkillType { 
   SkillType({
     required this.cooldown,
     required this.isExclusive,
   });
+
+    final int cooldown;
+  final bool isExclusive;
 }
 
 Map<String, SkillType> skillToType = {  
@@ -262,14 +264,14 @@ Map<String, List<String>> possessingSkills = {
   CharacterId.lanWenxi.id: [SkillId.veritasNonFalsitas.id],
 };
 
-class TraitType {  
-  final int useCount;
-  final bool isInitiative;
-
+class TraitType { 
   TraitType({
     required this.useCount,
     required this.isInitiative,
   });
+
+  final int useCount;
+  final bool isInitiative;
 }
 
 Map<String, TraitType> traitToType = {
@@ -464,12 +466,6 @@ enum BuffType {
 }
 
 class StatusType {
-  final BuffType buffType;
-  final bool hasIntensity;
-  final bool hasLayer;
-  final bool decayOverTurn;
-  final bool canOverlay;
-
   StatusType({
     required this.buffType,
     required this.hasIntensity,
@@ -477,6 +473,12 @@ class StatusType {
     required this.decayOverTurn,
     required this.canOverlay,
   });
+
+  final BuffType buffType;
+  final bool hasIntensity;
+  final bool hasLayer;
+  final bool decayOverTurn;
+  final bool canOverlay;
 }
 
 Map<String, StatusType> statusToType = {
@@ -621,4 +623,3 @@ List<List<String>> mirrorCards = [
     CardId.frostShield.id
   ]
 ];
-

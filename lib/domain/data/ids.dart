@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs
 // 角色名称
 enum CharacterId {
   empty('empty'),

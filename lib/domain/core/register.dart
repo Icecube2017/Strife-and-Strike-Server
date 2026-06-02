@@ -1,11 +1,12 @@
-import 'package:sns_server/domain/class/propcard.dart';
 import 'package:sns_server/domain/class/character.dart';
+import 'package:sns_server/domain/class/propcard.dart';
 import 'package:sns_server/domain/class/race.dart';
 import 'package:sns_server/domain/class/skill.dart';
 import 'package:sns_server/domain/class/status.dart';
 import 'package:sns_server/domain/class/template.dart';
 import 'package:sns_server/domain/class/trait.dart';
 import 'package:sns_server/domain/core/core.dart';
+import 'package:sns_server/domain/data/ids.dart';
 
 /// 通过ID注册和获取游戏对象，实现动态加载
 final class Registry<T extends Identifiable> {
@@ -16,6 +17,9 @@ final class Registry<T extends Identifiable> {
   }
   
   T create(String id) {
+    if (!_factories.containsKey(id)) {
+      throw Exception('No factory registered for $id');
+    }
     return _factories[id]!();
   }
 }
@@ -26,8 +30,7 @@ final statusReg = Registry<Status>();
 final characterReg = Registry<Character>();
 final cardReg = Registry<PropCard>();
 
-// 道具卡注册
+/// 道具卡注册
 void registryAllCards() {
-  cardReg.register('card_apollo_arrow', () => CardApolloArrow());
+  cardReg.register(CardId.apolloArrow.id, CardApolloArrow.new);
 }
-
