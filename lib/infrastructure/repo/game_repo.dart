@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 
+import 'package:postgres/postgres.dart';
 import 'package:sns_server/application/dto/game_dto.dart';
 import 'package:sns_server/application/services/game_service.dart';
+import 'package:sns_server/infrastructure/db/db_connection.dart';
 
 /// 游戏持久化接口（Structure.md §6：内存状态 + 周期快照）
 abstract class GameRepo {
@@ -10,68 +11,95 @@ abstract class GameRepo {
   GameRuntime? findRuntime(String gameId);
   void removeRuntime(String gameId);
 
-  /// 将当前 PublicGameView 序列化为 JSON 快照到磁盘
   Future<void> saveSnapshot(String gameId, PublicGameView view);
-  /// 加载最近一次快照（重启恢复用）
   Future<PublicGameView?> loadSnapshot(String gameId);
 }
 
+/// 内存实现（runtime 始终在内存；快照可选落盘）
 class InMemoryGameRepo implements GameRepo {
   final Map<String, GameRuntime> _runtimes = {};
-
-  // 快照落盘目录
-  final Directory _snapshotDir;
-
-  InMemoryGameRepo({String snapshotPath = '.snapshots'})
-      : _snapshotDir = Directory(snapshotPath);
+  final Map<String, PublicGameView> _snapshots = {};
 
   @override
-  void saveRuntime(String gameId, GameRuntime runtime) =>
-      _runtimes[gameId] = runtime;
-
+  void saveRuntime(String gameId, GameRuntime runtime) => _runtimes[gameId] = runtime;
   @override
   GameRuntime? findRuntime(String gameId) => _runtimes[gameId];
+  @override
+  void removeRuntime(String gameId) {
+    _runtimes.remove(gameId);
+    _snapshots.remove(gameId);
+  }
 
+  @override
+  Future<void> saveSnapshot(String gameId, PublicGameView view) async =>
+      _snapshots[gameId] = view;
+  @override
+  Future<PublicGameView?> loadSnapshot(String gameId) async => _snapshots[gameId];
+}
+
+/// Postgres 实现（runtime 仍在内存，快照存 pg）
+class PgGameRepo implements GameRepo {
+  PgGameRepo(this._db);
+  final DbConnection _db;
+  final Map<String, GameRuntime> _runtimes = {};
+
+  @override
+  void saveRuntime(String gameId, GameRuntime runtime) => _runtimes[gameId] = runtime;
+  @override
+  GameRuntime? findRuntime(String gameId) => _runtimes[gameId];
   @override
   void removeRuntime(String gameId) => _runtimes.remove(gameId);
 
   @override
-  Future<void> saveSnapshot(String gameId, PublicGameView view) async {
-    if (!_snapshotDir.existsSync()) _snapshotDir.createSync(recursive: true);
-    final file = File('${_snapshotDir.path}/$gameId.json');
-    await file.writeAsString(jsonEncode(view.toJson()));
-  }
+  Future<void> saveSnapshot(String gameId, PublicGameView view) => _db.pool.execute(
+        Sql.named('''
+          INSERT INTO game_snapshots (game_id, version, snapshot)
+          VALUES (@gameId, @version, @snapshot)
+          ON CONFLICT (game_id) DO UPDATE
+            SET version = EXCLUDED.version,
+                snapshot = EXCLUDED.snapshot,
+                updated_at = now()
+        '''),
+        parameters: {
+          'gameId': gameId,
+          'version': view.version,
+          'snapshot': jsonEncode(view.toJson()),
+        },
+      );
 
   @override
   Future<PublicGameView?> loadSnapshot(String gameId) async {
-    final file = File('${_snapshotDir.path}/$gameId.json');
-    if (!file.existsSync()) return null;
+    final result = await _db.pool.execute(
+      Sql.named('SELECT snapshot FROM game_snapshots WHERE game_id = @gameId'),
+      parameters: {'gameId': gameId},
+    );
+    if (result.isEmpty) return null;
     try {
-      final m = jsonDecode(await file.readAsString()) as Map<String, dynamic>;
-      return PublicGameView(
+      final m = jsonDecode(result.first[0] as String) as Map<String, dynamic>;
+      return _decodeView(m);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  PublicGameView _decodeView(Map<String, dynamic> m) => PublicGameView(
         gameId: m['gameId'] as String,
         version: m['version'] as int,
         currentRound: m['currentRound'] as int,
         currentPlayerId: m['currentPlayerId'] as String,
         currentPhase: m['currentPhase'] as String,
-        characters: (m['characters'] as List)
-            .map((c) {
-              final cv = c as Map<String, dynamic>;
-              return CharacterPublicView(
-                characterId: cv['characterId'] as String,
-                name: cv['name'] as String,
-                currentHp: cv['currentHp'] as int,
-                maxHp: cv['maxHp'] as int,
-                currentMp: cv['currentMp'] as int,
-                maxMp: cv['maxMp'] as int,
-                isAlive: cv['isAlive'] as bool,
-                statusIds: (cv['statusIds'] as List).cast<String>(),
-              );
-            })
-            .toList(),
+        characters: (m['characters'] as List).map((c) {
+          final cv = c as Map<String, dynamic>;
+          return CharacterPublicView(
+            characterId: cv['characterId'] as String,
+            name: cv['name'] as String,
+            currentHp: cv['currentHp'] as int,
+            maxHp: cv['maxHp'] as int,
+            currentMp: cv['currentMp'] as int,
+            maxMp: cv['maxMp'] as int,
+            isAlive: cv['isAlive'] as bool,
+            statusIds: (cv['statusIds'] as List).cast<String>(),
+          );
+        }).toList(),
       );
-    } catch (_) {
-      return null;
-    }
-  }
 }

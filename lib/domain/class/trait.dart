@@ -41,4 +41,3 @@ class TraitSelfEncouragement extends BaseTrait {
     });
   }
 }
-

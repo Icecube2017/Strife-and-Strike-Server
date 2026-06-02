@@ -7,7 +7,10 @@ environment:
   sdk: ^3.11.0
 
 dependencies:
+  bcrypt: ^1.2.0
+  crypto: ^3.0.7
   dart_frog: ^1.1.0
+  postgres: ^3.5.11  
 
 dev_dependencies:
   dart_frog_lint: ^0.1.0

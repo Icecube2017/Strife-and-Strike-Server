@@ -16,4 +16,3 @@ abstract class GameContext {
 
   Character? getCharacterById(String id);
 }
-

@@ -19,7 +19,7 @@ class BaseCardPack implements CardPack {
   BaseCardPack(this.id, this.name, this.cards);
 
   factory BaseCardPack.fromJson(Map<String, dynamic> json) => 
-    BaseCardPack(json["id"] as String, json["name"] as String, json["cards"] as Map<String, int>);
+    BaseCardPack(json['id'] as String, json['name'] as String, json['cards'] as Map<String, int>);
 }
 
 abstract class PropCard extends Identifiable {
@@ -48,16 +48,15 @@ class _BasePropCard implements PropCard {
 
 // apollo_arrow
 class CardApolloArrow extends _BasePropCard {
-  CardApolloArrow() : super('card_apollow_arrow', "阿波罗之箭", {PropCardTag.sharp});
+  CardApolloArrow() : super('card_apollow_arrow', '阿波罗之箭', {PropCardTag.sharp});
 }
 
 class CardBlade extends _BasePropCard {
-  CardBlade() : super('card_blade', "短刀", {PropCardTag.sharp});
+  CardBlade() : super('card_blade', '短刀', {PropCardTag.sharp});
 
   @override
   Future<void> playCard(GameContext context, Character character) async {
-    character.applyModifier(ModifierImpl("currentMp", -1, false));
-    character.applyModifier(ModifierImpl("attack", 10, false));
+    character..applyModifier(ModifierImpl('currentMp', -1, false))
+    ..applyModifier(ModifierImpl('attack', 10, false));
   }
 }
-

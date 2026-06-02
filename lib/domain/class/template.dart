@@ -25,11 +25,9 @@ class BaseTemplate implements Template {
 
   factory BaseTemplate.fromJson(Map<String, dynamic> json) =>
     BaseTemplate(
-      json["id"] as String,
-      json["name"] as String,
-      json["hp"] as int,
-      json["attack"] as int,
-      json["defense"] as int);
+      json['id'] as String,
+      json['name'] as String,
+      json['hp'] as int,
+      json['attack'] as int,
+      json['defense'] as int);
 }
-
-

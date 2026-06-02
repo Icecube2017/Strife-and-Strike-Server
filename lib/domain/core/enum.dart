@@ -66,4 +66,3 @@ enum ModifierType {
   multiplicative, // 乘法
   override,       // 覆盖
 }
-

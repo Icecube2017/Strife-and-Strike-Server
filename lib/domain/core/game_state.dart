@@ -24,4 +24,3 @@ class GameState {
   
   GameState(this.players, this.drawPile, this.discardPile) : eventBus = EventBus();
 }
-

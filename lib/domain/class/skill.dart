@@ -6,4 +6,3 @@ abstract class Skill extends Identifiable {
   bool get isExclusive; // 专属技能，不参与抽取
   Condition? get canUseCondition; // 使用条件
 }
-

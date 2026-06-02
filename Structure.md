@@ -105,3 +105,8 @@
   4. Soak tests：多局并发、断线重连、重复命令幂等
 
   ———
+
+## 8. 目前的 TODO（非阻塞，可逐步接通）：
+  1. auth/index.dart：换成真实 JWT 签发/验证
+  2. rooms/index.dart 和 join/：从 characterReg 加载实际角色，而不是 stub
+  3. start/index.dart：从 assets 构造完整牌堆

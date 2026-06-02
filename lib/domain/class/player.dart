@@ -10,4 +10,3 @@ class Player {
   
   Player(this.id, this.name, this.characters, this.teamId) : currentCharacter = characters[0];
 }
-

@@ -1,5 +1,5 @@
-import 'package:sns_server/domain/class/propcard.dart';
 import 'package:sns_server/domain/class/character.dart';
+import 'package:sns_server/domain/class/propcard.dart';
 import 'package:sns_server/domain/core/action_target.dart';
 import 'package:sns_server/domain/core/core.dart';
 import 'package:sns_server/domain/core/enum.dart';
@@ -163,4 +163,3 @@ class StatusDroppedEvent extends GameEvent {
     super.context
   );
 }
-

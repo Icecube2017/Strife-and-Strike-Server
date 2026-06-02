@@ -133,4 +133,3 @@ class _GameContextImpl implements GameContext {
   @override
   Character? getCharacterById(String id) => _state.characterById[id];
 }
-

@@ -77,18 +77,17 @@ class BaseStatus implements Status{
 }
 
 class StatusFrost extends BaseStatus {
-  StatusFrost() : super("status_frost", "霜冻");
+  StatusFrost() : super('status_frost', '霜冻');
 }
 
 class StatusFrozen extends BaseStatus {
-  StatusFrozen() : super("status_frozen", "冰封");
+  StatusFrozen() : super('status_frozen', '冰封');
 }
 
 class StatusDreaming extends BaseStatus {
-  StatusDreaming() : super("status_dreaming", "梦境");
+  StatusDreaming() : super('status_dreaming', '梦境');
 }
 
 class StatusStellula extends BaseStatus {
-  StatusStellula() : super("status_stellula", "星牢");
+  StatusStellula() : super('status_stellula', '星牢');
 }
-

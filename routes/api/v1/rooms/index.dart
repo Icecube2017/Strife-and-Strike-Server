@@ -16,7 +16,7 @@ Future<Response> onRequest(RequestContext context) async {
   final service = context.read<RoomService>();
   // TODO: 从 characterReg 加载角色；此处用一个 stub
   final hostChar = _stubCharacter(characterId);
-  final resp = service.createRoom(req, hostChar);
+  final resp = await service.createRoom(req, hostChar);
   return Response.json(statusCode: 201, body: resp.toJson());
 }
 

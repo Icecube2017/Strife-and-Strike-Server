@@ -15,7 +15,7 @@ Future<Response> onRequest(RequestContext context, String id) async {
 
     final service = context.read<RoomService>();
     final character = CharacterFactoryCreated(characterId, characterId, 'balanced', 'human', {}, [], []);
-    final resp = service.joinRoom(id, req, character);
+    final resp = await service.joinRoom(id, req, character);
     return Response.json(body: resp.toJson());
   } on StateError catch (e) {
     return Response.json(statusCode: 409, body: {'error': e.message});

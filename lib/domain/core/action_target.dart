@@ -16,4 +16,3 @@ class PlayerTarget implements ActionTarget {
 }
 
 class AllCharactersTarget implements ActionTarget {}
-

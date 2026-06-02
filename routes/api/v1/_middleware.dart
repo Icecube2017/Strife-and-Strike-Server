@@ -1,52 +1,107 @@
+import 'dart:io';
+
 import 'package:dart_frog/dart_frog.dart';
+import 'package:sns_server/application/services/auth_service.dart';
 import 'package:sns_server/application/services/game_service.dart';
 import 'package:sns_server/application/services/room_service.dart';
 import 'package:sns_server/infrastructure/cache/game_cache.dart';
 import 'package:sns_server/infrastructure/clock_rng/clock.dart';
 import 'package:sns_server/infrastructure/clock_rng/rng.dart';
+import 'package:sns_server/infrastructure/db/db_connection.dart';
 import 'package:sns_server/infrastructure/messaging/sse_messaging.dart';
 import 'package:sns_server/infrastructure/repo/game_repo.dart';
+import 'package:sns_server/infrastructure/repo/refresh_token_repo.dart';
 import 'package:sns_server/infrastructure/repo/room_repo.dart';
+import 'package:sns_server/infrastructure/repo/user_repo.dart';
 
-// 单例，整个进程共享
-final _roomRepo = InMemoryRoomRepo();
-final _gameRepo = InMemoryGameRepo();
-final _roomService = RoomService();
-final _gameService = GameService(_roomService);
-final _sseMessaging = SseMessaging();
-final _gameCache = GameCache();
-final _clock = SystemClock();
-final _rng = SystemRng();
+// 连接池和服务单例，由 _init() 懒初始化
+late final DbConnection _db;
+late final RoomRepo _roomRepo;
+late final GameRepo _gameRepo;
+late final UserRepo _userRepo;
+late final RefreshTokenRepo _refreshTokenRepo;
+late final AuthService _authService;
+late final RoomService _roomService;
+late final GameService _gameService;
+late final SseMessaging _sseMessaging;
+late final GameCache _gameCache;
 
-Handler middleware(Handler handler) {
-  return handler
-      .use(provider<RoomService>((_) => _roomService))
-      .use(provider<GameService>((_) => _gameService))
-      .use(provider<SseMessaging>((_) => _sseMessaging))
-      .use(provider<GameCache>((_) => _gameCache))
-      .use(provider<RoomRepo>((_) => _roomRepo))
-      .use(provider<GameRepo>((_) => _gameRepo))
-      .use(provider<AppClock>((_) => _clock))
-      .use(provider<AppRng>((_) => _rng))
-      .use(_authMiddleware);
+bool _initialized = false;
+
+Future<void> _init() async {
+  if (_initialized) return;
+  _initialized = true;
+
+  _db = await DbConnection.open(
+    host: Platform.environment['PG_HOST'] ?? 'localhost',
+    port: int.parse(Platform.environment['PG_PORT'] ?? '5432'),
+    database: Platform.environment['PG_DB'] ?? '',
+    username: Platform.environment['PG_USER'] ?? '',
+    password: Platform.environment['PG_PASS'] ?? '',
+  );
+
+  _roomRepo = PgRoomRepo(_db);
+  _gameRepo = PgGameRepo(_db);
+  _userRepo = PgUserRepo(_db);
+  _refreshTokenRepo = PgRefreshTokenRepo(_db);
+  _authService = AuthService(
+    _userRepo,
+    _refreshTokenRepo,
+    jwtSecret: Platform.environment['JWT_SECRET'] ?? 'dev_secret_change_me',
+  );
+  _roomService = RoomService(_roomRepo);
+  _gameService = GameService(_roomService);
+  _sseMessaging = SseMessaging();
+  _gameCache = GameCache();
 }
 
-// 鉴权中间件（Structure.md §4：_middleware 鉴权、日志、trace id）
+Handler middleware(Handler handler) {
+  return (context) async {
+    await _init();
+    return handler
+        .use(provider<RoomService>((_) => _roomService))
+        .use(provider<GameService>((_) => _gameService))
+        .use(provider<AuthService>((_) => _authService))
+        .use(provider<SseMessaging>((_) => _sseMessaging))
+        .use(provider<GameCache>((_) => _gameCache))
+        .use(provider<RoomRepo>((_) => _roomRepo))
+        .use(provider<GameRepo>((_) => _gameRepo))
+        .use(provider<UserRepo>((_) => _userRepo))
+        .use(provider<RefreshTokenRepo>((_) => _refreshTokenRepo))
+        .use(provider<AppClock>((_) => const SystemClock()))
+        .use(provider<AppRng>((_) => SystemRng()))
+        .use(_authMiddleware)
+        .call(context);
+  };
+}
+
 Handler _authMiddleware(Handler handler) {
   return (context) async {
     final path = context.request.uri.path;
-    // /health 和 /auth 不需要鉴权
-    if (path.endsWith('/health') || path.contains('/auth')) {
+    if (_isPublicPath(path)) {
       return handler(context);
     }
-    final token = context.request.headers['Authorization'];
-    if (token == null || !token.startsWith('Bearer ')) {
+
+    try {
+      final user = await _authService.verifyBearer(
+        context.request.headers['Authorization'],
+      );
+      return handler
+          .use(provider<AuthenticatedUser>((_) => user))
+          .call(context);
+    } on AuthException catch (e) {
       return Response.json(
-        statusCode: 401,
-        body: {'error': 'Unauthorized'},
+        statusCode: e.statusCode,
+        body: {'error': e.message},
       );
     }
-    // TODO: 验证 JWT；此处仅检查存在性
-    return handler(context);
   };
 }
+
+bool _isPublicPath(String path) =>
+    path.endsWith('/health') ||
+    path.endsWith('/auth') ||
+    path.endsWith('/auth/login') ||
+    path.endsWith('/auth/register') ||
+    path.endsWith('/auth/refresh') ||
+    path.endsWith('/auth/logout');

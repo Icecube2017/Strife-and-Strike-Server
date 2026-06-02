@@ -159,7 +159,7 @@ class GameService {
     final gameId = 'game_$roomId';
     final runtime = GameRuntime(gameId: gameId, state: state);
     _runtimes[gameId] = runtime;
-    _roomService.markInGame(roomId);
+    await _roomService.markInGame(roomId);
     await runtime.engine.initEngine();
     // 游戏开始事件（不 await，让回合推进在后台运行）
     unawaited(runtime.engine.startGame());

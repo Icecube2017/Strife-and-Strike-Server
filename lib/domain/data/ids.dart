@@ -426,4 +426,3 @@ enum TagId {
 
   const TagId(this.id);
 }
-

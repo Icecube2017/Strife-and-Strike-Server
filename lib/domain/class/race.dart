@@ -36,12 +36,12 @@ class BaseRace extends Race {
 
   factory BaseRace.fromJson(Map<String, dynamic> json) =>
     BaseRace(
-      json["id"] as String,
-      json["name"] as String,
-      json["regenType"] as int,
-      json["maxMp"] as int,
-      json["initMp"] as int,
-      json["regenMp"] as int,
-      json["regenInterval"] as int);
+      json['id'] as String,
+      json['name'] as String,
+      json['regenType'] as int,
+      json['maxMp'] as int,
+      json['initMp'] as int,
+      json['regenMp'] as int,
+      json['regenInterval'] as int);
 }
 

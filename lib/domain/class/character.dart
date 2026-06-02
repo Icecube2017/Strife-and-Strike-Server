@@ -113,7 +113,7 @@ class BaseCharacter implements Character {
     bus.on<DamageDealtEvent>((event) {
       if (event.target.character.id == id) {
         // 处理受到伤害的逻辑
-        Damage damage = event.damage;
+        final damage = event.damage;
         // 计算实际伤害，考虑防御、护甲等
         currentHp -= damage.amount;
         if (currentHp <= 0) {
@@ -145,14 +145,13 @@ class BaseCharacter implements Character {
   Future<void> drawCard(GameContext context, int count) async {
     if (context.state.drawPile.length <= count) {
       count = context.state.drawPile.length;
-    }
-    
+    }    
   }
 
   // 判定角色当前是否可以行动
   @override
   bool isNotActionable() {
-    return (state.any((e) => e is StatusFrozen || e is StatusDreaming || e is StatusStellula) || !isAlive);
+    return state.any((e) => e is StatusFrozen || e is StatusDreaming || e is StatusStellula) || !isAlive;
   }
 
   // ...
@@ -165,7 +164,7 @@ class BaseCharacter implements Character {
   @override
   void applyModifier(Modifier mod) {
     switch (mod.targetProperty) {
-      case ("attack"): {
+      case ('attack'): {
         
       }
     }
@@ -208,14 +207,14 @@ class CharacterFactoryCreated extends BaseCharacter {
   CharacterFactoryCreated(super.id, super.name, super.templateId, super.raceId, super.tags, super.traits, super.skills);
 
   factory CharacterFactoryCreated.fromJson(Map<String, dynamic> json) {
-    final tags = (json["tags"] as List).cast<String>().map((id) => CharacterTag.values.byName(id)).toSet();
-    final traits = (json["traits"] as List).cast<String>().map((id) => traitReg.create(id)).toList();
-    final skills = (json["skills"] as List?)?.cast<String>().map((id) => skillReg.create(id)).toList()??[];
+    final tags = (json['tags'] as List).cast<String>().map((id) => CharacterTag.values.byName(id)).toSet();
+    final traits = (json['traits'] as List).cast<String>().map(traitReg.create).toList();
+    final skills = (json['skills'] as List?)?.cast<String>().map(skillReg.create).toList()??[];
     return CharacterFactoryCreated(
-      json["id"] as String,
-      json["name"] as String,
-      json["template"] as String,
-      json["race"] as String,
+      json['id'] as String,
+      json['name'] as String,
+      json['template'] as String,
+      json['race'] as String,
       tags,
       traits,
       skills
@@ -233,7 +232,7 @@ class CharacterDefenV extends BaseCharacter {
     bus.on<DamageDealtEvent>((event) {
       if (event.target.character.id == id) {
         // 处理受到伤害的逻辑
-        Damage damage = event.damage;
+        final damage = event.damage;
         // 计算实际伤害，考虑防御、护甲等
         defense -= (damage.amount * 0.02).toInt();
         if (defense <= 0) {
@@ -245,4 +244,3 @@ class CharacterDefenV extends BaseCharacter {
     });
   }
 }
-

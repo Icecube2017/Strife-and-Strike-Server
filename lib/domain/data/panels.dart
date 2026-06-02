@@ -227,7 +227,7 @@ Map<String, SkillType> skillToType = {
   SkillId.veritasNonFalsitas.id: SkillType(cooldown: 1, isExclusive: true),
 };
 
-List<String> skillDeck = skillToType.keys.where((e) => skillToType[e]!.isExclusive == false).toList();
+List<String> skillDeck = skillToType.keys.where((e) => !skillToType[e]!.isExclusive).toList();
 
 Map<String, List<String>> possessingSkills = {
   CharacterId.darkstar.id: [SkillId.massacre.id],
@@ -378,7 +378,7 @@ Map<String, TraitType> traitToType = {
   TraitId.lossGainEquilibrium.id: TraitType(useCount: -1, isInitiative: false),
 };
 
-List<String> traitDeck = traitToType.keys.where((e) => traitToType[e]!.isInitiative == true).toList();
+List<String> traitDeck = traitToType.keys.where((e) => traitToType[e]!.isInitiative).toList();
 
 Map<String, List<String>> possessingTraits = {
   CharacterId.chinro.id: [TraitId.selfEncouragement.id],

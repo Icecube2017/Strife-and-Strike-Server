@@ -1,11 +1,12 @@
 import 'package:sns_server/application/dto/room_dto.dart';
 import 'package:sns_server/domain/class/character.dart';
 import 'package:sns_server/domain/class/player.dart';
+import 'package:sns_server/infrastructure/repo/room_repo.dart';
 
 /// 房间状态
 enum RoomStatus { waiting, ready, inGame }
 
-/// 内存房间对象（MVP 阶段无持久化）
+/// 内存房间对象
 class Room {
   final String id;
   final List<Player> players;
@@ -16,42 +17,52 @@ class Room {
 
 /// 房间管理服务
 class RoomService {
-  final Map<String, Room> _rooms = {};
+  RoomService(this._repo);
+  final RoomRepo _repo;
 
-  RoomResponse createRoom(CreateRoomRequest req, Character hostCharacter) {
+  // 内存中维护玩家列表（players 不持久化到 pg）
+  final Map<String, List<Player>> _playersByRoom = {};
+
+  Future<RoomResponse> createRoom(CreateRoomRequest req, Character hostCharacter) async {
     final roomId = 'room_${DateTime.now().millisecondsSinceEpoch}';
     final host = Player(req.hostPlayerId, req.hostPlayerName, [hostCharacter], 0);
-    _rooms[roomId] = Room(id: roomId, players: [host]);
-    return _toResponse(roomId);
+    final room = Room(id: roomId, players: [host]);
+    _playersByRoom[roomId] = room.players;
+    await _repo.save(room);
+    return _toResponse(roomId, room);
   }
 
-  RoomResponse joinRoom(String roomId, JoinRoomRequest req, Character character) {
-    final room = _getRoom(roomId);
+  Future<RoomResponse> joinRoom(String roomId, JoinRoomRequest req, Character character) async {
+    final room = await _getRoom(roomId);
     if (room.status != RoomStatus.waiting) {
       throw StateError('Room $roomId is not accepting players');
     }
-    final player = Player(req.playerId, req.playerName, [character], room.players.length);
-    room.players.add(player);
-    return _toResponse(roomId);
+    final players = _playersByRoom[roomId] ??= [];
+    final player = Player(req.playerId, req.playerName, [character], players.length);
+    players.add(player);
+    room.players.addAll(players.where((p) => p.id == player.id));
+    await _repo.save(room);
+    return _toResponse(roomId, room);
   }
 
-  /// 返回房间玩家列表，供 GameService 初始化 GameState
-  List<Player> getPlayers(String roomId) => List.unmodifiable(_getRoom(roomId).players);
+  List<Player> getPlayers(String roomId) =>
+      List.unmodifiable(_playersByRoom[roomId] ?? []);
 
-  void markInGame(String roomId) => _getRoom(roomId).status = RoomStatus.inGame;
+  Future<void> markInGame(String roomId) async {
+    final room = await _getRoom(roomId);
+    room.status = RoomStatus.inGame;
+    await _repo.save(room);
+  }
 
-  Room _getRoom(String roomId) {
-    final room = _rooms[roomId];
+  Future<Room> _getRoom(String roomId) async {
+    final room = await _repo.findById(roomId);
     if (room == null) throw StateError('Room $roomId not found');
     return room;
   }
 
-  RoomResponse _toResponse(String roomId) {
-    final room = _rooms[roomId]!;
-    return RoomResponse(
-      roomId: roomId,
-      status: room.status.name,
-      playerIds: room.players.map((p) => p.id).toList(),
-    );
-  }
+  RoomResponse _toResponse(String roomId, Room room) => RoomResponse(
+        roomId: roomId,
+        status: room.status.name,
+        playerIds: (_playersByRoom[roomId] ?? []).map((p) => p.id).toList(),
+      );
 }

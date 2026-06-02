@@ -49,4 +49,3 @@ class Damage {
   final int? diceResult; // 投骰结果，用于记录
   Damage(this.amount, this.type, [this.diceResult]);
 }
-
