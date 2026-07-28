@@ -19,7 +19,7 @@ class EventBus {
   }
   
   void emit<T extends GameEvent>(T event) {
-    final list = _listeners[T.runtimeType];
+    final list = _listeners[event.runtimeType];
     if (list != null) {
       for (final handler in list) {
         handler(event);
@@ -70,17 +70,6 @@ class TurnStartEvent extends GameEvent {
   );
 }
 
-
-class CardDrawnEvent extends GameEvent {
-  Character character;
-  PropCard card;
-  CardDrawnEvent(
-    super.context,
-    this.character,
-    this.card
-  );
-}
-
 class TurnEndEvent extends GameEvent {
   TurnEndEvent(
     super.context
@@ -95,9 +84,43 @@ class PhaseChangedEvent extends GameEvent {
   );
 }
 
+class BeforeDiceEvent extends GameEvent {
+  DiceRequest request;
+  BeforeDiceEvent(
+    super.context,
+    this.request,
+  );
+}
+
+class AfterDiceEvent extends GameEvent {
+  DiceRequest request;
+  DiceRoll roll;
+  AfterDiceEvent(
+    super.context,
+    this.request,
+    this.roll,
+  );
+}
+
+class DiceResolvedEvent extends GameEvent {
+  DiceRequest request;
+  DiceRoll roll;
+  DiceResolvedEvent(
+    super.context,
+    this.request,
+    this.roll,
+  );
+}
+
 class BeforeDamageEvent extends GameEvent {
+  CharacterTarget? source;
+  CharacterTarget target;
+  Damage damage;
   BeforeDamageEvent(
-    super.context
+    super.context, 
+    this.source,
+    this.target,
+    this.damage
   );
 }
 
@@ -114,8 +137,14 @@ class DamageDealtEvent extends GameEvent {
 }
 
 class AfterDamageEvent extends GameEvent {
+  CharacterTarget? source;
+  CharacterTarget target;
+  Damage damage;
   AfterDamageEvent(
-    super.context
+    super.context,
+    this.source,
+    this.target,
+    this.damage
   );
 }
 
@@ -146,8 +175,44 @@ class MovepointChangedEvent extends GameEvent {
   );
 }
 
+class CardDrawnEvent extends GameEvent {
+  Character character;
+  List<PropCard> cards;
+  int count;
+  CardDrawnEvent(
+    super.context,
+    this.character,
+    this.cards,
+    this.count
+  );
+}
+
 class CardPlayedEvent extends GameEvent {
+  Character character;
+  List<PropCard> cards;
+  int count;
   CardPlayedEvent(
+    super.context,
+    this.character,
+    this.cards,
+    this.count
+  );
+}
+
+class CardGrabbedEvent extends GameEvent {
+  CardGrabbedEvent(
+    super.context
+  );
+}
+
+class CardGaveEvent extends GameEvent {
+  CardGaveEvent(
+    super.context
+  );
+}
+
+class StatusAppliedEvent extends GameEvent {
+  StatusAppliedEvent(
     super.context
   );
 }

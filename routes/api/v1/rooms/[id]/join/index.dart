@@ -14,7 +14,7 @@ Future<Response> onRequest(RequestContext context, String id) async {
     final characterId = body['characterId'] as String? ?? 'empty';
 
     final service = context.read<RoomService>();
-    final character = CharacterFactoryCreated(characterId, characterId, 'balanced', 'human', {}, [], []);
+    final character = CharacterFactoryCreated(characterId, 'balanced', 'human', {}, [], []);
     final resp = await service.joinRoom(id, req, character);
     return Response.json(body: resp.toJson());
   } on StateError catch (e) {

@@ -5,7 +5,6 @@ import 'package:sns_server/domain/core/game_event.dart';
 
 /// 接口
 abstract class Status extends Identifiable {
-  String get name;
   Character get owner;
   int get stacks;
   int get intensity;
@@ -21,29 +20,26 @@ enum StatusStacking {
   add, // 强度和层数直接相加
 }
 
+// 隐藏状态，和Status实现逻辑一致
 abstract class Stuff extends Identifiable {
+  int get stacks;
+  int get intensity;
   int get value;
+  String get text;
 }
 
 class BaseStatus implements Status{
   @override
   final String id;
-
-  @override
-  final String name;
-
   @override
   late Character owner;
-
   @override
   int stacks = 0;
-
   @override
   int intensity = 0;
 
   BaseStatus(
     this.id,
-    this.name
   );
 
   @override
@@ -77,17 +73,17 @@ class BaseStatus implements Status{
 }
 
 class StatusFrost extends BaseStatus {
-  StatusFrost() : super('status_frost', '霜冻');
+  StatusFrost() : super('status_frost');
 }
 
 class StatusFrozen extends BaseStatus {
-  StatusFrozen() : super('status_frozen', '冰封');
+  StatusFrozen() : super('status_frozen');
 }
 
 class StatusDreaming extends BaseStatus {
-  StatusDreaming() : super('status_dreaming', '梦境');
+  StatusDreaming() : super('status_dreaming');
 }
 
 class StatusStellula extends BaseStatus {
-  StatusStellula() : super('status_stellula', '星牢');
+  StatusStellula() : super('status_stellula');
 }

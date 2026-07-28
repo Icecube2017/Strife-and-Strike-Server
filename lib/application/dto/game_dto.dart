@@ -31,6 +31,7 @@ class PublicGameView {
   final String gameId;
   final int version;
   final int currentRound;
+  final int currentTurn;
   final String currentPlayerId;
   final String currentPhase;
   final List<CharacterPublicView> characters;
@@ -39,6 +40,7 @@ class PublicGameView {
     required this.gameId,
     required this.version,
     required this.currentRound,
+    required this.currentTurn,
     required this.currentPlayerId,
     required this.currentPhase,
     required this.characters,
@@ -48,6 +50,7 @@ class PublicGameView {
         'gameId': gameId,
         'version': version,
         'currentRound': currentRound,
+        'currentTurn': currentTurn,
         'currentPlayerId': currentPlayerId,
         'currentPhase': currentPhase,
         'characters': characters.map((c) => c.toJson()).toList(),
@@ -57,22 +60,23 @@ class PublicGameView {
 /// 玩家私有视图（含手牌）
 class PlayerPrivateView {
   final String playerId;
-  final List<String> handCardIds;
+  final List<Map<String, dynamic>> cards;
 
-  PlayerPrivateView({required this.playerId, required this.handCardIds});
+  PlayerPrivateView({required this.playerId, required this.cards});
 
   Map<String, dynamic> toJson() => {
         'playerId': playerId,
-        'handCardIds': handCardIds,
+        'cards': cards,
       };
 }
 
 /// 单个角色公开状态
 class CharacterPublicView {
   final String characterId;
-  final String name;
   final int currentHp;
   final int maxHp;
+  final int attack;
+  final int defense;
   final int currentMp;
   final int maxMp;
   final bool isAlive;
@@ -80,9 +84,10 @@ class CharacterPublicView {
 
   CharacterPublicView({
     required this.characterId,
-    required this.name,
     required this.currentHp,
     required this.maxHp,
+    required this.attack,
+    required this.defense,
     required this.currentMp,
     required this.maxMp,
     required this.isAlive,
@@ -91,9 +96,10 @@ class CharacterPublicView {
 
   Map<String, dynamic> toJson() => {
         'characterId': characterId,
-        'name': name,
         'currentHp': currentHp,
         'maxHp': maxHp,
+        'attack': attack,
+        'defense': defense,
         'currentMp': currentMp,
         'maxMp': maxMp,
         'isAlive': isAlive,

@@ -46,6 +46,7 @@ class GameCache {
         gameId: m['gameId'] as String,
         version: m['version'] as int,
         currentRound: m['currentRound'] as int,
+        currentTurn: m['currentTurn'] as int,
         currentPlayerId: m['currentPlayerId'] as String,
         currentPhase: m['currentPhase'] as String,
         characters: (m['characters'] as List)
@@ -60,9 +61,10 @@ class GameCache {
   CharacterPublicView _decodeCharView(Map<String, dynamic> m) =>
       CharacterPublicView(
         characterId: m['characterId'] as String,
-        name: m['name'] as String,
         currentHp: m['currentHp'] as int,
         maxHp: m['maxHp'] as int,
+        attack: m['attack'] as int,
+        defense: m['defense'] as int,
         currentMp: m['currentMp'] as int,
         maxMp: m['maxMp'] as int,
         isAlive: m['isAlive'] as bool,

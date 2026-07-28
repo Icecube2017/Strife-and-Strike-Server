@@ -78,7 +78,11 @@ enum CharacterId {
   moonseek('moonseek'),
   siKu('si_ku'),
   pi123('pi_123'),
-  lanWenxi('lan_wenxi');  
+  lanWenxi('lan_wenxi'),
+  normal12('normal_12'),
+  trifolawn('trifolawn'),
+  zhuYanHuang('zhu_yanhuang'),
+  vivace('vivace');
 
   final String id;
 
@@ -192,6 +196,7 @@ enum SkillId {
   velocity('velocity'),
   lastStand('last_stand'),
   airstrike('airstrike'),
+  blender('blender'),
   massacre('massacre'),
   nebulaField('nebula_field'),
   deconstruction('deconstruction'),
@@ -214,6 +219,7 @@ enum SkillId {
   replenishment('replenishment'),
   icyOblivion135Bars('icy_oblivion_135_bars'),
   sacrificialLove('sacrificial_love'),
+  earthBreak("earth_break"),
   orderAegis('order_aegis'),
   chaosIncursion('chaos_incursion'),
   frostShatter('frost_shatter'),
@@ -225,7 +231,9 @@ enum SkillId {
   unwaveringGuard('unwavering_guard'),
   spareMove('spare_move'),
   anabasis('anabasis'),
-  veritasNonFalsitas('veritas_non_falsitas');
+  veritasNonFalsitas('veritas_non_falsitas'),
+  massEnergyConversionGamma("mass_energy_conversion_gamma"),
+  wildfireMomentum("wildfire_momentum");
 
   final String id;
 
@@ -275,6 +283,7 @@ enum TraitId {
   ranger('ranger'),
   precision('precision'),
   craftingOfDreams('crafting_of_dreams'),
+  resonanceOfDreams("resonance_of_dreams"),
   conflagrationAvatar('conflagration_avatar'),
   guardianOfDreams('guardian_of_dreams'),
   introductoryGift('introductory_gift'),
@@ -304,7 +313,6 @@ enum TraitId {
   glacialCircle('glacial_circle'),
   innocentLove('innocent_love'),
   lifeBreath('life_breath'),
-  earthBreak('earth_break'),
   holdBreath('hold_breath'),
   gunShy('gun_shy'),
   defensiveProtocol('defensive_protocol'),
@@ -335,7 +343,11 @@ enum TraitId {
   danshari('danshari'),
   essenceOverIllusion('essence_over_illusion'),
   binaryDyad('binary_dyad'),
-  lossGainEquilibrium('loss_gain_equilibrium');
+  lossGainEquilibrium('loss_gain_equilibrium'),
+  normalization("normalization"),
+  anachronicPrologue("anachronic_prologue"),
+  coreMeltdown("core_meltdown"),
+  vulcansProtection("vulcans_protection");
 
   final String id;
 
@@ -425,4 +437,62 @@ enum TagId {
   final String id;
 
   const TagId(this.id);
+}
+
+enum CardDeckId {
+  basic('basic'),
+  advanced('advanced');
+
+  final String id;
+
+  const CardDeckId(this.id);
+}
+
+enum TemplateId {
+  empty('empty'),
+  defensive('defensive'),
+  supportive('supportive'),
+  balanced('balanced'),
+  challenging('challenging'),
+  brutal('brutal'),
+  vital('vital'),
+  defen5('defen5');
+
+  final String id;
+
+  const TemplateId(this.id);
+}
+
+enum RaceId {
+  empty('empty'),
+  human('human'),
+  feline('feline'),
+  humanFeline('human_feline'),
+  gryphon('gryphon'),
+  humanGryphon('human_gryphon'),
+  dragon('dragon'),
+  halfDragon('half_dragon'),
+  columba('columba'),
+  muridae('muridae'),
+  caprinae('caprinae'),
+  pseudois('pseudois'),
+  machina('machina'),
+  currus('currus'),
+  experiment('experiment'),
+  program('program'),
+  lemures('lemures'),
+  oni('oni'),
+  anima('anima'),
+  pseudosacra('pseudosacra'),
+  elf('elf'),
+  froth('froth'),
+  nyxumbra('nyxumbra'),
+  tinXingyu('tin_xingyu'),
+  valedictus('valedictus'),
+  engine4('engine4'),
+  ennoia('ennoia');
+
+  final String id;
+
+  const RaceId(this.id);
 }

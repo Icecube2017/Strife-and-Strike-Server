@@ -15,15 +15,47 @@ abstract class GameCommand {
 }
 
 /// 出牌命令
-class PlayCardCommand extends GameCommand {
+class PlayCardSelection {
   final String cardId;
+  final int? handIndex;
+
+  const PlayCardSelection({
+    required this.cardId,
+    this.handIndex,
+  });
+
+  factory PlayCardSelection.fromJson(Map<String, dynamic> json) {
+    final cardId = json['cardId'];
+    if (cardId is! String || cardId.isEmpty) {
+      throw StateError('cardSelections[].cardId must be a non-empty string');
+    }
+
+    final handIndex = json['handIndex'];
+    if (handIndex != null && handIndex is! int) {
+      throw StateError('cardSelections[].handIndex must be an integer');
+    }
+
+    return PlayCardSelection(
+      cardId: cardId,
+      handIndex: handIndex as int?,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'cardId': cardId,
+        if (handIndex != null) 'handIndex': handIndex,
+      };
+}
+
+class PlayCardCommand extends GameCommand {
+  final List<PlayCardSelection> cardSelections;
   final String? targetCharacterId;
 
   const PlayCardCommand({
     required super.commandId,
     required super.playerId,
     required super.clientVersion,
-    required this.cardId,
+    required this.cardSelections,
     this.targetCharacterId,
   });
 }
@@ -58,9 +90,34 @@ class UseSkillCommand extends GameCommand {
   });
 }
 
+/// 使用特质命令
+class UseTraitCommand extends GameCommand {
+  final String characterId;
+  final String traitId;
+  final Map<String, dynamic> params;
+
+  const UseTraitCommand({
+    required super.commandId,
+    required super.playerId,
+    required super.clientVersion,
+    required this.characterId,
+    required this.traitId,
+    this.params = const {},
+  });
+}
+
 /// 结束回合命令
 class EndTurnCommand extends GameCommand {
   const EndTurnCommand({
+    required super.commandId,
+    required super.playerId,
+    required super.clientVersion,
+  });
+}
+
+/// 放弃当前响应优先权命令
+class PassPriorityCommand extends GameCommand {
+  const PassPriorityCommand({
     required super.commandId,
     required super.playerId,
     required super.clientVersion,
@@ -75,14 +132,28 @@ GameCommand parseGameCommand({
   required ActionType actionType,
   required Map<String, dynamic> payload,
 }) {
+  List<PlayCardSelection> parseCardSelections() {
+    final rawSelections = payload['cardSelections'];
+    if (rawSelections is! List) {
+      throw StateError('cardSelections must be a list');
+    }
+
+    return rawSelections.map((rawSelection) {
+      if (rawSelection is! Map) {
+        throw StateError('Each card selection must be an object');
+      }
+      return PlayCardSelection.fromJson(Map<String, dynamic>.from(rawSelection));
+    }).toList();
+  }
+
   switch (actionType) {
-    case ActionType.attackCard:
+    case ActionType.playCard:
       return PlayCardCommand(
         commandId: commandId,
         playerId: playerId,
         clientVersion: clientVersion,
-        cardId: payload['cardId'] as String,
-        targetCharacterId: payload['targetCharacterId'] as String?,
+        cardSelections: parseCardSelections(),
+        targetCharacterId: payload['targetId'] as String?,
       );
     case ActionType.attack:
       return AttackCommand(
@@ -93,6 +164,9 @@ GameCommand parseGameCommand({
         targetCharacterId: payload['targetCharacterId'] as String,
       );
     case ActionType.limitedCard:
+    case ActionType.attackCard:
+      throw StateError('API clients must use playCard instead of ${actionType.name}');
+    case ActionType.skill:
       return UseSkillCommand(
         commandId: commandId,
         playerId: playerId,
@@ -100,6 +174,21 @@ GameCommand parseGameCommand({
         characterId: payload['characterId'] as String,
         skillId: payload['skillId'] as String,
         params: (payload['params'] as Map<String, dynamic>?) ?? {},
+      );
+    case ActionType.trait:
+      return UseTraitCommand(
+        commandId: commandId,
+        playerId: playerId,
+        clientVersion: clientVersion,
+        characterId: payload['characterId'] as String,
+        traitId: payload['traitId'] as String,
+        params: (payload['params'] as Map<String, dynamic>?) ?? {},
+      );
+    case ActionType.passPriority:
+      return PassPriorityCommand(
+        commandId: commandId,
+        playerId: playerId,
+        clientVersion: clientVersion,
       );
   }
 }

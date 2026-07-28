@@ -4,13 +4,14 @@ import 'dart:collection';
 import 'package:sns_server/application/commands/game_command.dart';
 import 'package:sns_server/application/dto/game_dto.dart';
 import 'package:sns_server/application/services/room_service.dart';
+import 'package:sns_server/domain/class/character.dart';
 import 'package:sns_server/domain/class/player.dart';
 import 'package:sns_server/domain/class/propcard.dart';
 import 'package:sns_server/domain/core/enum.dart';
 import 'package:sns_server/domain/core/game.dart';
 import 'package:sns_server/domain/core/game_state.dart';
 
-/// 一局游戏运行时（Structure.md §3：RoomRuntime Actor）
+/// 一局游戏运行时
 class GameRuntime {
   final String gameId;
   final GameState state;
@@ -57,32 +58,50 @@ class GameRuntime {
   }
 
   Future<CommandResult> _execute(GameCommand cmd) async {
-    final currentPlayer = state.players[state.currentPlayerIndex];
-    if (currentPlayer.id != cmd.playerId) {
-      throw StateError('Not your turn');
-    }
     if (cmd.clientVersion != version) {
       throw StateError('Version conflict: expected $version, got ${cmd.clientVersion}');
     }
 
-    final character = currentPlayer.currentCharacter;
-
     switch (cmd) {
       case EndTurnCommand():
-        // 继续推进回合（由 engine 内部处理）
-        break;
+        _assertPlayerCanEndTurn(cmd.playerId);
+        await engine.endTurn();
+      case PassPriorityCommand():
+        await engine.passPriority(cmd.playerId);
       case AttackCommand():
+        final character = _resolveOwnedCharacter(
+          playerId: cmd.playerId,
+          characterId: cmd.attackerCharacterId,
+        );
         await engine.processAction(character, ActionType.attack, {
           'targetId': cmd.targetCharacterId,
         });
       case PlayCardCommand():
-        await engine.processAction(character, ActionType.attackCard, {
-          'cardId': cmd.cardId,
+        final character = _resolveDefaultCharacter(cmd.playerId);
+        final inferredActionType = _inferPlayCardActionType(
+          character: character,
+          selections: cmd.cardSelections,
+        );
+        await engine.processAction(character, inferredActionType, {
+          'cardSelections': cmd.cardSelections.map((selection) => selection.toJson()).toList(),
           'targetId': cmd.targetCharacterId,
         });
       case UseSkillCommand():
-        await engine.processAction(character, ActionType.limitedCard, {
+        final character = _resolveOwnedCharacter(
+          playerId: cmd.playerId,
+          characterId: cmd.characterId,
+        );
+        await engine.processAction(character, ActionType.skill, {
           'skillId': cmd.skillId,
+          ...cmd.params,
+        });
+      case UseTraitCommand():
+        final character = _resolveOwnedCharacter(
+          playerId: cmd.playerId,
+          characterId: cmd.characterId,
+        );
+        await engine.processAction(character, ActionType.trait, {
+          'traitId': cmd.traitId,
           ...cmd.params,
         });
       default:
@@ -96,19 +115,21 @@ class GameRuntime {
 
   /// 获取公开视图（支持 sinceVersion 快速判断）
   PublicGameView getPublicView() {
-    final currentPlayer = state.players[state.currentPlayerIndex];
+    final currentPlayer = _resolveCurrentPublicPlayer();
     return PublicGameView(
       gameId: gameId,
       version: version,
       currentRound: state.currentRound,
+      currentTurn: state.currentTurn,
       currentPlayerId: currentPlayer.id,
       currentPhase: state.currentPhase.name,
       characters: state.characterById.values
           .map((c) => CharacterPublicView(
                 characterId: c.id,
-                name: c.name,
                 currentHp: c.currentHp,
                 maxHp: c.maxHp,
+                attack: c.attack,
+                defense: c.defense,
                 currentMp: c.currentMp,
                 maxMp: c.maxMp,
                 isAlive: c.isAlive,
@@ -125,7 +146,8 @@ class GameRuntime {
     );
     return PlayerPrivateView(
       playerId: playerId,
-      handCardIds: player.currentCharacter.hand.map((c) => c.id).toList(),
+      // cards: player.currentCharacter.hand.map((c) => c.toJson()).toList(),
+      cards: []
     );
   }
 
@@ -140,6 +162,144 @@ class GameRuntime {
     for (final ctrl in _subscribers) {
       if (!ctrl.isClosed) ctrl.add(view);
     }
+  }
+
+  void _assertPlayerCanEndTurn(String playerId) {
+    if (state.activePlayerId != playerId) {
+      throw StateError('Only the active player can end the turn');
+    }
+  }
+
+  Character _resolveDefaultCharacter(String playerId) {
+    final player = _getPlayer(playerId);
+    return player.currentCharacter;
+  }
+
+  ActionType _inferPlayCardActionType({
+    required Character character,
+    required List<PlayCardSelection> selections,
+  }) {
+    final cards = _resolvePlayCardSelections(
+      character: character,
+      selections: selections,
+    );
+    return cards.any((card) => card.isAttackLimited)
+        ? ActionType.limitedCard
+        : ActionType.attackCard;
+  }
+
+  List<PropCard> _resolvePlayCardSelections({
+    required Character character,
+    required List<PlayCardSelection> selections,
+  }) {
+    if (selections.isEmpty) {
+      throw StateError('cardSelections must not be empty');
+    }
+
+    final resolvedCards = <PropCard>[];
+    final reservedHandIndices = <int>{};
+    for (final selection in selections) {
+      resolvedCards.add(
+        _resolveSinglePlayCardSelection(
+          character: character,
+          selection: selection,
+          reservedHandIndices: reservedHandIndices,
+        ),
+      );
+    }
+    return resolvedCards;
+  }
+
+  PropCard _resolveSinglePlayCardSelection({
+    required Character character,
+    required PlayCardSelection selection,
+    required Set<int> reservedHandIndices,
+  }) {
+    if (selection.handIndex != null) {
+      final handIndex = selection.handIndex!;
+      if (handIndex < 0 || handIndex >= character.hand.length) {
+        throw StateError('handIndex $handIndex is out of range');
+      }
+      if (reservedHandIndices.contains(handIndex)) {
+        throw StateError('handIndex $handIndex is selected more than once');
+      }
+
+      final indexedCard = character.hand[handIndex];
+      if (indexedCard.id != selection.cardId) {
+        throw StateError(
+          'handIndex $handIndex points to ${indexedCard.id}, not the requested card ${selection.cardId}',
+        );
+      }
+
+      reservedHandIndices.add(handIndex);
+      return indexedCard;
+    }
+
+    final matchedEntries = <MapEntry<int, PropCard>>[];
+    for (var index = 0; index < character.hand.length; index++) {
+      if (reservedHandIndices.contains(index)) {
+        continue;
+      }
+      final card = character.hand[index];
+      if (card.id == selection.cardId) {
+        matchedEntries.add(MapEntry(index, card));
+      }
+    }
+
+    if (matchedEntries.isEmpty) {
+      throw StateError('Card ${selection.cardId} not found in character hand');
+    }
+    if (matchedEntries.length == 1) {
+      reservedHandIndices.add(matchedEntries.single.key);
+      return matchedEntries.single.value;
+    }
+
+    final firstMatch = matchedEntries.first.value;
+    final hasDifferentRuntimeState = matchedEntries.any(
+      (entry) =>
+          entry.value.isDisabled != firstMatch.isDisabled ||
+          entry.value.isReinforced != firstMatch.isReinforced ||
+          entry.value.isAttackLimited != firstMatch.isAttackLimited,
+    );
+    if (hasDifferentRuntimeState) {
+      throw StateError(
+        'Multiple card instances with id ${selection.cardId} have different runtime states; provide handIndex',
+      );
+    }
+
+    reservedHandIndices.add(matchedEntries.first.key);
+    return matchedEntries.first.value;
+  }
+
+  Character _resolveOwnedCharacter({
+    required String playerId,
+    required String characterId,
+  }) {
+    final player = _getPlayer(playerId);
+    final character = state.characterById[characterId];
+    if (character == null) {
+      throw StateError('Character $characterId not found');
+    }
+    if (!player.characters.contains(character)) {
+      throw StateError('Character $characterId does not belong to player $playerId');
+    }
+    return character;
+  }
+
+  Player _resolveCurrentPublicPlayer() {
+    final activePlayerId = state.activePlayerId;
+    if (activePlayerId != null) {
+      return _getPlayer(activePlayerId);
+    }
+    return state.players[state.currentPlayerIndex];
+  }
+
+  Player _getPlayer(String playerId) {
+    final player = state.playerById[playerId];
+    if (player == null) {
+      throw StateError('Player $playerId not found');
+    }
+    return player;
   }
 }
 
@@ -162,7 +322,7 @@ class GameService {
     await _roomService.markInGame(roomId);
     await runtime.engine.initEngine();
     // 游戏开始事件（不 await，让回合推进在后台运行）
-    unawaited(runtime.engine.startGame());
+    await runtime.engine.startGame();
     return gameId;
   }
 

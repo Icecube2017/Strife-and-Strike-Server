@@ -7,11 +7,75 @@ enum TurnPhase {
   end
 }
 
+/// 引擎当前所处的流程节点
+enum FlowState {
+  bootstrapping,
+  turnOpening,
+  mainDecision,
+  responseWindow,
+  resolvingStack,
+  forcedDecision,
+  discardDecision,
+  turnClosing,
+  finished,
+}
+
 // 玩家动作类型
 enum ActionType {
   attack,
+  playCard,
   attackCard,
   limitedCard,
+  skill,
+  trait,
+  passPriority,
+}
+
+/// 掷骰用途分类。
+enum DiceRollReason {
+  attackDamage,
+  skillDamage,
+  traitEffect,
+  statusEffect,
+  generic,
+}
+
+/// 栈上动作当前推进到的结算阶段。
+enum PendingActionStage {
+  declared,
+  resolving,
+  waitingResponse,
+  effectResolved,
+  diceResolved,
+  damagePrepared,
+  resolved,
+  cancelled,
+}
+
+/// 响应动作对栈上既有动作施加的修改类型
+enum StackMutationType {
+  cancelAction,
+  replaceTarget,
+  patchPayload,
+  setPayloadField,
+  removePayloadField,
+  setDiceResult,
+}
+
+/// 当前等待玩家做出的决策类型
+enum DecisionType {
+  action,
+  response,
+  forcedSelection,
+  discard,
+  passPriority,
+}
+
+/// 对局最终结果类型
+enum GameOutcomeType {
+  victory,
+  defeat,
+  draw,
 }
 
 // 伤害类型
@@ -20,6 +84,18 @@ enum DamageType {
   magical,
   real,
   loss
+}
+
+// 伤害来源
+enum DamageSource{
+  action,
+  effect,
+  card,
+  skill,
+  trait,
+  status,
+  lost,
+  scene
 }
 
 enum CharacterTag {

@@ -86,15 +86,17 @@ class PgGameRepo implements GameRepo {
         gameId: m['gameId'] as String,
         version: m['version'] as int,
         currentRound: m['currentRound'] as int,
+        currentTurn: m['currentTurn'] as int,
         currentPlayerId: m['currentPlayerId'] as String,
         currentPhase: m['currentPhase'] as String,
         characters: (m['characters'] as List).map((c) {
           final cv = c as Map<String, dynamic>;
           return CharacterPublicView(
             characterId: cv['characterId'] as String,
-            name: cv['name'] as String,
             currentHp: cv['currentHp'] as int,
             maxHp: cv['maxHp'] as int,
+            attack: cv['attack'] as int,
+            defense: cv['defense'] as int,
             currentMp: cv['currentMp'] as int,
             maxMp: cv['maxMp'] as int,
             isAlive: cv['isAlive'] as bool,

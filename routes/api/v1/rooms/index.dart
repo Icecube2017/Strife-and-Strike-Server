@@ -22,4 +22,4 @@ Future<Response> onRequest(RequestContext context) async {
 
 /// 临时占位：从 registry 加载角色（接通 assets 后替换）
 Character _stubCharacter(String id) =>
-    CharacterFactoryCreated(id, id, 'balanced', 'human', {}, [], []);
+    CharacterFactoryCreated(id, 'balanced', 'human', {}, [], []);
