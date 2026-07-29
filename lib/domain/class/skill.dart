@@ -1,8 +1,8 @@
-import 'package:sns_server/domain/class/character.dart';
 import 'package:sns_server/domain/core/core.dart';
 import 'package:sns_server/domain/core/enum.dart';
 import 'package:sns_server/domain/core/game_context.dart';
 import 'package:sns_server/domain/data/ids.dart';
+import 'package:sns_server/domain/resolver/skill_resolver.dart';
 
 abstract class Skill extends Identifiable {
   int get cooldown; // 当前CD
@@ -38,8 +38,11 @@ class SkillFinaleHope extends BaseSkill {
 
   @override
   Future<void> cast(GameContext context, Map<String, dynamic> data) async {
-    final forcedResult = _readForcedResult(data);
-    final responseTargetActionId = _readTargetActionId(data);
+    final forcedResult = SkillResolver.readForcedResult(
+      data,
+      skillName: 'SkillFinaleHope',
+    );
+    final responseTargetActionId = SkillResolver.readTargetActionId(data);
     data['_postDispatchResponseMutations'] = <Map<String, dynamic>>[
       {
         'effect': StackMutationType.setDiceResult.name,
@@ -49,37 +52,14 @@ class SkillFinaleHope extends BaseSkill {
       },
     ];
   }
-
-  String? _readTargetActionId(Map<String, dynamic> data) {
-    final rawTargetActionId =
-        data['responseTargetActionId'] ?? data['targetActionId'];
-    if (rawTargetActionId == null) {
-      return null;
-    }
-    if (rawTargetActionId is! String || rawTargetActionId.isEmpty) {
-      throw StateError('responseTargetActionId must be a non-empty string');
-    }
-    return rawTargetActionId;
-  }
-
-  int _readForcedResult(Map<String, dynamic> data) {
-    final rawForcedResult = data['forcedResult'];
-    if (rawForcedResult is! int) {
-      throw StateError('SkillFinaleHope requires forcedResult as an integer');
-    }
-    if (rawForcedResult < 1) {
-      throw StateError('forcedResult must be a positive integer');
-    }
-    return rawForcedResult;
-  }
 }
 
-class SkillReticence extends BaseSkill { 
+class SkillReticence extends BaseSkill {
   SkillReticence() : super(SkillId.reticence.id, 5, false, null);
 
   @override
   Future<void> cast(GameContext context, Map<String, dynamic> data) async {
-    final responseTargetActionId = _readTargetActionId(data);
+    final responseTargetActionId = SkillResolver.readTargetActionId(data);
     data['_postDispatchResponseMutations'] = <Map<String, dynamic>>[
       {
         'effect': StackMutationType.cancelAction.name,
@@ -87,17 +67,5 @@ class SkillReticence extends BaseSkill {
           'targetActionId': responseTargetActionId,
       },
     ];
-  }
-
-  String? _readTargetActionId(Map<String, dynamic> data) {
-    final rawTargetActionId =
-        data['responseTargetActionId'] ?? data['targetActionId'];
-    if (rawTargetActionId == null) {
-      return null;
-    }
-    if (rawTargetActionId is! String || rawTargetActionId.isEmpty) {
-      throw StateError('responseTargetActionId must be a non-empty string');
-    }
-    return rawTargetActionId;
   }
 }

@@ -3,13 +3,14 @@ import 'package:sns_server/domain/class/player.dart';
 import 'package:sns_server/domain/class/trait.dart';
 import 'package:sns_server/domain/core/action_validator.dart';
 import 'package:sns_server/domain/core/core.dart';
-import 'package:sns_server/domain/core/dice_resolver.dart';
 import 'package:sns_server/domain/core/enum.dart';
 import 'package:sns_server/domain/core/game_context.dart';
 import 'package:sns_server/domain/core/game_event.dart';
 import 'package:sns_server/domain/core/game_state.dart';
 import 'package:sns_server/domain/core/register.dart';
-import 'package:sns_server/domain/core/stack_resolver.dart';
+import 'package:sns_server/domain/resolver/attack_card_resolver.dart';
+import 'package:sns_server/domain/resolver/dice_resolver.dart';
+import 'package:sns_server/domain/resolver/stack_resolver.dart';
 
 /// 游戏引擎
 class GameEngine {
@@ -21,6 +22,7 @@ class GameEngine {
     _stackResolver = StackResolver(state);
     _actionValidator = ActionValidator(state, _stackResolver);
     _diceResolver = DiceResolver(_context);
+    _attackCardResolver = AttackCardResolver(_context, _diceResolver);
   }
 
   final GameState _state;
@@ -29,6 +31,7 @@ class GameEngine {
   late final StackResolver _stackResolver;
   late final ActionValidator _actionValidator;
   late final DiceResolver _diceResolver;
+  late final AttackCardResolver _attackCardResolver;
 
   /// 初始化注册表、索引和被动效果绑定。
   Future<void> initEngine() async {
@@ -424,6 +427,10 @@ class GameEngine {
     ActionType type,
     Map<String, dynamic> payload,
   ) {
+    // Attack cards expose their response point only after their damage die is revealed.
+    if (type == ActionType.attackCard) {
+      return false;
+    }
     final explicit = payload['opensResponseWindow'];
     if (explicit is bool) {
       return explicit;
@@ -511,39 +518,22 @@ class GameEngine {
     }
   }
 
-  /// 分两段结算攻击型卡牌：先公开骰子结果，再继续伤害结算。
+  /// 公开攻击骰子并等待响应结束后，再执行卡牌效果和伤害结算。
   Future<bool> _resolveAttackCardPendingAction(
     Character actor,
     PendingAction pendingAction,
   ) async {
-    if (_shouldResumeDiceDrivenResolution(pendingAction)) {
-      pendingAction.payload.remove('_deferDamageResolution');
-      pendingAction.payload['_resumeDamageResolutionOnly'] = true;
-      await _handleAttackCard(actor, pendingAction.payload);
-      pendingAction.payload.remove('_resumeDamageResolutionOnly');
-      return false;
+    if (pendingAction.resolutionState.diceRoll == null) {
+      await _attackCardResolver.resolveDicePhase(actor, pendingAction);
+      _stackResolver.syncResolutionState(pendingAction);
+
+      if (_openResponseWindow(pendingAction, forceOpen: true)) {
+        _state.pendingStack.add(pendingAction);
+        return true;
+      }
     }
 
-    pendingAction.payload['_deferDamageResolution'] = true;
     await _handleAttackCard(actor, pendingAction.payload);
-    pendingAction.payload.remove('_deferDamageResolution');
-    _stackResolver.syncResolutionState(pendingAction);
-    if (!_hasPreparedDicePhase(pendingAction)) {
-      return false;
-    }
-
-    final paused = await _resolveStandaloneDicePhase(
-      actor,
-      pendingAction,
-      forceOpen: true,
-    );
-    if (paused) {
-      return true;
-    }
-
-    pendingAction.payload['_resumeDamageResolutionOnly'] = true;
-    await _handleAttackCard(actor, pendingAction.payload);
-    pendingAction.payload.remove('_resumeDamageResolutionOnly');
     return false;
   }
 
@@ -558,12 +548,6 @@ class GameEngine {
         pendingAction.payload['_resolvedDiceRequest'] is DiceRequest ||
         pendingAction.payload['_resolvedDiceRoll'] is DiceRoll ||
         pendingAction.payload['_resolvedDamage'] is Damage;
-  }
-
-  /// 判断当前动作是否已经准备好了独立的掷骰阶段。
-  bool _hasPreparedDicePhase(PendingAction pendingAction) {
-    return pendingAction.resolutionState.diceRequest != null ||
-        pendingAction.payload['_resolvedDiceRequest'] is DiceRequest;
   }
 
   /// 解析带有独立掷骰阶段的特质动作。
@@ -644,7 +628,6 @@ class GameEngine {
       final diceRoll = await _diceResolver.resolve(actor, preparedDiceRequest);
       pendingAction.payload['_resolvedDiceRequest'] = diceRoll.request;
       pendingAction.payload['_resolvedDiceRoll'] = diceRoll;
-      _materializePostDiceResolutionState(pendingAction);
       _stackResolver.syncResolutionState(pendingAction);
     }
 
@@ -657,38 +640,6 @@ class GameEngine {
       return true;
     }
     return false;
-  }
-
-  /// 在掷骰结束后补齐动作后续需要公开的中间态。
-  void _materializePostDiceResolutionState(PendingAction pendingAction) {
-    switch (pendingAction.actionType) {
-      case ActionType.attackCard:
-        _materializeAttackCardPendingDamage(pendingAction);
-        return;
-      case ActionType.attack:
-      case ActionType.playCard:
-      case ActionType.limitedCard:
-      case ActionType.skill:
-      case ActionType.trait:
-      case ActionType.passPriority:
-        return;
-    }
-  }
-
-  /// 根据 attackCard 已准备的基础伤害和骰子结果，回填 pendingDamage。
-  void _materializeAttackCardPendingDamage(PendingAction pendingAction) {
-    final diceRoll = pendingAction.payload['_resolvedDiceRoll'];
-    final baseDamage = pendingAction.payload['_resolvedBaseDamage'];
-    if (diceRoll is! DiceRoll || baseDamage is! int) {
-      return;
-    }
-
-    pendingAction.payload['_resolvedDamage'] = Damage(
-      (baseDamage * diceRoll.damageMultiplier).round(),
-      DamageType.physical,
-      DamageSource.action,
-      diceRoll.finalResult,
-    );
   }
 
   /// 检查是否已经满足对局胜利条件。

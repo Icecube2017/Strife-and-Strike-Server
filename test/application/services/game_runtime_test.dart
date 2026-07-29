@@ -18,35 +18,38 @@ import 'package:test/test.dart';
 
 void main() {
   group('GameRuntime play-card inference', () {
-    test('infers limitedCard when any selected card is attack-limited', () async {
-      final alpha = _RuntimeTestCharacter('char_alpha');
-      final beta = _RuntimeTestCharacter('char_beta');
-      alpha.hand.addAll([
-        _RuntimeTestPropCard('card_normal', isAttackLimited: false),
-        _RuntimeTestPropCard('card_limited', isAttackLimited: true),
-      ]);
+    test(
+      'infers limitedCard when any selected card is attack-limited',
+      () async {
+        final alpha = _RuntimeTestCharacter('char_alpha');
+        final beta = _RuntimeTestCharacter('char_beta');
+        alpha.hand.addAll([
+          _RuntimeTestPropCard('card_normal', isAttackLimited: false),
+          _RuntimeTestPropCard('card_limited', isAttackLimited: true),
+        ]);
 
-      final runtime = await _buildRuntime(alpha, beta);
-      final result = await runtime.submit(
-        PlayCardCommand(
-          commandId: 'cmd_1',
-          playerId: 'player_alpha',
-          clientVersion: 0,
-          cardSelections: const [
-            PlayCardSelection(cardId: 'card_normal', handIndex: 0),
-            PlayCardSelection(cardId: 'card_limited', handIndex: 1),
-          ],
-          targetCharacterId: beta.id,
-        ),
-      );
+        final runtime = await _buildRuntime(alpha, beta);
+        final result = await runtime.submit(
+          PlayCardCommand(
+            commandId: 'cmd_1',
+            playerId: 'player_alpha',
+            clientVersion: 0,
+            cardSelections: const [
+              PlayCardSelection(cardId: 'card_normal', handIndex: 0),
+              PlayCardSelection(cardId: 'card_limited', handIndex: 1),
+            ],
+            targetCharacterId: beta.id,
+          ),
+        );
 
-      expect(result.success, isTrue);
-      expect(alpha.actedTypes, [ActionType.limitedCard]);
-      expect(alpha.actedPayloads.single['cardSelections'], [
-        {'cardId': 'card_normal', 'handIndex': 0},
-        {'cardId': 'card_limited', 'handIndex': 1},
-      ]);
-    });
+        expect(result.success, isTrue);
+        expect(alpha.actedTypes, [ActionType.limitedCard]);
+        expect(alpha.actedPayloads.single['cardSelections'], [
+          {'cardId': 'card_normal', 'handIndex': 0},
+          {'cardId': 'card_limited', 'handIndex': 1},
+        ]);
+      },
+    );
 
     test('infers attackCard when all selected cards are non-limited', () async {
       final alpha = _RuntimeTestCharacter('char_alpha');
@@ -71,6 +74,18 @@ void main() {
       );
 
       expect(result.success, isTrue);
+      expect(runtime.state.flowState, FlowState.responseWindow);
+      expect(alpha.actedTypes, isEmpty);
+
+      final passResult = await runtime.submit(
+        const PassPriorityCommand(
+          commandId: 'cmd_2_pass',
+          playerId: 'player_beta',
+          clientVersion: 1,
+        ),
+      );
+
+      expect(passResult.success, isTrue);
       expect(alpha.actedTypes, [ActionType.attackCard]);
     });
 
@@ -100,10 +115,14 @@ Future<GameRuntime> _buildRuntime(
   _RuntimeTestCharacter alpha,
   _RuntimeTestCharacter beta,
 ) async {
-  final state = GameState([
-    Player('player_alpha', 'Alpha', [alpha], 0),
-    Player('player_beta', 'Beta', [beta], 1),
-  ], <PropCard>[], <PropCard>[]);
+  final state = GameState(
+    [
+      Player('player_alpha', 'Alpha', [alpha], 0),
+      Player('player_beta', 'Beta', [beta], 1),
+    ],
+    <PropCard>[],
+    <PropCard>[],
+  );
   state.characterById[alpha.id] = alpha;
   state.characterById[beta.id] = beta;
   state.playerById['player_alpha'] = state.players[0];
@@ -191,7 +210,7 @@ class _RuntimeTestCharacter implements Character {
   bool isNotActionable() => !isAlive;
 
   @override
-  void addModifier(List<Modifier> mods) {
+  void addModifiers(List<Modifier> mods) {
     modifiers.addAll(mods);
   }
 
@@ -224,7 +243,11 @@ class _RuntimeTestCharacter implements Character {
   }
 
   @override
-  void applyHealing(GameContext context, int amount, {bool noWandering = false}) {
+  void applyHealing(
+    GameContext context,
+    int amount, {
+    bool noWandering = false,
+  }) {
     currentHp += amount;
   }
 }
@@ -233,8 +256,6 @@ class _RuntimeTestPropCard implements PropCard {
   _RuntimeTestPropCard(
     this.id, {
     required this.isAttackLimited,
-    this.isDisabled = false,
-    this.isReinforced = false,
   });
 
   @override
@@ -244,10 +265,10 @@ class _RuntimeTestPropCard implements PropCard {
   final bool isAttackLimited;
 
   @override
-  final bool isDisabled;
+  bool get isDisabled => false;
 
   @override
-  final bool isReinforced;
+  bool get isReinforced => false;
 
   @override
   int get priority => 50;
@@ -268,7 +289,6 @@ class _RuntimeTestTemplate implements Template {
   @override
   String get id => 'template_test';
 
-  @override
   String get name => 'template_test';
 
   @override
@@ -285,7 +305,6 @@ class _RuntimeTestRace implements Race {
   @override
   String get id => 'race_test';
 
-  @override
   String get name => 'race_test';
 
   @override

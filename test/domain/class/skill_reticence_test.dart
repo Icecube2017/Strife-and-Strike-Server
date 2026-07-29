@@ -26,10 +26,14 @@ void main() {
         'char_beta',
         [SkillReticence()],
       );
-      final state = GameState([
-        Player('player_alpha', 'Alpha', [alpha], 0),
-        Player('player_beta', 'Beta', [beta], 1),
-      ], <PropCard>[], <PropCard>[]);
+      final state = GameState(
+        [
+          Player('player_alpha', 'Alpha', [alpha], 0),
+          Player('player_beta', 'Beta', [beta], 1),
+        ],
+        <PropCard>[],
+        <PropCard>[],
+      );
       state.characterById[alpha.id] = alpha;
       state.characterById[beta.id] = beta;
       state.playerById['player_alpha'] = state.players[0];
@@ -139,7 +143,7 @@ class _ReticenceTestCharacter implements Character {
   bool isNotActionable() => !isAlive;
 
   @override
-  void addModifier(List<Modifier> mods) {
+  void addModifiers(List<Modifier> mods) {
     modifiers.addAll(mods);
   }
 
@@ -173,14 +177,19 @@ class _ReticenceTestCharacter implements Character {
       final skillId = data['skillId'];
       final skill = skills.firstWhere(
         (candidate) => candidate.id == skillId,
-        orElse: () => throw StateError('Character $id does not own skill $skillId'),
+        orElse: () =>
+            throw StateError('Character $id does not own skill $skillId'),
       );
       await skill.cast(context, data);
     }
   }
 
   @override
-  void applyHealing(GameContext context, int amount, {bool noWandering = false}) {
+  void applyHealing(
+    GameContext context,
+    int amount, {
+    bool noWandering = false,
+  }) {
     currentHp += amount;
   }
 }
@@ -189,7 +198,6 @@ class _ReticenceTestTemplate implements Template {
   @override
   String get id => 'template_test';
 
-  @override
   String get name => 'template_test';
 
   @override

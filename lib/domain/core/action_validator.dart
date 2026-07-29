@@ -3,7 +3,7 @@ import 'package:sns_server/domain/class/player.dart';
 import 'package:sns_server/domain/class/propcard.dart';
 import 'package:sns_server/domain/core/enum.dart';
 import 'package:sns_server/domain/core/game_state.dart';
-import 'package:sns_server/domain/core/stack_resolver.dart';
+import 'package:sns_server/domain/resolver/stack_resolver.dart';
 
 /// Validates action declarations before they are placed on the resolution stack.
 class ActionValidator {
@@ -154,6 +154,10 @@ class ActionValidator {
     }
     try {
       final cards = _resolveSelectedCards(character, payload);
+      final disabledCard = cards.where((card) => card.isDisabled).firstOrNull;
+      if (disabledCard != null) {
+        return 'Card ${disabledCard.id} is disabled and cannot be played';
+      }
       final inferred = cards.any((card) => card.isAttackLimited)
           ? ActionType.limitedCard
           : ActionType.attackCard;

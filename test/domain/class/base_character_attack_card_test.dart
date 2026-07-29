@@ -12,6 +12,40 @@ import 'package:test/test.dart';
 
 void main() {
   group('BaseCharacter.playCard actions', () {
+    test('registerListeners is idempotent for the same event bus', () {
+      final actor = BaseCharacter(
+        'char_actor',
+        TemplateId.defensive.id,
+        RaceId.human.id,
+        const {},
+        [],
+        [],
+      );
+      final target = BaseCharacter(
+        'char_target',
+        TemplateId.defensive.id,
+        RaceId.human.id,
+        const {},
+        [],
+        [],
+      );
+      final context = _buildContext(actor, target);
+
+      actor
+        ..registerListeners(context.eventBus)
+        ..registerListeners(context.eventBus);
+      context.eventBus.emit(
+        DamageDealtEvent(
+          context,
+          CharacterTarget(target),
+          CharacterTarget(actor),
+          Damage(1, DamageType.physical, DamageSource.action),
+        ),
+      );
+
+      expect(actor.currentHp, actor.maxHp - 1);
+    });
+
     test('plays the matching card instance and removes it from hand', () async {
       final actor = BaseCharacter(
         'char_actor',
@@ -185,8 +219,14 @@ void main() {
       expect(secondCard.wasPlayed, isTrue);
       expect(firstCard.playTarget, isA<CharacterTarget>());
       expect(secondCard.playTarget, isA<CharacterTarget>());
-      expect(firstCard.playParams['resolvedCardIds'], [firstCard.id, secondCard.id]);
-      expect(secondCard.playParams['resolvedCardIds'], [firstCard.id, secondCard.id]);
+      expect(firstCard.playParams['resolvedCardIds'], [
+        firstCard.id,
+        secondCard.id,
+      ]);
+      expect(secondCard.playParams['resolvedCardIds'], [
+        firstCard.id,
+        secondCard.id,
+      ]);
       expect(secondCard.playParams['isReinforced'], isTrue);
     });
 
@@ -230,213 +270,231 @@ void main() {
       expect(normalCard.playParams['isReinforced'], isFalse);
     });
 
-    test('rejects selecting the same handIndex twice in one multi-card action', () async {
-      final actor = BaseCharacter(
-        'char_actor',
-        TemplateId.defensive.id,
-        RaceId.human.id,
-        const {},
-        [],
-        [],
-      );
-      final target = BaseCharacter(
-        'char_target',
-        TemplateId.defensive.id,
-        RaceId.human.id,
-        const {},
-        [],
-        [],
-      );
-      actor.hand.add(_TestPropCard(CardId.apolloArrow.id));
-      final context = _buildContext(actor, target);
+    test(
+      'rejects selecting the same handIndex twice in one multi-card action',
+      () async {
+        final actor = BaseCharacter(
+          'char_actor',
+          TemplateId.defensive.id,
+          RaceId.human.id,
+          const {},
+          [],
+          [],
+        );
+        final target = BaseCharacter(
+          'char_target',
+          TemplateId.defensive.id,
+          RaceId.human.id,
+          const {},
+          [],
+          [],
+        );
+        actor.hand.add(_TestPropCard(CardId.apolloArrow.id));
+        final context = _buildContext(actor, target);
 
-      await expectLater(
-        () => actor.act(context, ActionType.attackCard, {
+        await expectLater(
+          () => actor.act(context, ActionType.attackCard, {
+            'cardSelections': [
+              {'cardId': CardId.apolloArrow.id, 'handIndex': 0},
+              {'cardId': CardId.apolloArrow.id, 'handIndex': 0},
+            ],
+            'targetId': target.id,
+          }),
+          throwsA(isA<StateError>()),
+        );
+      },
+    );
+
+    test(
+      'limitedCard uses the same multi-card protocol and execution path',
+      () async {
+        final actor = BaseCharacter(
+          'char_actor',
+          TemplateId.defensive.id,
+          RaceId.human.id,
+          const {},
+          [],
+          [],
+        );
+        final target = BaseCharacter(
+          'char_target',
+          TemplateId.defensive.id,
+          RaceId.human.id,
+          const {},
+          [],
+          [],
+        );
+        final firstCard = _TestPropCard(CardId.apolloArrow.id);
+        final secondCard = _TestPropCard(
+          CardId.woodSword.id,
+          isReinforced: true,
+        );
+        actor.hand.addAll([firstCard, secondCard]);
+        final context = _buildContext(actor, target);
+
+        await actor.act(context, ActionType.limitedCard, {
           'cardSelections': [
-            {'cardId': CardId.apolloArrow.id, 'handIndex': 0},
-            {'cardId': CardId.apolloArrow.id, 'handIndex': 0},
+            {'cardId': firstCard.id},
+            {'cardId': secondCard.id},
           ],
           'targetId': target.id,
-        }),
-        throwsA(isA<StateError>()),
-      );
-    });
+        });
 
-    test('limitedCard uses the same multi-card protocol and execution path', () async {
-      final actor = BaseCharacter(
-        'char_actor',
-        TemplateId.defensive.id,
-        RaceId.human.id,
-        const {},
-        [],
-        [],
-      );
-      final target = BaseCharacter(
-        'char_target',
-        TemplateId.defensive.id,
-        RaceId.human.id,
-        const {},
-        [],
-        [],
-      );
-      final firstCard = _TestPropCard(CardId.apolloArrow.id);
-      final secondCard = _TestPropCard(CardId.woodSword.id, isReinforced: true);
-      actor.hand.addAll([firstCard, secondCard]);
-      final context = _buildContext(actor, target);
+        expect(actor.hand, isEmpty);
+        expect(firstCard.wasPlayed, isTrue);
+        expect(secondCard.wasPlayed, isTrue);
+        expect(secondCard.playParams['resolvedCardIds'], [
+          firstCard.id,
+          secondCard.id,
+        ]);
+      },
+    );
 
-      await actor.act(context, ActionType.limitedCard, {
-        'cardSelections': [
-          {'cardId': firstCard.id},
-          {'cardId': secondCard.id},
-        ],
-        'targetId': target.id,
-      });
+    test(
+      'limitedCard does not emit dice or damage events or reduce target hp',
+      () async {
+        final actor = BaseCharacter(
+          'char_actor',
+          TemplateId.defensive.id,
+          RaceId.human.id,
+          const {},
+          [],
+          [],
+        )..attack = 18;
+        final target =
+            BaseCharacter(
+                'char_target',
+                TemplateId.defensive.id,
+                RaceId.human.id,
+                const {},
+                [],
+                [],
+              )
+              ..currentHp = 40
+              ..defense = 5;
+        final card = _TestPropCard(CardId.apolloArrow.id);
+        actor.hand.add(card);
+        final context = _buildContext(actor, target);
+        var effectEventCount = 0;
 
-      expect(actor.hand, isEmpty);
-      expect(firstCard.wasPlayed, isTrue);
-      expect(secondCard.wasPlayed, isTrue);
-      expect(secondCard.playParams['resolvedCardIds'], [firstCard.id, secondCard.id]);
-    });
+        actor.registerListeners(context.eventBus);
+        target.registerListeners(context.eventBus);
+        context.eventBus.on<BeforeDiceEvent>((_) => effectEventCount++);
+        context.eventBus.on<AfterDiceEvent>((_) => effectEventCount++);
+        context.eventBus.on<DiceResolvedEvent>((_) => effectEventCount++);
+        context.eventBus.on<BeforeDamageEvent>((_) => effectEventCount++);
+        context.eventBus.on<DamageDealtEvent>((_) => effectEventCount++);
+        context.eventBus.on<AfterDamageEvent>((_) => effectEventCount++);
 
-    test('limitedCard does not emit dice or damage events or reduce target hp', () async {
-      final actor = BaseCharacter(
-        'char_actor',
-        TemplateId.defensive.id,
-        RaceId.human.id,
-        const {},
-        [],
-        [],
-      )
-        ..attack = 18;
-      final target = BaseCharacter(
-        'char_target',
-        TemplateId.defensive.id,
-        RaceId.human.id,
-        const {},
-        [],
-        [],
-      )
-        ..currentHp = 40
-        ..defense = 5;
-      final card = _TestPropCard(CardId.apolloArrow.id);
-      actor.hand.add(card);
-      final context = _buildContext(actor, target);
-      var effectEventCount = 0;
+        await actor.act(context, ActionType.limitedCard, {
+          'cardSelections': [
+            {'cardId': card.id},
+          ],
+          'targetId': target.id,
+        });
 
-      actor.registerListeners(context.eventBus);
-      target.registerListeners(context.eventBus);
-      context.eventBus.on<BeforeDiceEvent>((_) => effectEventCount++);
-      context.eventBus.on<AfterDiceEvent>((_) => effectEventCount++);
-      context.eventBus.on<DiceResolvedEvent>((_) => effectEventCount++);
-      context.eventBus.on<BeforeDamageEvent>((_) => effectEventCount++);
-      context.eventBus.on<DamageDealtEvent>((_) => effectEventCount++);
-      context.eventBus.on<AfterDamageEvent>((_) => effectEventCount++);
+        expect(effectEventCount, 0);
+        expect(target.currentHp, 40);
+      },
+    );
 
-      await actor.act(context, ActionType.limitedCard, {
-        'cardSelections': [
-          {'cardId': card.id},
-        ],
-        'targetId': target.id,
-      });
+    test(
+      'attackCard resolves dice before damage and reduces target hp',
+      () async {
+        final actor = BaseCharacter(
+          'char_actor',
+          TemplateId.defensive.id,
+          RaceId.human.id,
+          const {},
+          [],
+          [],
+        )..attack = 18;
+        final target =
+            BaseCharacter(
+                'char_target',
+                TemplateId.defensive.id,
+                RaceId.human.id,
+                const {},
+                [],
+                [],
+              )
+              ..currentHp = 40
+              ..defense = 5;
+        final card = _TestPropCard(CardId.apolloArrow.id);
+        actor.hand.add(card);
+        final context = _buildContext(actor, target);
+        final observedEvents = <String>[];
+        BeforeDiceEvent? beforeDiceEvent;
+        AfterDiceEvent? afterDiceEvent;
+        DiceResolvedEvent? diceResolvedEvent;
+        BeforeDamageEvent? beforeDamageEvent;
+        DamageDealtEvent? dealtDamageEvent;
+        AfterDamageEvent? afterDamageEvent;
 
-      expect(effectEventCount, 0);
-      expect(target.currentHp, 40);
-    });
+        actor.registerListeners(context.eventBus);
+        target.registerListeners(context.eventBus);
+        context.eventBus.on<BeforeDiceEvent>((event) {
+          observedEvents.add('beforeDice');
+          beforeDiceEvent = event;
+          event.request = event.request.copyWith(
+            forcedResult: 2,
+          );
+        });
+        context.eventBus.on<AfterDiceEvent>((event) {
+          observedEvents.add('afterDice');
+          afterDiceEvent = event;
+        });
+        context.eventBus.on<DiceResolvedEvent>((event) {
+          observedEvents.add('diceResolved');
+          diceResolvedEvent = event;
+        });
+        context.eventBus.on<BeforeDamageEvent>((event) {
+          observedEvents.add('before');
+          beforeDamageEvent = event;
+        });
+        context.eventBus.on<DamageDealtEvent>((event) {
+          observedEvents.add('dealt');
+          dealtDamageEvent = event;
+        });
+        context.eventBus.on<AfterDamageEvent>((event) {
+          observedEvents.add('after');
+          afterDamageEvent = event;
+        });
 
-    test('attackCard resolves dice before damage and reduces target hp', () async {
-      final actor = BaseCharacter(
-        'char_actor',
-        TemplateId.defensive.id,
-        RaceId.human.id,
-        const {},
-        [],
-        [],
-      )
-        ..attack = 18;
-      final target = BaseCharacter(
-        'char_target',
-        TemplateId.defensive.id,
-        RaceId.human.id,
-        const {},
-        [],
-        [],
-      )
-        ..currentHp = 40
-        ..defense = 5;
-      final card = _TestPropCard(CardId.apolloArrow.id);
-      actor.hand.add(card);
-      final context = _buildContext(actor, target);
-      final observedEvents = <String>[];
-      BeforeDiceEvent? beforeDiceEvent;
-      AfterDiceEvent? afterDiceEvent;
-      DiceResolvedEvent? diceResolvedEvent;
-      BeforeDamageEvent? beforeDamageEvent;
-      DamageDealtEvent? dealtDamageEvent;
-      AfterDamageEvent? afterDamageEvent;
+        await actor.act(context, ActionType.attackCard, {
+          'cardSelections': [
+            {'cardId': card.id},
+          ],
+          'targetId': target.id,
+        });
 
-      actor.registerListeners(context.eventBus);
-      target.registerListeners(context.eventBus);
-      context.eventBus.on<BeforeDiceEvent>((event) {
-        observedEvents.add('beforeDice');
-        beforeDiceEvent = event;
-        event.request = event.request.copyWith(
-          forcedResult: 2,
-        );
-      });
-      context.eventBus.on<AfterDiceEvent>((event) {
-        observedEvents.add('afterDice');
-        afterDiceEvent = event;
-      });
-      context.eventBus.on<DiceResolvedEvent>((event) {
-        observedEvents.add('diceResolved');
-        diceResolvedEvent = event;
-      });
-      context.eventBus.on<BeforeDamageEvent>((event) {
-        observedEvents.add('before');
-        beforeDamageEvent = event;
-      });
-      context.eventBus.on<DamageDealtEvent>((event) {
-        observedEvents.add('dealt');
-        dealtDamageEvent = event;
-      });
-      context.eventBus.on<AfterDamageEvent>((event) {
-        observedEvents.add('after');
-        afterDamageEvent = event;
-      });
-
-      await actor.act(context, ActionType.attackCard, {
-        'cardSelections': [
-          {'cardId': card.id},
-        ],
-        'targetId': target.id,
-      });
-
-      expect(observedEvents, [
-        'beforeDice',
-        'afterDice',
-        'diceResolved',
-        'before',
-        'dealt',
-        'after',
-      ]);
-      expect(beforeDiceEvent, isNotNull);
-      expect(afterDiceEvent, isNotNull);
-      expect(diceResolvedEvent, isNotNull);
-      expect(beforeDamageEvent, isNotNull);
-      expect(dealtDamageEvent, isNotNull);
-      expect(afterDamageEvent, isNotNull);
-      expect(beforeDiceEvent!.request.reason, DiceRollReason.attackDamage);
-      expect(afterDiceEvent!.roll.finalResult, 2);
-      expect(afterDiceEvent!.roll.damageMultiplier, 2.0);
-      expect(diceResolvedEvent!.roll.finalResult, 2);
-      expect(beforeDamageEvent!.source!.character, same(actor));
-      expect(beforeDamageEvent!.target.character, same(target));
-      expect(beforeDamageEvent!.damage, isA<Damage>());
-      expect(beforeDamageEvent!.damage.diceResult, 2);
-      expect(beforeDamageEvent!.damage.amount, 26);
-      expect(target.currentHp, 14);
-      expect(target.isAlive, isTrue);
-    });
+        expect(observedEvents, [
+          'beforeDice',
+          'afterDice',
+          'diceResolved',
+          'before',
+          'dealt',
+          'after',
+        ]);
+        expect(beforeDiceEvent, isNotNull);
+        expect(afterDiceEvent, isNotNull);
+        expect(diceResolvedEvent, isNotNull);
+        expect(beforeDamageEvent, isNotNull);
+        expect(dealtDamageEvent, isNotNull);
+        expect(afterDamageEvent, isNotNull);
+        expect(beforeDiceEvent!.request.reason, DiceRollReason.attackDamage);
+        expect(afterDiceEvent!.roll.finalResult, 2);
+        expect(afterDiceEvent!.roll.damageMultiplier, 2.0);
+        expect(diceResolvedEvent!.roll.finalResult, 2);
+        expect(beforeDamageEvent!.source!.character, same(actor));
+        expect(beforeDamageEvent!.target.character, same(target));
+        expect(beforeDamageEvent!.damage, isA<Damage>());
+        expect(beforeDamageEvent!.damage.diceResult, 2);
+        expect(beforeDamageEvent!.damage.amount, 26);
+        expect(target.currentHp, 14);
+        expect(target.isAlive, isTrue);
+      },
+    );
   });
 }
 
@@ -453,7 +511,10 @@ GameContext _buildContext(Character actor, Character target) {
   state.characterById[target.id] = target;
   state.playerById['player_actor'] = state.players[0];
   state.playerById['player_target'] = state.players[1];
-  return _TestGameContext(state);
+  final context = _TestGameContext(state);
+  actor.registerListeners(context.eventBus);
+  target.registerListeners(context.eventBus);
+  return context;
 }
 
 class _TestGameContext implements GameContext {

@@ -188,10 +188,24 @@ class CardDrawnEvent extends GameEvent {
 }
 
 class CardPlayedEvent extends GameEvent {
-  Character character;
+  CharacterTarget source;
+  CharacterTarget target;
   List<PropCard> cards;
   int count;
   CardPlayedEvent(
+    super.context,
+    this.source,
+    this.target,
+    this.cards,
+    this.count
+  );
+}
+
+class CardDiscardedEvent extends GameEvent {
+  Character character;
+  List<PropCard> cards;
+  int count;
+  CardDiscardedEvent(
     super.context,
     this.character,
     this.cards,

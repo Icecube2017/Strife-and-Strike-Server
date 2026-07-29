@@ -43,8 +43,9 @@ class StackResolver {
         );
         if (await resolveAction(actor, action)) return;
         syncResolutionState(action);
-        action..isResolved = true
-        ..stage = PendingActionStage.resolved;
+        action
+          ..isResolved = true
+          ..stage = PendingActionStage.resolved;
       } finally {
         _state.resolvingActionId = null;
       }
@@ -430,7 +431,8 @@ class StackResolver {
     final target = _state.characterById[id];
     if (target == null) return 'Target character $id not found';
     if (!target.isAlive) return 'Target character $id is not alive';
-    if (action.actionType == ActionType.attack && action.actorCharacterId == id) {
+    if (action.actionType == ActionType.attack &&
+        action.actorCharacterId == id) {
       return 'Character cannot target itself with a normal attack';
     }
     return null;

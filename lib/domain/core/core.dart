@@ -10,7 +10,11 @@ abstract class Identifiable {
 /// 可执行效果
 abstract class Action {
   /// 执行效果，context提供当前游戏上下文、执行者、目标等
-  Future<void> execute(GameContext context, ActionTarget? target, [Map<String, dynamic>? params]);
+  Future<void> execute(
+    GameContext context,
+    ActionTarget? target, [
+    Map<String, dynamic>? params,
+  ]);
 }
 
 /// 条件判断接口
@@ -23,24 +27,17 @@ abstract class Modifier {
   String get targetProperty;
   int get value;
   ModifierType get type;
-  Future<void> apply(Map<String, dynamic> stats);
-  Future<void> revert(Map<String, dynamic> stats);
 }
 
 class ModifierImpl implements Modifier {
   @override
   final String targetProperty;
   @override
-  int value;
+  final int value;
   @override
-  ModifierType type = ModifierType.additive;
+  final ModifierType type;
 
   ModifierImpl(this.targetProperty, this.value, this.type);
-
-  @override
-  Future<void> apply(Map<String, dynamic> stats) async {}
-  @override
-  Future<void> revert(Map<String, dynamic> stats) async {}
 }
 
 class Damage {
@@ -78,8 +75,8 @@ class DiceRequest {
 
   DiceRequest({
     required this.requestId,
-    required this.sides, 
-    required this.reason, 
+    required this.sides,
+    required this.reason,
     this.source,
     this.target,
     this.forcedResult,
