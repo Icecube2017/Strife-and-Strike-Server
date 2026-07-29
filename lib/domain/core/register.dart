@@ -31,7 +31,7 @@ final cardReg = Registry<PropCard>();
 /// 道具卡注册
 void registryAllCards() {
   cardReg..register(CardId.apolloArrow.id, CardApolloArrow.new)
-  ..register(CardId.woodSword.id, CardBlade.new);
+  ..register(CardId.blade.id, CardBlade.new);
 }
 
 /// 特质注册
@@ -42,6 +42,6 @@ void registryAllTraits() {
 /// 技能注册
 void registryAllSkills() {
   skillReg
-    ..register(SkillId.finaleHope.id, SkillFinaleHope.new)
+    ..register(SkillId.finaleHope.id, SkillFinalHope.new)
     ..register(SkillId.reticence.id, SkillReticence.new);
 }

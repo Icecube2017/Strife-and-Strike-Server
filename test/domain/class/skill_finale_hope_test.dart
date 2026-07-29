@@ -13,7 +13,7 @@ import 'package:sns_server/domain/data/ids.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('SkillFinaleHope', () {
+  group('SkillFinalHope', () {
     test('can rewrite a revealed attack dice result during the response window', () async {
       final alpha = _FixedDiceCharacter(
         'char_alpha',
@@ -29,7 +29,7 @@ void main() {
         RaceId.human.id,
         const {},
         [],
-        [SkillFinaleHope()],
+        [SkillFinalHope()],
       );
       final attackCard = _SkillTestPropCard('card_normal');
       final state = GameState([
@@ -101,7 +101,7 @@ void main() {
         RaceId.human.id,
         const {},
         [],
-        [SkillFinaleHope()],
+        [SkillFinalHope()],
       );
       final state = GameState([
         Player('player_alpha', 'Alpha', [alpha], 0),

@@ -67,7 +67,7 @@ class CardApolloArrow extends _BasePropCard {
 }
 
 class CardBlade extends _BasePropCard {
-  CardBlade() : super(CardId.woodSword.id, {PropCardTag.sharp}, false);
+  CardBlade() : super(CardId.blade.id, {PropCardTag.sharp}, false);
 
   @override
   Future<void> playCard(

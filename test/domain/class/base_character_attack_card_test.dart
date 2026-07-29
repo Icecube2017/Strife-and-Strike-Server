@@ -202,7 +202,7 @@ void main() {
         [],
       );
       final firstCard = _TestPropCard(CardId.apolloArrow.id);
-      final secondCard = _TestPropCard(CardId.woodSword.id, isReinforced: true);
+      final secondCard = _TestPropCard(CardId.blade.id, isReinforced: true);
       actor.hand.addAll([firstCard, secondCard]);
       final context = _buildContext(actor, target);
 
@@ -326,7 +326,7 @@ void main() {
         );
         final firstCard = _TestPropCard(CardId.apolloArrow.id);
         final secondCard = _TestPropCard(
-          CardId.woodSword.id,
+          CardId.blade.id,
           isReinforced: true,
         );
         actor.hand.addAll([firstCard, secondCard]);
