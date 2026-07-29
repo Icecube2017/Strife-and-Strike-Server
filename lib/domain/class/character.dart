@@ -13,7 +13,6 @@ import 'package:sns_server/domain/core/game_context.dart';
 import 'package:sns_server/domain/core/game_event.dart';
 import 'package:sns_server/domain/core/register.dart';
 import 'package:sns_server/domain/data/ids.dart';
-import 'package:sns_server/domain/data/panels.dart';
 
 //final Assets assets = Assets();
 
@@ -112,7 +111,7 @@ class BaseCharacter implements Character {
   // 注册监听器
   @override
   void registerListeners(EventBus bus) {
-    bus..on<DamageDealtEvent>((event) {
+    bus.on<DamageDealtEvent>((event) {
       if (event.target.character.id == id) {
         // 处理受到伤害的逻辑
         final damage = event.damage;

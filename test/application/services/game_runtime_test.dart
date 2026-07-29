@@ -1,5 +1,3 @@
-import 'package:test/test.dart';
-
 import 'package:sns_server/application/commands/game_command.dart';
 import 'package:sns_server/application/services/game_service.dart';
 import 'package:sns_server/domain/class/character.dart';
@@ -16,6 +14,7 @@ import 'package:sns_server/domain/core/enum.dart';
 import 'package:sns_server/domain/core/game_context.dart';
 import 'package:sns_server/domain/core/game_event.dart';
 import 'package:sns_server/domain/core/game_state.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('GameRuntime play-card inference', () {

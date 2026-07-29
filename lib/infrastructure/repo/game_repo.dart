@@ -75,7 +75,7 @@ class PgGameRepo implements GameRepo {
     );
     if (result.isEmpty) return null;
     try {
-      final m = jsonDecode(result.first[0] as String) as Map<String, dynamic>;
+      final m = jsonDecode(result.first[0]! as String) as Map<String, dynamic>;
       return _decodeView(m);
     } catch (_) {
       return null;

@@ -13,9 +13,9 @@ Future<Response> onRequest(RequestContext context, String gameId) async {
     final service = context.read<GameService>();
     final current = service.getState(gameId);
 
-    final ctrl = StreamController<List<int>>();
+    final ctrl = StreamController<List<int>>()
     // 立即推送当前完整状态
-    ctrl.add(utf8.encode('data: ${jsonEncode(current.toJson())}\n\n'));
+    ..add(utf8.encode('data: ${jsonEncode(current.toJson())}\n\n'));
     // 订阅后续增量更新
     service.subscribe(gameId).listen(
       (view) => ctrl.add(utf8.encode('data: ${jsonEncode(view.toJson())}\n\n')),

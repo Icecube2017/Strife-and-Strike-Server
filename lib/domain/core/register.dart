@@ -1,9 +1,7 @@
 import 'package:sns_server/domain/class/character.dart';
 import 'package:sns_server/domain/class/propcard.dart';
-import 'package:sns_server/domain/class/race.dart';
 import 'package:sns_server/domain/class/skill.dart';
 import 'package:sns_server/domain/class/status.dart';
-import 'package:sns_server/domain/class/template.dart';
 import 'package:sns_server/domain/class/trait.dart';
 import 'package:sns_server/domain/core/core.dart';
 import 'package:sns_server/domain/data/ids.dart';

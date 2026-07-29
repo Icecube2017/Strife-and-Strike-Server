@@ -1,5 +1,3 @@
-import 'package:test/test.dart';
-
 import 'package:sns_server/domain/class/character.dart';
 import 'package:sns_server/domain/class/player.dart';
 import 'package:sns_server/domain/class/propcard.dart';
@@ -9,6 +7,7 @@ import 'package:sns_server/domain/core/game.dart';
 import 'package:sns_server/domain/core/game_context.dart';
 import 'package:sns_server/domain/core/game_state.dart';
 import 'package:sns_server/domain/data/ids.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('TraitRadiantBlast', () {

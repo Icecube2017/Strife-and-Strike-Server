@@ -219,7 +219,7 @@ enum SkillId {
   replenishment('replenishment'),
   icyOblivion135Bars('icy_oblivion_135_bars'),
   sacrificialLove('sacrificial_love'),
-  earthBreak("earth_break"),
+  earthBreak('earth_break'),
   orderAegis('order_aegis'),
   chaosIncursion('chaos_incursion'),
   frostShatter('frost_shatter'),
@@ -232,8 +232,8 @@ enum SkillId {
   spareMove('spare_move'),
   anabasis('anabasis'),
   veritasNonFalsitas('veritas_non_falsitas'),
-  massEnergyConversionGamma("mass_energy_conversion_gamma"),
-  wildfireMomentum("wildfire_momentum");
+  massEnergyConversionGamma('mass_energy_conversion_gamma'),
+  wildfireMomentum('wildfire_momentum');
 
   final String id;
 
@@ -283,7 +283,7 @@ enum TraitId {
   ranger('ranger'),
   precision('precision'),
   craftingOfDreams('crafting_of_dreams'),
-  resonanceOfDreams("resonance_of_dreams"),
+  resonanceOfDreams('resonance_of_dreams'),
   conflagrationAvatar('conflagration_avatar'),
   guardianOfDreams('guardian_of_dreams'),
   introductoryGift('introductory_gift'),
@@ -344,10 +344,10 @@ enum TraitId {
   essenceOverIllusion('essence_over_illusion'),
   binaryDyad('binary_dyad'),
   lossGainEquilibrium('loss_gain_equilibrium'),
-  normalization("normalization"),
-  anachronicPrologue("anachronic_prologue"),
-  coreMeltdown("core_meltdown"),
-  vulcansProtection("vulcans_protection");
+  normalization('normalization'),
+  anachronicPrologue('anachronic_prologue'),
+  coreMeltdown('core_meltdown'),
+  vulcansProtection('vulcans_protection');
 
   final String id;
 

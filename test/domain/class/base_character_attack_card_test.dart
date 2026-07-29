@@ -1,5 +1,3 @@
-import 'package:test/test.dart';
-
 import 'package:sns_server/domain/class/character.dart';
 import 'package:sns_server/domain/class/player.dart';
 import 'package:sns_server/domain/class/propcard.dart';
@@ -10,6 +8,7 @@ import 'package:sns_server/domain/core/game_context.dart';
 import 'package:sns_server/domain/core/game_event.dart';
 import 'package:sns_server/domain/core/game_state.dart';
 import 'package:sns_server/domain/data/ids.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('BaseCharacter.playCard actions', () {
@@ -44,7 +43,7 @@ void main() {
       expect(actor.hand, isEmpty);
       expect(card.playedBy, same(actor));
       expect(card.playTarget, isA<CharacterTarget>());
-      expect((card.playTarget as CharacterTarget).character, same(target));
+      expect((card.playTarget! as CharacterTarget).character, same(target));
       expect(card.playParams['isReinforced'], isFalse);
     });
 

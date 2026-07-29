@@ -1,9 +1,8 @@
-import 'package:test/test.dart';
-
 import 'package:sns_server/domain/class/character.dart';
 import 'package:sns_server/domain/core/core.dart';
 import 'package:sns_server/domain/core/enum.dart';
 import 'package:sns_server/domain/data/ids.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('BaseCharacter modifiers', () {

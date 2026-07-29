@@ -44,9 +44,9 @@ class PgRoomRepo implements RoomRepo {
     if (result.isEmpty) return null;
     final row = result.first;
     return Room(
-      id: row[0] as String,
+      id: row[0]! as String,
       players: [], // 玩家从内存恢复，不持久化
-      status: RoomStatus.values.byName(row[1] as String),
+      status: RoomStatus.values.byName(row[1]! as String),
     );
   }
 

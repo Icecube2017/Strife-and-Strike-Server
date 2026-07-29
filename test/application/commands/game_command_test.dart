@@ -1,7 +1,6 @@
-import 'package:test/test.dart';
-
 import 'package:sns_server/application/commands/game_command.dart';
 import 'package:sns_server/domain/core/enum.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('parseGameCommand', () {

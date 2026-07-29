@@ -78,11 +78,11 @@ class DiceRequest {
 
   DiceRequest({
     required this.requestId,
+    required this.sides, 
+    required this.reason, 
     this.source,
     this.target,
-    required this.sides,
     this.forcedResult,
-    required this.reason,
     this.relatedActionId,
     this.payload = const {},
   });
