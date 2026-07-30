@@ -171,7 +171,7 @@ enum SkillId {
   reinforcement('skill_reinforcement'),
   chase('skill_chase'),
   reticence('skill_reticence'),
-  finaleHope('skill_finale_hope'),
+  finalHope('skill_final_hope'),
   devotion('skill_devotion'),
   barrier('skill_barrier'),
   laser('skill_laser'),

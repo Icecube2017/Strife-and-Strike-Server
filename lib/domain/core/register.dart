@@ -42,6 +42,6 @@ void registryAllTraits() {
 /// 技能注册
 void registryAllSkills() {
   skillReg
-    ..register(SkillId.finaleHope.id, SkillFinalHope.new)
+    ..register(SkillId.finalHope.id, SkillFinalHope.new)
     ..register(SkillId.reticence.id, SkillReticence.new);
 }

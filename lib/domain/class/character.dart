@@ -35,6 +35,10 @@ abstract class Character extends Identifiable {
   int get armor;
   int get currentMp;
   int get maxMp;
+  int get actionTime;
+  int get jumpedTurn;
+  DamageStats damageStats = DamageStats();
+  HealStats healStats = HealStats();
   List<Stuff> get stuffs;
   List<Status> get state;
   bool get isAlive;
@@ -99,6 +103,14 @@ class BaseCharacter implements Character {
   int maxMp = 5;
   @override
   int currentMp = 0;
+  @override
+  int actionTime = 0;
+  @override
+  int jumpedTurn = 0;
+  @override
+  DamageStats damageStats = DamageStats();
+  @override
+  HealStats healStats = HealStats();
   @override
   List<Stuff> stuffs = [];
   @override
@@ -204,7 +216,7 @@ class BaseCharacter implements Character {
   @override
   void applyModifier(Modifier mod) {
     if (modifiers.contains(mod)) {
-      throw StateError('Modifier has already been applied');
+      // throw StateError('Modifier has already been applied');
     }
 
     _modifierBaseValues.putIfAbsent(

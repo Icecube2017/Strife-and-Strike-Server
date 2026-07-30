@@ -98,6 +98,24 @@ enum DamageSource{
   scene
 }
 
+// 治疗类型
+enum HealType {
+  heal,
+  revive,
+}
+
+// 治疗来源
+enum HealSource{
+  action,
+  effect,
+  card,
+  skill,
+  trait,
+  status,
+  heal,
+  scene
+}
+
 enum CharacterTag {
   // 定位Tag
   empty,
@@ -141,4 +159,22 @@ enum ModifierType {
   additive,       // 加法
   multiplicative, // 乘法
   override,       // 覆盖
+}
+
+/// 属性类型
+enum PropertyType{
+  health, 
+  maxHp, 
+  attack, 
+  defense, 
+  armor, 
+  movepoint, 
+  maxMove, 
+  maxCard,
+  dmgDealt,
+  dmgReceived,
+  curDealt,
+  curReceived,
+  actionTime,
+  jumpedTurn
 }

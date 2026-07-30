@@ -119,6 +119,18 @@ class _ReticenceTestCharacter implements Character {
   int maxMp = 5;
 
   @override
+  int actionTime = 0;
+
+  @override
+  int jumpedTurn = 0;
+
+  @override
+  DamageStats damageStats = DamageStats();
+
+  @override
+  HealStats healStats = HealStats();
+
+  @override
   List<Stuff> stuffs = [];
 
   @override

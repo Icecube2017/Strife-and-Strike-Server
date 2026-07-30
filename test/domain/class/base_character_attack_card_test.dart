@@ -1,3 +1,4 @@
+import 'package:sns_server/domain/class/action.dart';
 import 'package:sns_server/domain/class/character.dart';
 import 'package:sns_server/domain/class/player.dart';
 import 'package:sns_server/domain/class/propcard.dart';
@@ -551,6 +552,9 @@ class _TestPropCard implements PropCard {
 
   @override
   final String id;
+
+  @override
+  List<Action> get actions => const [];
 
   @override
   final bool isDisabled;

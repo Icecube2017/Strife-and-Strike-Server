@@ -34,13 +34,13 @@ class BaseSkill implements Skill {
 }
 
 class SkillFinalHope extends BaseSkill {
-  SkillFinalHope() : super(SkillId.finaleHope.id, 10, false, null);
+  SkillFinalHope() : super(SkillId.finalHope.id, 10, false, null);
 
   @override
   Future<void> cast(GameContext context, Map<String, dynamic> data) async {
     final forcedResult = SkillResolver.readForcedResult(
       data,
-      skillName: SkillId.finaleHope.id,
+      skillName: SkillId.finalHope.id,
     );
     final responseTargetActionId = SkillResolver.readTargetActionId(data);
     data['_postDispatchResponseMutations'] = <Map<String, dynamic>>[

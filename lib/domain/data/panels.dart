@@ -170,7 +170,7 @@ Map<String, SkillType> skillToType = {
   SkillId.reinforcement.id: SkillType(cooldown: 3, isExclusive: false),
   SkillId.chase.id: SkillType(cooldown: 3, isExclusive: false),
   SkillId.reticence.id: SkillType(cooldown: 5, isExclusive: false),
-  SkillId.finaleHope.id: SkillType(cooldown: 10, isExclusive: false),
+  SkillId.finalHope.id: SkillType(cooldown: 10, isExclusive: false),
   SkillId.devotion.id: SkillType(cooldown: 4, isExclusive: false),
   SkillId.barrier.id: SkillType(cooldown: 4, isExclusive: false),
   SkillId.laser.id: SkillType(cooldown: 2, isExclusive: false),

@@ -7,16 +7,6 @@ abstract class Identifiable {
   String get id;
 }
 
-/// 可执行效果
-abstract class Action {
-  /// 执行效果，context提供当前游戏上下文、执行者、目标等
-  Future<void> execute(
-    GameContext context,
-    ActionTarget? target, [
-    Map<String, dynamic>? params,
-  ]);
-}
-
 /// 条件判断接口
 abstract class Condition {
   bool test(GameContext context, ActionTarget? source, ActionTarget? target);
@@ -60,6 +50,61 @@ class Damage {
       diceResult ?? this.diceResult,
     );
   }
+}
+
+ class Heal {
+  final int amount;
+  final HealType type;
+  final HealSource source;
+  Heal(this.amount, this.type, this.source);
+
+  Heal copyWith({
+    int? amount,
+    HealType? type,
+    HealSource? source,
+  }) {
+    return Heal(
+      amount ?? this.amount,
+      type ?? this.type,
+      source ?? this.source
+    );
+  }
+ }
+
+ class DamageStats {
+  int receivedByTurn;
+  int receivedByRound;
+  int receivedTotal;
+  int dealtByTurn;
+  int dealtByRound;
+  int dealtTotal;
+
+  DamageStats({
+    this.receivedByTurn = 0,
+    this.receivedByRound = 0,
+    this.receivedTotal = 0,
+    this.dealtByTurn = 0,
+    this.dealtByRound = 0,
+    this.dealtTotal = 0,
+  });
+}
+
+ class HealStats {
+  int receivedByTurn;
+  int receivedByRound;
+  int receivedTotal;
+  int dealtByTurn;
+  int dealtByRound;
+  int dealtTotal;
+
+  HealStats({
+    this.receivedByTurn = 0,
+    this.receivedByRound = 0,
+    this.receivedTotal = 0,
+    this.dealtByTurn = 0,
+    this.dealtByRound = 0,
+    this.dealtTotal = 0,
+  });
 }
 
 /// 一次待执行的掷骰请求。

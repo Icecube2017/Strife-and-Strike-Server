@@ -1,3 +1,4 @@
+import 'package:sns_server/domain/class/action.dart';
 import 'package:sns_server/domain/class/character.dart';
 import 'package:sns_server/domain/class/player.dart';
 import 'package:sns_server/domain/class/propcard.dart';
@@ -438,6 +439,18 @@ class _TestCharacter implements Character {
   int maxMp = 5;
 
   @override
+  int actionTime = 0;
+
+  @override
+  int jumpedTurn = 0;
+
+  @override
+  DamageStats damageStats = DamageStats();
+
+  @override
+  HealStats healStats = HealStats();
+
+  @override
   List<Stuff> stuffs = [];
 
   @override
@@ -550,6 +563,9 @@ class _EngineTestPropCard implements PropCard {
 
   @override
   final String id;
+
+  @override
+  List<Action> get actions => const [];
 
   @override
   final bool isAttackLimited;
