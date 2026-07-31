@@ -14,14 +14,14 @@ abstract class Condition {
 
 /// 修改器
 abstract class Modifier {
-  String get targetProperty;
+  PropertyType get targetProperty;
   int get value;
   ModifierType get type;
 }
 
 class ModifierImpl implements Modifier {
   @override
-  final String targetProperty;
+  final PropertyType targetProperty;
   @override
   final int value;
   @override
@@ -52,7 +52,7 @@ class Damage {
   }
 }
 
- class Heal {
+class Heal {
   final int amount;
   final HealType type;
   final HealSource source;
@@ -66,12 +66,12 @@ class Damage {
     return Heal(
       amount ?? this.amount,
       type ?? this.type,
-      source ?? this.source
+      source ?? this.source,
     );
   }
- }
+}
 
- class DamageStats {
+class DamageStats {
   int receivedByTurn;
   int receivedByRound;
   int receivedTotal;
@@ -89,7 +89,7 @@ class Damage {
   });
 }
 
- class HealStats {
+class HealStats {
   int receivedByTurn;
   int receivedByRound;
   int receivedTotal;

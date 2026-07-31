@@ -1,11 +1,5 @@
 // 玩家轮次各阶段
-enum TurnPhase {
-  start,
-  draw,
-  action,
-  discard,
-  end
-}
+enum TurnPhase { start, draw, action, discard, end }
 
 /// 引擎当前所处的流程节点
 enum FlowState {
@@ -79,23 +73,23 @@ enum GameOutcomeType {
 }
 
 // 伤害类型
-enum DamageType {
-  physical,
-  magical,
-  real,
-  loss
+enum DamageType { 
+  physical, 
+  magical, 
+  real, 
+  loss 
 }
 
 // 伤害来源
-enum DamageSource{
-  action,
-  effect,
-  card,
-  skill,
-  trait,
-  status,
-  lost,
-  scene
+enum DamageSource { 
+  action, 
+  effect, 
+  card, 
+  skill, 
+  trait, 
+  status, 
+  lost, 
+  scene 
 }
 
 // 治疗类型
@@ -105,15 +99,15 @@ enum HealType {
 }
 
 // 治疗来源
-enum HealSource{
-  action,
-  effect,
-  card,
-  skill,
-  trait,
-  status,
-  heal,
-  scene
+enum HealSource { 
+  action, 
+  effect, 
+  card, 
+  skill, 
+  trait, 
+  status, 
+  heal, 
+  scene 
 }
 
 enum CharacterTag {
@@ -137,16 +131,16 @@ enum CharacterTag {
 }
 
 enum PropCardTag {
-  sharp,      // 锋锐
-  shield,     // 铁御
-  life,       // 生机
-  fate,       // 命运
-  arcane,     // 秘法
-  illusion,   // 幻相
-  mana,       // 魔能
-  trick,      // 诡术
-  chaos,      // 失序
-  sense,      // 感知
+  sharp, // 锋锐
+  shield, // 铁御
+  life, // 生机
+  fate, // 命运
+  arcane, // 秘法
+  illusion, // 幻相
+  mana, // 魔能
+  trick, // 诡术
+  chaos, // 失序
+  sense, // 感知
 }
 
 enum StatusStacking {
@@ -156,25 +150,33 @@ enum StatusStacking {
 
 /// 修饰器类型
 enum ModifierType {
-  additive,       // 加法
+  additive, // 加法
   multiplicative, // 乘法
-  override,       // 覆盖
+  override, // 覆盖
 }
 
 /// 属性类型
-enum PropertyType{
-  health, 
-  maxHp, 
-  attack, 
-  defense, 
-  armor, 
-  movepoint, 
-  maxMove, 
+enum PropertyType {
+  health,
+  maxHp,
+  attack,
+  defense,
+  armor,
+  movepoint,
+  maxMove,
   maxCard,
-  dmgDealt,
-  dmgReceived,
-  curDealt,
-  curReceived,
+  damageDealtByTurn,
+  damageDealtByRound,
+  damageDealtTotal,
+  damageReceivedByTurn,
+  damageReceivedByRound,
+  damageReceivedTotal,
+  healReceivedByTurn,
+  healReceivedByRound,
+  healReceivedTotal,
+  healDealtByTurn,
+  healDealtByRound,
+  healDealtTotal,
   actionTime,
-  jumpedTurn
+  jumpedTurn,
 }

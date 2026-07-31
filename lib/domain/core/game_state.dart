@@ -14,8 +14,9 @@ class GameState {
   int currentRound = 0;
   int currentTurn = 0;
   int extraTurn = 0;
+  int basePlayerTurnIndex = 0;
 
-  // 旧回合推进设计遗留字段，当前 HTTP 驱动模型下暂不使用。  
+  // 旧回合推进设计遗留字段，当前 HTTP 驱动模型下暂不使用。
   // int realCurrentTurn = 0;
 
   TurnPhase currentPhase = TurnPhase.start;
@@ -38,5 +39,6 @@ class GameState {
 
   EventBus eventBus;
 
-  GameState(this.players, this.drawPile, this.discardPile) : eventBus = EventBus();
+  GameState(this.players, this.drawPile, this.discardPile)
+    : eventBus = EventBus();
 }

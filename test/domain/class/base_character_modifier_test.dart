@@ -15,7 +15,11 @@ void main() {
         [],
         [],
       )..attack = 20;
-      final modifier = ModifierImpl('attack', 10, ModifierType.additive);
+      final modifier = ModifierImpl(
+        PropertyType.attack,
+        10,
+        ModifierType.additive,
+      );
 
       character.applyModifier(modifier);
 
@@ -39,7 +43,11 @@ void main() {
           [],
           [],
         )..attack = 20;
-        final modifier = ModifierImpl('attack', 2, ModifierType.multiplicative);
+        final modifier = ModifierImpl(
+          PropertyType.attack,
+          2,
+          ModifierType.multiplicative,
+        );
 
         character.applyModifier(modifier);
         expect(character.attack, 40);
@@ -58,7 +66,11 @@ void main() {
         [],
         [],
       )..defense = 8;
-      final modifier = ModifierImpl('defense', 99, ModifierType.override);
+      final modifier = ModifierImpl(
+        PropertyType.defense,
+        99,
+        ModifierType.override,
+      );
 
       character.applyModifier(modifier);
       expect(character.defense, 99);
@@ -76,8 +88,16 @@ void main() {
         [],
         [],
       )..attack = 20;
-      final multiplier = ModifierImpl('attack', 2, ModifierType.multiplicative);
-      final bonus = ModifierImpl('attack', 5, ModifierType.additive);
+      final multiplier = ModifierImpl(
+        PropertyType.attack,
+        2,
+        ModifierType.multiplicative,
+      );
+      final bonus = ModifierImpl(
+        PropertyType.attack,
+        5,
+        ModifierType.additive,
+      );
 
       character
         ..applyModifier(multiplier)
@@ -100,9 +120,21 @@ void main() {
         [],
         [],
       )..defense = 8;
-      final bonus = ModifierImpl('defense', 10, ModifierType.additive);
-      final lowOverride = ModifierImpl('defense', 50, ModifierType.override);
-      final highOverride = ModifierImpl('defense', 99, ModifierType.override);
+      final bonus = ModifierImpl(
+        PropertyType.defense,
+        10,
+        ModifierType.additive,
+      );
+      final lowOverride = ModifierImpl(
+        PropertyType.defense,
+        50,
+        ModifierType.override,
+      );
+      final highOverride = ModifierImpl(
+        PropertyType.defense,
+        99,
+        ModifierType.override,
+      );
 
       character
         ..applyModifier(bonus)
@@ -114,6 +146,37 @@ void main() {
       expect(character.defense, 50);
       character.removeModifier(lowOverride);
       expect(character.defense, 18);
+    });
+
+    test('maps damage and heal statistic properties through PropertyType', () {
+      final character =
+          BaseCharacter(
+              'char_actor',
+              TemplateId.defensive.id,
+              RaceId.human.id,
+              const {},
+              [],
+              [],
+            )
+            ..damageStats.dealtByTurn = 3
+            ..healStats.receivedTotal = 4;
+      final dealtModifier = ModifierImpl(
+        PropertyType.damageDealtByTurn,
+        2,
+        ModifierType.additive,
+      );
+      final healedModifier = ModifierImpl(
+        PropertyType.healReceivedTotal,
+        6,
+        ModifierType.additive,
+      );
+
+      character
+        ..applyModifier(dealtModifier)
+        ..applyModifier(healedModifier);
+
+      expect(character.damageStats.dealtByTurn, 5);
+      expect(character.healStats.receivedTotal, 10);
     });
   });
 }

@@ -4,7 +4,7 @@ import 'package:sns_server/domain/core/enum.dart';
 import 'package:sns_server/domain/core/game_context.dart';
 import 'package:sns_server/domain/resolver/target_resolver.dart';
 
-/// 可执行效果。
+/// 可执行效果
 abstract class Action {
   Future<void> execute(ActionExecutionContext actionContext);
 }
@@ -50,7 +50,7 @@ class ActionAddAttack extends Action {
     ).resolve(actionContext.target!, source: actionContext.source);
     for (final characterTarget in targets) {
       characterTarget.character.applyModifier(
-        ModifierImpl('attack', amount, ModifierType.additive),
+        ModifierImpl(PropertyType.attack, amount, ModifierType.additive),
       );
     }
   }

@@ -65,7 +65,12 @@ class BaseTrait implements Trait {
 }
 
 class TraitSelfEncouragement extends BaseTrait {
-  TraitSelfEncouragement(super.id, super.isAuto, super.castCount, super.canUseCondition);
+  TraitSelfEncouragement(
+    super.id,
+    super.isAuto,
+    super.castCount,
+    super.canUseCondition,
+  );
 
   bool hasTriggered = false;
 
@@ -82,8 +87,8 @@ class TraitSelfEncouragement extends BaseTrait {
   }
 }
 
-class TraitRadiantBlast extends BaseTrait { 
-  TraitRadiantBlast(): super(TraitId.radiantBlast.id, true, -1, null);
+class TraitRadiantBlast extends BaseTrait {
+  TraitRadiantBlast() : super(TraitId.radiantBlast.id, true, -1, null);
   static const int _attackBonus = 10;
 
   Modifier? _activeAttackModifier;
@@ -140,7 +145,7 @@ class TraitRadiantBlast extends BaseTrait {
     }
 
     final modifier = ModifierImpl(
-      'attack',
+      PropertyType.attack,
       _attackBonus,
       ModifierType.additive,
     );

@@ -123,7 +123,7 @@ class BaseCharacter implements Character {
   bool isAlive = true;
   final Set<EventBus> _listenerBuses = <EventBus>{};
   final ModifierResolver _modifierResolver = const ModifierResolver();
-  final Map<String, int> _modifierBaseValues = <String, int>{};
+  final Map<PropertyType, int> _modifierBaseValues = <PropertyType, int>{};
 
   BaseCharacter(
     this.id,
@@ -243,7 +243,7 @@ class BaseCharacter implements Character {
     }
   }
 
-  void _recalculateModifiedProperty(String property) {
+  void _recalculateModifiedProperty(PropertyType property) {
     final baseValue = _modifierBaseValues[property];
     if (baseValue == null) {
       throw StateError('Modifier base value is missing for $property');
@@ -321,51 +321,124 @@ class BaseCharacter implements Character {
     throw StateError('Character $id does not own skill $rawSkillId');
   }
 
-  int _readIntProperty(String property) {
+  int _readIntProperty(PropertyType property) {
     switch (property) {
-      case 'attack':
-        return attack;
-      case 'defense':
-        return defense;
-      case 'armor':
-        return armor;
-      case 'currentHp':
+      case PropertyType.health:
         return currentHp;
-      case 'maxHp':
+      case PropertyType.maxHp:
         return maxHp;
-      case 'currentMp':
+      case PropertyType.attack:
+        return attack;
+      case PropertyType.defense:
+        return defense;
+      case PropertyType.armor:
+        return armor;
+      case PropertyType.movepoint:
         return currentMp;
-      case 'maxMp':
+      case PropertyType.maxMove:
         return maxMp;
+      case PropertyType.maxCard:
+        return maxHand;
+      case PropertyType.damageDealtByTurn:
+        return damageStats.dealtByTurn;
+      case PropertyType.damageDealtByRound:
+        return damageStats.dealtByRound;
+      case PropertyType.damageDealtTotal:
+        return damageStats.dealtTotal;
+      case PropertyType.damageReceivedByTurn:
+        return damageStats.receivedByTurn;
+      case PropertyType.damageReceivedByRound:
+        return damageStats.receivedByRound;
+      case PropertyType.damageReceivedTotal:
+        return damageStats.receivedTotal;
+      case PropertyType.healReceivedByTurn:
+        return healStats.receivedByTurn;
+      case PropertyType.healReceivedByRound:
+        return healStats.receivedByRound;
+      case PropertyType.healReceivedTotal:
+        return healStats.receivedTotal;
+      case PropertyType.healDealtByTurn:
+        return healStats.dealtByTurn;
+      case PropertyType.healDealtByRound:
+        return healStats.dealtByRound;
+      case PropertyType.healDealtTotal:
+        return healStats.dealtTotal;
+      case PropertyType.actionTime:
+        return actionTime;
+      case PropertyType.jumpedTurn:
+        return jumpedTurn;
     }
-    throw StateError('Unsupported modifier targetProperty: $property');
   }
 
-  void _writeIntProperty(String property, int value) {
+  void _writeIntProperty(PropertyType property, int value) {
     switch (property) {
-      case 'attack':
-        attack = value;
-        return;
-      case 'defense':
-        defense = value;
-        return;
-      case 'armor':
-        armor = value;
-        return;
-      case 'currentHp':
+      case PropertyType.health:
         currentHp = value;
         return;
-      case 'maxHp':
+      case PropertyType.maxHp:
         maxHp = value;
         return;
-      case 'currentMp':
+      case PropertyType.attack:
+        attack = value;
+        return;
+      case PropertyType.defense:
+        defense = value;
+        return;
+      case PropertyType.armor:
+        armor = value;
+        return;
+      case PropertyType.movepoint:
         currentMp = value;
         return;
-      case 'maxMp':
+      case PropertyType.maxMove:
         maxMp = value;
         return;
+      case PropertyType.maxCard:
+        maxHand = value;
+        return;
+      case PropertyType.damageDealtByTurn:
+        damageStats.dealtByTurn = value;
+        return;
+      case PropertyType.damageDealtByRound:
+        damageStats.dealtByRound = value;
+        return;
+      case PropertyType.damageDealtTotal:
+        damageStats.dealtTotal = value;
+        return;
+      case PropertyType.damageReceivedByTurn:
+        damageStats.receivedByTurn = value;
+        return;
+      case PropertyType.damageReceivedByRound:
+        damageStats.receivedByRound = value;
+        return;
+      case PropertyType.damageReceivedTotal:
+        damageStats.receivedTotal = value;
+        return;
+      case PropertyType.healReceivedByTurn:
+        healStats.receivedByTurn = value;
+        return;
+      case PropertyType.healReceivedByRound:
+        healStats.receivedByRound = value;
+        return;
+      case PropertyType.healReceivedTotal:
+        healStats.receivedTotal = value;
+        return;
+      case PropertyType.healDealtByTurn:
+        healStats.dealtByTurn = value;
+        return;
+      case PropertyType.healDealtByRound:
+        healStats.dealtByRound = value;
+        return;
+      case PropertyType.healDealtTotal:
+        healStats.dealtTotal = value;
+        return;
+      case PropertyType.actionTime:
+        actionTime = value;
+        return;
+      case PropertyType.jumpedTurn:
+        jumpedTurn = value;
+        return;
     }
-    throw StateError('Unsupported modifier targetProperty: $property');
   }
 
   void _normalizeDerivedState() {

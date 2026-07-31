@@ -11,6 +11,7 @@ import 'package:sns_server/domain/core/register.dart';
 import 'package:sns_server/domain/resolver/attack_card_resolver.dart';
 import 'package:sns_server/domain/resolver/dice_resolver.dart';
 import 'package:sns_server/domain/resolver/stack_resolver.dart';
+import 'package:sns_server/domain/resolver/status_resolver.dart';
 
 /// 游戏引擎
 class GameEngine {
@@ -20,6 +21,7 @@ class GameEngine {
       _context = _GameContextImpl(state),
       _eventBus = state.eventBus {
     _stackResolver = StackResolver(state);
+    _statusResolver = StatusResolver(_context);
     _actionValidator = ActionValidator(state, _stackResolver);
     _diceResolver = DiceResolver(_context);
     _attackCardResolver = AttackCardResolver(_context, _diceResolver);
@@ -29,6 +31,7 @@ class GameEngine {
   final GameContext _context;
   final EventBus _eventBus;
   late final StackResolver _stackResolver;
+  late final StatusResolver _statusResolver;
   late final ActionValidator _actionValidator;
   late final DiceResolver _diceResolver;
   late final AttackCardResolver _attackCardResolver;
@@ -38,6 +41,7 @@ class GameEngine {
     registryAllCards();
     registryAllTraits();
     registryAllSkills();
+    registryAllStatuses();
     _indexEntities();
     await _bindCharacterEffects();
     _resetFlowState();
@@ -168,7 +172,7 @@ class GameEngine {
   Future<void> _runStartPhase(Character character) async {
     _state.flowState = FlowState.turnOpening;
     for (final effect in List.of(character.state)) {
-      await effect.onTurnStart(_context, character);
+      await effect.onTurnStart(_context);
     }
     for (final trait in List.of(character.traits)) {
       await trait.onTurnStart(_context, character);
@@ -263,13 +267,14 @@ class GameEngine {
 
     _eventBus.emit(PhaseChangedEvent(_context, TurnPhase.end));
     for (final effect in List.of(character.state)) {
-      await effect.onTurnEnd(_context, character);
+      await effect.onTurnEnd(_context);
     }
     for (final trait in List.of(character.traits)) {
       await trait.onTurnEnd(_context, character);
     }
     _eventBus.emit(TurnEndEvent(_context));
     await character.regenMp(_context);
+    await _statusResolver.advanceBasePlayerTurn();
   }
 
   /// 将回合推进到下一名玩家。
