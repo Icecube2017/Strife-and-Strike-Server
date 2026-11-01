@@ -1,0 +1,33 @@
+{
+  "variables": [
+    {
+      "id": "team_used_tags",
+      "namespace": "team_tag_tracker",
+      "type": "set",
+      "scope": "team",
+      "visibility": "team",
+      "reset": "round",
+      "maxEntries": 64
+    }
+  ],
+  "traits": [
+    {
+      "id": "trait_team_tag_tracker",
+      "triggers": [
+        {
+          "timing": "cardsPlayed",
+          "scope": "allies",
+          "recordOnly": true,
+          "effects": [
+            {
+              "op": "modifyVariable",
+              "variable": "team_used_tags",
+              "operation": "setAdd",
+              "input": { "source": "eventTags" }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

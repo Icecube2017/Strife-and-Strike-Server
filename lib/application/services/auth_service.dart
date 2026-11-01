@@ -18,6 +18,8 @@ class AuthException implements Exception {
 }
 
 class AuthenticatedUser {
+  final String? nickname;
+  String get displayName => nickname ?? username;
   final int id;
   final String username;
   final String? email;
@@ -31,6 +33,7 @@ class AuthenticatedUser {
     required this.id,
     required this.username,
     required this.permission,
+    this.nickname,
     this.email,
     this.phoneNumber,
     this.pronoun,
@@ -39,12 +42,11 @@ class AuthenticatedUser {
   });
 
   UserView toView() => UserView(
+    nickname: displayName,
     id: id,
     username: username,
     permission: permission,
     email: email,
-    phoneNumber: phoneNumber,
-    pronoun: pronoun,
     createdAt: createdAt,
     updatedAt: updatedAt,
   );
@@ -80,9 +82,6 @@ class AuthService {
       CreateUserData(
         username: request.username,
         passwordHash: passwordHash,
-        email: _blankToNull(request.email),
-        phoneNumber: _blankToNull(request.phoneNumber),
-        pronoun: _blankToNull(request.pronoun),
       ),
     );
     return _issueAuthResponse(_toAuthenticatedUser(user));
@@ -130,6 +129,18 @@ class AuthService {
       throw AuthException('User not found', statusCode: 401);
     }
     return _toAuthenticatedUser(user);
+  }
+
+  Future<UserView> updateNickname(int userId, Object? value) async {
+    if (value is! String ||
+        value.trim().isEmpty ||
+        value.trim().runes.length > 32 ||
+        value.runes.any((c) => c < 32 || c == 127)) {
+      throw AuthException('Nickname must contain 1 to 32 characters');
+    }
+    return _toAuthenticatedUser(
+      await _users.updateNickname(userId, value.trim()),
+    ).toView();
   }
 
   Future<void> logout(RefreshTokenRequest request) async {
@@ -258,12 +269,10 @@ class AuthService {
   }
 
   AuthenticatedUser _toAuthenticatedUser(UserRecord user) => AuthenticatedUser(
+    nickname: user.displayName,
     id: user.id,
     username: user.username,
     permission: user.permission,
-    email: user.email,
-    phoneNumber: user.phoneNumber,
-    pronoun: user.pronoun,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   );
@@ -284,10 +293,5 @@ class AuthService {
     if (utf8.encode(password).length > 72) {
       throw AuthException('Password is too long for bcrypt');
     }
-  }
-
-  String? _blankToNull(String? value) {
-    if (value == null || value.trim().isEmpty) return null;
-    return value.trim();
   }
 }

@@ -1,0 +1,40 @@
+{
+  "searchTrainingVersion": 1,
+  "search": {
+    "simulations": 32,
+    "maxDepth": 6,
+    "horizon": 24,
+    "maxTurnAdvances": 2,
+    "maxMilliseconds": 1500,
+    "maxSelectedCards": 3
+  },
+  "collection": {
+    "samples": 256,
+    "maximumAttempts": 2048,
+    "maximumEpisodes": 256,
+    "maximumStepsPerEpisode": 256,
+    "maximumSamplesPerEpisode": 4,
+    "sampleEvery": 2,
+    "searchRepeats": 2,
+    "minimumVisits": 2,
+    "minimumValueSpread": 0.04,
+    "maximumTargetDisagreement": 0.05,
+    "temperature": 0.1,
+    "strictProjection": true,
+    "seed": 51,
+    "seedStart": 1000,
+    "validationEvery": 5,
+    "shardSize": 32,
+    "opponent": "rules",
+    "hardTimeoutSeconds": 15
+  },
+  "distillation": {
+    "epochs": 3,
+    "batchSize": 16,
+    "learningRate": 0.00003,
+    "anchorCoefficient": 0.5,
+    "maxGradNorm": 0.5,
+    "minimumSamples": 32,
+    "seed": 51
+  }
+}

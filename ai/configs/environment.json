@@ -1,0 +1,22 @@
+{
+  "configVersion": 1,
+  "projectRoot": ".",
+  "content": "content/content_items.json",
+  "scenarios": "ai/scenarios/full-match",
+  "registry": "ai/configs/definitions.json",
+  "scenarioIds": [
+    "rondo-encouragement-1v1",
+    "ranger-observer-1v1",
+    "restricted-team-2v2"
+  ],
+  "learnerId": "a",
+  "opponent": "rules",
+  "seed": 1000,
+  "scenarioSet": "ai/scenarios/full-match",
+  "taskName": "full-match-four-character-v2",
+  "reward": {
+    "mode": "winLoss"
+  },
+  "maximumLearnerSteps": 10000,
+  "maximumKernelDecisions": 100000
+}

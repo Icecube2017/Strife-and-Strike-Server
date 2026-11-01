@@ -18,3 +18,50 @@ coverage/
 .env
 docs/
 database/
+RULE.md
+test/
+
+# Local wiki credentials and downloaded snapshots
+/scripts/wiki.local.json
+/data/wiki/
+__pycache__/
+
+# Generated local match logs (raw facts may contain private game data)
+/artifacts/
+
+/packages/sns_kernel/.dart_tool/
+/packages/sns_kernel/pubspec.lock
+
+/scripts/
+!/scripts/
+/scripts/*
+!/scripts/server.ps1
+!/scripts/server_job.cs
+/tool/
+/test/
+/example/
+
+# Generated markdown files
+
+# Private token
+.db_key
+
+# Local SQLite database, WAL and journal files
+/data/server/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+
+# Offline AI experiments; scenario definitions and code remain reviewable.
+/ai/runs/
+/ai/reports/
+/ai/datasets/
+/ai/.venv/
+/ai/models/
+/ai/tests/
+/ai/trajectories/
+/ai/__pycache__/
+/ai/src/*.egg-info/
+/ai/.pytest_cache/
+/.pytest_cache/

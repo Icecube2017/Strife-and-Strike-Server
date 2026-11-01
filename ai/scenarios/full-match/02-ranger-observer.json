@@ -1,0 +1,20 @@
+{
+  "scenarioVersion": 1,
+  "id": "ranger-observer-1v1",
+  "description": "正式完整对局；正式201张牌堆、完整通用技能池、默认开局与摸牌规则。",
+  "trainingMode": "fullMatch",
+  "players": [
+    {
+      "id": "a",
+      "characterId": "character_fan_qiu",
+      "teamId": "red"
+    },
+    {
+      "id": "b",
+      "characterId": "character_neko",
+      "teamId": "blue"
+    }
+  ],
+  "deck": "default",
+  "skillPool": "default"
+}

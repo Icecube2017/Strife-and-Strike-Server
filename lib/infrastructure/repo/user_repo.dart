@@ -1,13 +1,11 @@
-import 'package:postgres/postgres.dart';
 import 'package:sns_server/infrastructure/db/db_connection.dart';
 
 class UserRecord {
   final int id;
   final String username;
+  final String? nickname;
+  String get displayName => nickname ?? username;
   final String passwordHash;
-  final String? email;
-  final String? phoneNumber;
-  final String? pronoun;
   final int permission;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -17,9 +15,7 @@ class UserRecord {
     required this.username,
     required this.passwordHash,
     required this.permission,
-    this.email,
-    this.phoneNumber,
-    this.pronoun,
+    this.nickname,
     this.createdAt,
     this.updatedAt,
   });
@@ -27,18 +23,15 @@ class UserRecord {
 
 class CreateUserData {
   final String username;
+  final String? nickname;
+  String get displayName => nickname ?? username;
   final String passwordHash;
-  final String? email;
-  final String? phoneNumber;
-  final String? pronoun;
   final int permission;
 
   CreateUserData({
     required this.username,
     required this.passwordHash,
-    this.email,
-    this.phoneNumber,
-    this.pronoun,
+    this.nickname,
     this.permission = 0,
   });
 }
@@ -47,6 +40,7 @@ abstract class UserRepo {
   Future<UserRecord> create(CreateUserData data);
   Future<UserRecord?> findById(int id);
   Future<UserRecord?> findByUsername(String username);
+  Future<UserRecord> updateNickname(int id, String nickname);
 }
 
 class InMemoryUserRepo implements UserRepo {
@@ -59,16 +53,28 @@ class InMemoryUserRepo implements UserRepo {
     final user = UserRecord(
       id: _nextId++,
       username: data.username,
+      nickname: data.displayName,
       passwordHash: data.passwordHash,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      pronoun: data.pronoun,
       permission: data.permission,
       createdAt: now,
       updatedAt: now,
     );
     _usersById[user.id] = user;
     return user;
+  }
+
+  @override
+  Future<UserRecord> updateNickname(int id, String nickname) async {
+    final old = _usersById[id]!;
+    return _usersById[id] = UserRecord(
+      id: id,
+      username: old.username,
+      passwordHash: old.passwordHash,
+      permission: old.permission,
+      nickname: nickname,
+      createdAt: old.createdAt,
+      updatedAt: DateTime.now(),
+    );
   }
 
   @override
@@ -83,110 +89,56 @@ class InMemoryUserRepo implements UserRepo {
   }
 }
 
-class PgUserRepo implements UserRepo {
-  PgUserRepo(this._db);
-
+class SqliteUserRepo implements UserRepo {
+  SqliteUserRepo(this._db);
   final DbConnection _db;
-
   @override
   Future<UserRecord> create(CreateUserData data) async {
-    final result = await _db.pool.execute(
-      Sql.named('''
-        INSERT INTO users (
-          username,
-          password,
-          email,
-          phone_number,
-          pronoun,
-          permission
-        )
-        VALUES (
-          @username,
-          @password,
-          @email,
-          @phoneNumber,
-          @pronoun,
-          @permission
-        )
-        RETURNING
-          id,
-          username,
-          password,
-          email,
-          phone_number,
-          pronoun,
-          permission,
-          created_at,
-          updated_at
-      '''),
-      parameters: {
-        'username': data.username,
-        'password': data.passwordHash,
-        'email': data.email,
-        'phoneNumber': data.phoneNumber,
-        'pronoun': data.pronoun,
-        'permission': data.permission,
-      },
+    final now = DateTime.now().toUtc().toIso8601String();
+    _db.database.execute(
+      'INSERT INTO users (username, password, permission, created_at, updated_at, nickname) VALUES (?, ?, ?, ?, ?, ?)',
+      [
+        data.username,
+        data.passwordHash,
+        data.permission,
+        now,
+        now,
+        data.displayName,
+      ],
     );
-    return _fromRow(result.first);
+    return (await findById(_db.database.lastInsertRowId))!;
   }
 
   @override
   Future<UserRecord?> findById(int id) async {
-    final result = await _db.pool.execute(
-      Sql.named('''
-        SELECT
-          id,
-          username,
-          password,
-          email,
-          phone_number,
-          pronoun,
-          permission,
-          created_at,
-          updated_at
-        FROM users
-        WHERE id = @id
-      '''),
-      parameters: {'id': id},
-    );
-    if (result.isEmpty) return null;
-    return _fromRow(result.first);
+    final rows = _db.database.select('SELECT * FROM users WHERE id = ?', [id]);
+    return rows.isEmpty ? null : _fromRow(rows.first);
   }
 
   @override
   Future<UserRecord?> findByUsername(String username) async {
-    final result = await _db.pool.execute(
-      Sql.named('''
-        SELECT
-          id,
-          username,
-          password,
-          email,
-          phone_number,
-          pronoun,
-          permission,
-          created_at,
-          updated_at
-        FROM users
-        WHERE username = @username
-        LIMIT 1
-      '''),
-      parameters: {'username': username},
-    );
-    if (result.isEmpty) return null;
-    return _fromRow(result.first);
+    final rows = _db.database.select('SELECT * FROM users WHERE username = ?', [
+      username,
+    ]);
+    return rows.isEmpty ? null : _fromRow(rows.first);
   }
 
-  UserRecord _fromRow(ResultRow row) => UserRecord(
-    id: row[0]! as int,
-    username: row[1]! as String,
-    passwordHash: row[2]! as String,
-    email: row[3] as String?,
-    phoneNumber: row[4] as String?,
-    pronoun: row[5] as String?,
-    permission: row[6]! as int,
-    createdAt: row[7] as DateTime?,
-    updatedAt: row[8] as DateTime?,
+  @override
+  Future<UserRecord> updateNickname(int id, String nickname) async {
+    _db.database.execute(
+      'UPDATE users SET nickname = ?, updated_at = ? WHERE id = ?',
+      [nickname, DateTime.now().toUtc().toIso8601String(), id],
+    );
+    return (await findById(id))!;
+  }
+
+  UserRecord _fromRow(Map<String, Object?> row) => UserRecord(
+    nickname: row['nickname'] as String?,
+    id: row['id']! as int,
+    username: row['username']! as String,
+    passwordHash: row['password']! as String,
+    permission: row['permission']! as int,
+    createdAt: DateTime.parse(row['created_at']! as String),
+    updatedAt: DateTime.parse(row['updated_at']! as String),
   );
 }

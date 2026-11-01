@@ -1,0 +1,192 @@
+{
+  "configVersion": 1,
+  "device": "cpu",
+  "workers": 2,
+  "torchThreads": 1,
+  "seed": 31,
+  "totalDecisionSteps": 100000,
+  "policyHiddenSizes": [
+    128,
+    128
+  ],
+  "learningRate": 0.0003,
+  "rolloutSteps": 1024,
+  "batchSize": 128,
+  "optimizationEpochs": 5,
+  "gamma": 0.999,
+  "gaeLambda": 0.95,
+  "entropyCoefficient": 0.01,
+  "checkpointEveryUpdates": 10,
+  "evaluateEveryUpdates": 10,
+  "maximumKernelDecisions": 100000,
+  "maximumLearnerSteps": 10000,
+  "opponent": "rules",
+  "trainingSeedStart": 1000,
+  "trainingSeedStop": 999999,
+  "cases": [
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "a",
+      "mode": "duel",
+      "weight": 6
+    },
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "b",
+      "mode": "duel",
+      "weight": 6
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "a",
+      "mode": "duel",
+      "weight": 6
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "b",
+      "mode": "duel",
+      "weight": 6
+    },
+    {
+      "scenarioId": "mixed-team-2v2-1",
+      "learnerId": "a",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-1",
+      "learnerId": "b",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-1",
+      "learnerId": "c",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-1",
+      "learnerId": "d",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-2",
+      "learnerId": "a",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-2",
+      "learnerId": "b",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-2",
+      "learnerId": "c",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-2",
+      "learnerId": "d",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-3",
+      "learnerId": "a",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-3",
+      "learnerId": "b",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-3",
+      "learnerId": "c",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-3",
+      "learnerId": "d",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-1",
+      "learnerId": "a",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-1",
+      "learnerId": "b",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-1",
+      "learnerId": "c",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-1",
+      "learnerId": "d",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-2",
+      "learnerId": "a",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-2",
+      "learnerId": "b",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-2",
+      "learnerId": "c",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-2",
+      "learnerId": "d",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-3",
+      "learnerId": "a",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-3",
+      "learnerId": "b",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-3",
+      "learnerId": "c",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-3",
+      "learnerId": "d",
+      "mode": "ffa"
+    }
+  ],
+  "evaluation": {
+    "seeds": [
+      11000001
+    ],
+    "opponents": [
+      "rules"
+    ],
+    "deterministic": false,
+    "maximumLearnerSteps": 10000
+  },
+  "taskName": "full-match-four-character-hybrid-seed31-branch-20261031",
+  "scenarioSet": "ai/scenarios/full-match",
+  "reward": {
+    "mode": "hybrid",
+    "win": 2,
+    "loss": -2,
+    "draw": 0,
+    "scoreWeight": 1,
+    "scoreScale": 10
+  }
+}

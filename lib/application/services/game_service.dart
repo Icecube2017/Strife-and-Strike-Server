@@ -1,369 +1,274 @@
-import 'dart:async';
-import 'dart:collection';
+import 'dart:math';
 
-import 'package:sns_server/application/commands/game_command.dart';
-import 'package:sns_server/application/dto/game_dto.dart';
+import 'package:sns_kernel/sns_kernel.dart';
+
+import 'package:sns_server/application/commands/kernel_command_request.dart';
+import 'package:sns_server/application/dto/room_dto.dart';
+import 'package:sns_server/application/services/kernel_game_service.dart';
 import 'package:sns_server/application/services/room_service.dart';
-import 'package:sns_server/domain/class/character.dart';
-import 'package:sns_server/domain/class/player.dart';
-import 'package:sns_server/domain/class/propcard.dart';
-import 'package:sns_server/domain/core/enum.dart';
-import 'package:sns_server/domain/core/game.dart';
-import 'package:sns_server/domain/core/game_state.dart';
+import 'package:sns_server/infrastructure/repo/game_abort_store.dart';
+import 'package:sns_server/infrastructure/repo/room_expiry_store.dart';
 
-/// 一局游戏运行时
-class GameRuntime {
-  final String gameId;
-  final GameState state;
-  final GameEngine engine;
-  int version = 0;
+/// Room/HTTP facade. All game state and rules live in GameKernel.
+class GameService {
+  GameService(
+    this._rooms,
+    this._kernel, {
+    required List<String> deck,
+    required List<String> commonSkills,
+    this.rules = const GameRules(),
+    this.abortStore,
+    this.expiryStore,
+  }) : deck = List.unmodifiable(deck),
+       commonSkills = List.unmodifiable(commonSkills);
+  final RoomService _rooms;
+  final KernelGameService _kernel;
+  final List<String> deck;
+  final List<String> commonSkills;
+  final GameRules rules;
+  final GameAbortStore? abortStore;
+  final RoomExpiryStore? expiryStore;
+  final Set<String> _starting = {};
 
-  /// 用于串行化命令，避免并发踩状态
-  final Queue<_PendingCommand> _commandQueue = Queue();
-  bool _processing = false;
-
-  /// SSE/WS 订阅者
-  final List<StreamController<PublicGameView>> _subscribers = [];
-
-  GameRuntime({required this.gameId, required this.state})
-      : engine = GameEngine(state);
-
-  /// 提交命令（幂等键由上层去重后调用此方法）
-  Future<CommandResult> submit(GameCommand cmd) {
-    final completer = Completer<CommandResult>();
-    _commandQueue.add(_PendingCommand(cmd, completer));
-    _drainQueue();
-    return completer.future;
+  Future<void> startRoomExpiration() {
+    if (_kernel.checkpointRepo != null && expiryStore == null) {
+      throw StateError('Atomic room expiration storage is not configured');
+    }
+    return _rooms.startExpiration((closedRoom) async {
+      // Start reserves the room before taking the kernel queue. Let that
+      // operation finish before expiration retries, avoiding inverse locks.
+      if (_starting.contains(closedRoom.id)) {
+        throw StateError('Room is starting');
+      }
+      await _kernel.expireRoomGamePersisted(
+        'game_${closedRoom.id}',
+        erase: (version, {required bool finished}) =>
+            _kernel.checkpointRepo == null
+            ? _rooms.deleteAbortedRoom(closedRoom)
+            : expiryStore!.expire(
+                closedRoom,
+                'game_${closedRoom.id}',
+                expectedGameVersion: version,
+                gameFinished: finished,
+              ),
+      );
+    });
   }
 
-  void _drainQueue() {
-    if (_processing || _commandQueue.isEmpty) return;
-    _processing = true;
-    _processNext();
+  Future<RoomConnection?> connectGamePlayer(String gameId, String playerId) =>
+      _rooms.connectForGame(gameId, playerId);
+
+  void requireCharacter(String definitionId) {
+    if (!_kernel.catalog.characters.containsKey(definitionId)) {
+      throw StateError('Unknown character definition: $definitionId');
+    }
   }
 
-  Future<void> _processNext() async {
-    while (_commandQueue.isNotEmpty) {
-      final pending = _commandQueue.removeFirst();
+  Future<String> startGame(String key, String hostPlayerId) async {
+    final roomId = _rooms.resolveRoomId(key);
+    _rooms.assertCanStart(roomId, hostPlayerId);
+    if (!_starting.add(roomId)) {
+      throw StateError('Room is already starting');
+    }
+    final gameId = _rooms.gameIdForRoom(roomId);
+    var created = false;
+    var reserved = false;
+    if (_kernel.hasGameRecord(gameId)) {
       try {
-        final result = await _execute(pending.command);
-        pending.completer.complete(result);
-      } catch (e) {
-        pending.completer.complete(
-          CommandResult(success: false, error: e.toString(), newVersion: version),
-        );
+        await _kernel.ensureGameLoaded(gameId);
+        await _rooms.markInGame(roomId);
+        return gameId;
+      } finally {
+        _starting.remove(roomId);
       }
     }
-    _processing = false;
-  }
-
-  Future<CommandResult> _execute(GameCommand cmd) async {
-    if (cmd.clientVersion != version) {
-      throw StateError('Version conflict: expected $version, got ${cmd.clientVersion}');
-    }
-
-    switch (cmd) {
-      case EndTurnCommand():
-        _assertPlayerCanEndTurn(cmd.playerId);
-        await engine.endTurn();
-      case PassPriorityCommand():
-        await engine.passPriority(cmd.playerId);
-      case AttackCommand():
-        final character = _resolveOwnedCharacter(
-          playerId: cmd.playerId,
-          characterId: cmd.attackerCharacterId,
-        );
-        await engine.processAction(character, ActionType.attack, {
-          'targetId': cmd.targetCharacterId,
-        });
-      case PlayCardCommand():
-        final character = _resolveDefaultCharacter(cmd.playerId);
-        final inferredActionType = _inferPlayCardActionType(
-          character: character,
-          selections: cmd.cardSelections,
-        );
-        await engine.processAction(character, inferredActionType, {
-          'cardSelections': cmd.cardSelections.map((selection) => selection.toJson()).toList(),
-          'targetId': cmd.targetCharacterId,
-        });
-      case UseSkillCommand():
-        final character = _resolveOwnedCharacter(
-          playerId: cmd.playerId,
-          characterId: cmd.characterId,
-        );
-        await engine.processAction(character, ActionType.skill, {
-          'skillId': cmd.skillId,
-          ...cmd.params,
-        });
-      case UseTraitCommand():
-        final character = _resolveOwnedCharacter(
-          playerId: cmd.playerId,
-          characterId: cmd.characterId,
-        );
-        await engine.processAction(character, ActionType.trait, {
-          'traitId': cmd.traitId,
-          ...cmd.params,
-        });
-      default:
-        throw StateError('Unknown command type: ${cmd.runtimeType}');
-    }
-
-    version++;
-    _broadcast();
-    return CommandResult(success: true, newVersion: version);
-  }
-
-  /// 获取公开视图（支持 sinceVersion 快速判断）
-  PublicGameView getPublicView() {
-    final currentPlayer = _resolveCurrentPublicPlayer();
-    return PublicGameView(
-      gameId: gameId,
-      version: version,
-      currentRound: state.currentRound,
-      currentTurn: state.currentTurn,
-      currentPlayerId: currentPlayer.id,
-      currentPhase: state.currentPhase.name,
-      characters: state.characterById.values
-          .map((c) => CharacterPublicView(
-                characterId: c.id,
-                currentHp: c.currentHp,
-                maxHp: c.maxHp,
-                attack: c.attack,
-                defense: c.defense,
-                currentMp: c.currentMp,
-                maxMp: c.maxMp,
-                isAlive: c.isAlive,
-                statusIds: c.state.map((s) => s.id).toList(),
-              ))
-          .toList(),
-    );
-  }
-
-  PlayerPrivateView getPrivateView(String playerId) {
-    final player = state.players.firstWhere(
-      (p) => p.id == playerId,
-      orElse: () => throw StateError('Player $playerId not found'),
-    );
-    return PlayerPrivateView(
-      playerId: playerId,
-      // cards: player.currentCharacter.hand.map((c) => c.toJson()).toList(),
-      cards: []
-    );
-  }
-
-  Stream<PublicGameView> subscribe() {
-    final ctrl = StreamController<PublicGameView>.broadcast();
-    _subscribers.add(ctrl);
-    return ctrl.stream;
-  }
-
-  void _broadcast() {
-    final view = getPublicView();
-    for (final ctrl in _subscribers) {
-      if (!ctrl.isClosed) ctrl.add(view);
-    }
-  }
-
-  void _assertPlayerCanEndTurn(String playerId) {
-    if (state.activePlayerId != playerId) {
-      throw StateError('Only the active player can end the turn');
-    }
-  }
-
-  Character _resolveDefaultCharacter(String playerId) {
-    final player = _getPlayer(playerId);
-    return player.currentCharacter;
-  }
-
-  ActionType _inferPlayCardActionType({
-    required Character character,
-    required List<PlayCardSelection> selections,
-  }) {
-    final cards = _resolvePlayCardSelections(
-      character: character,
-      selections: selections,
-    );
-    return cards.any((card) => card.isAttackLimited)
-        ? ActionType.limitedCard
-        : ActionType.attackCard;
-  }
-
-  List<PropCard> _resolvePlayCardSelections({
-    required Character character,
-    required List<PlayCardSelection> selections,
-  }) {
-    if (selections.isEmpty) {
-      throw StateError('cardSelections must not be empty');
-    }
-
-    final resolvedCards = <PropCard>[];
-    final reservedHandIndices = <int>{};
-    for (final selection in selections) {
-      resolvedCards.add(
-        _resolveSinglePlayCardSelection(
-          character: character,
-          selection: selection,
-          reservedHandIndices: reservedHandIndices,
+    try {
+      await _rooms.reserveStart(roomId, hostPlayerId);
+      reserved = true;
+      final players = _rooms.getPlayers(roomId);
+      await _kernel.startGamePersisted(
+        GameSetup(
+          gameId: gameId,
+          players: [
+            for (final p in players)
+              PlayerSetup(
+                id: p.id,
+                characterId: p.characterDefinitionId!,
+                teamId: p.teamId!,
+              ),
+          ],
+          deck: deck,
+          skillPool: commonSkills,
+          rules: _rooms.getRules(roomId).applyTo(rules),
+          seed: Random.secure().nextInt(2147483646),
         ),
       );
+      created = true;
+      await _rooms.markInGame(roomId);
+      return gameId;
+    } catch (_) {
+      if (created) {
+        await _kernel.removeGamePersisted(gameId);
+      }
+      if (reserved) {
+        await _rooms.cancelStart(roomId);
+      }
+      rethrow;
+    } finally {
+      _starting.remove(roomId);
     }
-    return resolvedCards;
   }
 
-  PropCard _resolveSinglePlayCardSelection({
-    required Character character,
-    required PlayCardSelection selection,
-    required Set<int> reservedHandIndices,
-  }) {
-    if (selection.handIndex != null) {
-      final handIndex = selection.handIndex!;
-      if (handIndex < 0 || handIndex >= character.hand.length) {
-        throw StateError('handIndex $handIndex is out of range');
-      }
-      if (reservedHandIndices.contains(handIndex)) {
-        throw StateError('handIndex $handIndex is selected more than once');
-      }
-
-      final indexedCard = character.hand[handIndex];
-      if (indexedCard.id != selection.cardId) {
-        throw StateError(
-          'handIndex $handIndex points to ${indexedCard.id}, not the requested card ${selection.cardId}',
-        );
-      }
-
-      reservedHandIndices.add(handIndex);
-      return indexedCard;
+  Future<void> resumeCompletedDrafts() async {
+    for (final (id, host) in _rooms.completedDrafts) {
+      await startGame(id, host);
     }
+  }
 
-    final matchedEntries = <MapEntry<int, PropCard>>[];
-    for (var index = 0; index < character.hand.length; index++) {
-      if (reservedHandIndices.contains(index)) {
-        continue;
-      }
-      final card = character.hand[index];
-      if (card.id == selection.cardId) {
-        matchedEntries.add(MapEntry(index, card));
-      }
-    }
+  Map<String, Object?> characterCatalog() {
+    return {
+      'contentVersion': _kernel.catalog.version,
+      'contentHash': _kernel.contentHash,
+      'characters': [
+        for (final id in selectableCharacterIds)
+          {
+            'id': id,
+            'templateId': _kernel.catalog.characters[id]!.templateId,
+            'raceId': _kernel.catalog.characters[id]!.raceId,
+            'traitIds': _kernel.catalog.characters[id]!.traits,
+            'skillIds': _kernel.catalog.characters[id]!.skills,
+          },
+      ],
+    };
+  }
 
-    if (matchedEntries.isEmpty) {
-      throw StateError('Card ${selection.cardId} not found in character hand');
+  List<String> get selectableCharacterIds =>
+      _kernel.catalog.characters.keys.where((id) => id != 'practice').toList();
+  Future<RoomResponse> beginDraft(String key, String hostId) async {
+    final current = _rooms.getRoom(key, hostId);
+    if (current.hostPlayerId == hostId &&
+        current.rules.randomCharacters &&
+        const ['selectionComplete', 'inGame'].contains(current.phase)) {
+      // Retrying a timed-out random start must not deal a new set of roles.
+      return _startCompletedDraft(current);
     }
-    if (matchedEntries.length == 1) {
-      reservedHandIndices.add(matchedEntries.single.key);
-      return matchedEntries.single.value;
-    }
-
-    final firstMatch = matchedEntries.first.value;
-    final hasDifferentRuntimeState = matchedEntries.any(
-      (entry) =>
-          entry.value.isDisabled != firstMatch.isDisabled ||
-          entry.value.isReinforced != firstMatch.isReinforced ||
-          entry.value.isAttackLimited != firstMatch.isAttackLimited,
+    return _startCompletedDraft(
+      await _rooms.beginDraft(key, hostId, selectableCharacterIds),
     );
-    if (hasDifferentRuntimeState) {
-      throw StateError(
-        'Multiple card instances with id ${selection.cardId} have different runtime states; provide handIndex',
-      );
-    }
-
-    reservedHandIndices.add(matchedEntries.first.key);
-    return matchedEntries.first.value;
   }
 
-  Character _resolveOwnedCharacter({
-    required String playerId,
-    required String characterId,
-  }) {
-    final player = _getPlayer(playerId);
-    final character = state.characterById[characterId];
-    if (character == null) {
-      throw StateError('Character $characterId not found');
-    }
-    if (!player.characters.contains(character)) {
-      throw StateError('Character $characterId does not belong to player $playerId');
-    }
-    return character;
+  Future<RoomResponse> submitBans(
+    String key,
+    String playerId,
+    List<String> characterIds,
+  ) async => _startCompletedDraft(
+    await _rooms.submitBans(key, playerId, characterIds),
+  );
+  Future<RoomResponse> confirmCharacter(
+    String key,
+    String playerId,
+    String characterId,
+  ) async {
+    requireCharacter(characterId);
+    return _startCompletedDraft(
+      await _rooms.confirmCharacter(key, playerId, characterId),
+    );
   }
 
-  Player _resolveCurrentPublicPlayer() {
-    final activePlayerId = state.activePlayerId;
-    if (activePlayerId != null) {
-      return _getPlayer(activePlayerId);
-    }
-    return state.players[state.currentPlayerIndex];
-  }
-
-  Player _getPlayer(String playerId) {
-    final player = state.playerById[playerId];
-    if (player == null) {
-      throw StateError('Player $playerId not found');
-    }
-    return player;
-  }
-}
-
-/// 游戏服务：管理所有局的生命周期
-class GameService {
-  final RoomService _roomService;
-  final Map<String, GameRuntime> _runtimes = {};
-  /// 幂等去重：commandId -> result
-  final Map<String, CommandResult> _commandCache = {};
-
-  GameService(this._roomService);
-
-  /// 从房间创建游戏
-  Future<String> startGame(String roomId, List<PropCard> drawPile) async {
-    final players = _roomService.getPlayers(roomId);
-    final state = _buildState(players, drawPile);
-    final gameId = 'game_$roomId';
-    final runtime = GameRuntime(gameId: gameId, state: state);
-    _runtimes[gameId] = runtime;
-    await _roomService.markInGame(roomId);
-    await runtime.engine.initEngine();
-    // 游戏开始事件（不 await，让回合推进在后台运行）
-    await runtime.engine.startGame();
-    return gameId;
-  }
-
-  Future<CommandResult> handleCommand(String gameId, GameCommand cmd) async {
-    // 幂等去重
-    if (_commandCache.containsKey(cmd.commandId)) {
-      return _commandCache[cmd.commandId]!;
-    }
-    final runtime = _getRuntime(gameId);
-    final result = await runtime.submit(cmd);
-    _commandCache[cmd.commandId] = result;
-    return result;
-  }
-
-  PublicGameView getState(String gameId) => _getRuntime(gameId).getPublicView();
-
-  PlayerPrivateView getPrivateView(String gameId, String playerId) =>
-      _getRuntime(gameId).getPrivateView(playerId);
-
-  Stream<PublicGameView> subscribe(String gameId) => _getRuntime(gameId).subscribe();
-
-  GameRuntime _getRuntime(String gameId) {
-    final rt = _runtimes[gameId];
-    if (rt == null) throw StateError('Game $gameId not found');
-    return rt;
-  }
-
-  GameState _buildState(List<Player> players, List<PropCard> drawPile) {
-    final state = GameState(players, drawPile, []);
-    for (final player in players) {
-      for (final character in player.characters) {
-        state.characterById[character.id] = character;
+  Future<RoomResponse> _startCompletedDraft(RoomResponse view) async {
+    if (view.phase == 'selectionComplete') {
+      if (!_starting.contains(view.roomId)) {
+        try {
+          await startGame(view.roomId, view.hostPlayerId!);
+        } catch (_) {
+          // A persisted complete selection can retry automatic start safely.
+          if (_rooms.getRoom(view.roomId, view.hostPlayerId!).phase !=
+              'inGame') {
+            rethrow;
+          }
+        }
       }
-      state.playerById[player.id] = player;
+      return _rooms.getRoom(view.roomId, view.hostPlayerId!);
     }
-    return state;
+    return view;
   }
-}
 
-class _PendingCommand {
-  final GameCommand command;
-  final Completer<CommandResult> completer;
-  _PendingCommand(this.command, this.completer);
+  Future<RoomResponse> closeRoom(String key, String playerId) =>
+      _rooms.closeRoom(
+        key,
+        playerId,
+        validateFinished: (id) async {
+          await _kernel.requireFinishedGame(id);
+        },
+      );
+
+  Future<RoomResponse> abortGame(String gameId, String playerId) async {
+    final roomId = _rooms.roomIdForGame(gameId);
+    if (_rooms.getHostId(roomId) != playerId) {
+      throw StateError('Only the host can abort');
+    }
+    if (_starting.contains(roomId)) throw StateError('Room is starting');
+    // Older clients use abort when their local game could not be loaded. A
+    // terminal archive can close the room while preserving the saved result.
+    if (!_kernel.hasGame(gameId) && await _kernel.hasFinishedArchive(gameId)) {
+      return closeRoom(roomId, playerId);
+    }
+    if (_kernel.checkpointRepo != null && abortStore == null) {
+      throw StateError('Atomic abort storage is not configured');
+    }
+    // Room and match queues fence concurrent commands and settings writes.
+    return _rooms.closeAfterAbort(
+      roomId,
+      playerId,
+      (closedRoom) => _kernel.abortGamePersisted(
+        gameId,
+        playerId,
+        allowNonParticipant: true, // The room host was authenticated above.
+        erase: (version) => _kernel.checkpointRepo == null
+            ? _rooms.deleteAbortedRoom(closedRoom)
+            : abortStore!.abort(gameId, version, closedRoom),
+      ),
+    );
+  }
+
+  int handleCommand(String gameId, KernelCommandRequest request) =>
+      _kernel.submit(
+        gameId,
+        request.command,
+        commandId: request.commandId,
+        expectedVersion: request.clientVersion,
+      );
+  Future<int> handleCommandPersisted(
+    String gameId,
+    KernelCommandRequest request,
+  ) => _kernel.submitPersisted(
+    gameId,
+    request.command,
+    commandId: request.commandId,
+    expectedVersion: request.clientVersion,
+  );
+  Future<void> ensureGameLoaded(String id) => _kernel.ensureGameLoaded(id);
+  Future<void> requireFinishedGame(String id) =>
+      _kernel.requireFinishedGame(id);
+  Map<String, Object?> getState(String gameId) => _kernel.getState(gameId);
+  Map<String, Object?> getPrivateView(String gameId, String playerId) =>
+      _kernel.getPrivateState(gameId, playerId);
+  Map<String, Object?> getPlayerState(String gameId, String playerId) =>
+      _kernel.getPlayerState(gameId, playerId);
+  Map<String, Object?> getPreviewState(String gameId, String playerId) =>
+      _kernel.getPreviewState(gameId, playerId);
+  Map<String, Object?> getPreviewContent(String gameId, String playerId) =>
+      _rooms.isSpectatorForGame(gameId, playerId)
+      ? _kernel.getPublicContent(gameId)
+      : _kernel.getPreviewContent(gameId, playerId);
+  Map<String, Object?> previewAttack(String gameId, PreviewRequest request) =>
+      preview(gameId, request);
+  Map<String, Object?> preview(String gameId, PreviewRequest request) =>
+      _kernel.preview(gameId, request);
+  Stream<Map<String, Object?>> subscribeForPlayer(
+    String gameId,
+    String playerId,
+  ) => _kernel.subscribeForPlayer(gameId, playerId);
+  Stream<Map<String, Object?>> subscribe(String gameId) =>
+      _kernel.subscribe(gameId);
 }

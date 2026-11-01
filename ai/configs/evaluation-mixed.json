@@ -1,0 +1,155 @@
+{
+  "suiteVersion": 2,
+  "seeds": [
+    12000001,
+    12000037
+  ],
+  "opponents": [
+    "rules",
+    "random"
+  ],
+  "deterministic": false,
+  "maximumLearnerSteps": 10000,
+  "cases": [
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "a",
+      "mode": "duel"
+    },
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "b",
+      "mode": "duel"
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "a",
+      "mode": "duel"
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "b",
+      "mode": "duel"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-1",
+      "learnerId": "a",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-1",
+      "learnerId": "b",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-1",
+      "learnerId": "c",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-1",
+      "learnerId": "d",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-2",
+      "learnerId": "a",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-2",
+      "learnerId": "b",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-2",
+      "learnerId": "c",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-2",
+      "learnerId": "d",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-3",
+      "learnerId": "a",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-3",
+      "learnerId": "b",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-3",
+      "learnerId": "c",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-team-2v2-3",
+      "learnerId": "d",
+      "mode": "team"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-1",
+      "learnerId": "a",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-1",
+      "learnerId": "b",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-1",
+      "learnerId": "c",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-1",
+      "learnerId": "d",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-2",
+      "learnerId": "a",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-2",
+      "learnerId": "b",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-2",
+      "learnerId": "c",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-2",
+      "learnerId": "d",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-3",
+      "learnerId": "a",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-3",
+      "learnerId": "b",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-3",
+      "learnerId": "c",
+      "mode": "ffa"
+    },
+    {
+      "scenarioId": "mixed-ffa-4-3",
+      "learnerId": "d",
+      "mode": "ffa"
+    }
+  ]
+}

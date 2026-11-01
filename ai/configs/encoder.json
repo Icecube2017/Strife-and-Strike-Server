@@ -1,0 +1,86 @@
+{
+  "numericObservationSchema": 1,
+  "encoderVersion": 1,
+  "actionSchema": 1,
+  "candidateCapacity": 64,
+  "config": {
+    "players": 8,
+    "statuses": 32,
+    "marks": 16,
+    "hand": 16,
+    "skills": 16,
+    "variables": 128,
+    "records": 8,
+    "candidate_capacity": 64
+  },
+  "shapes": {
+    "global": [
+      32
+    ],
+    "players": [
+      8,
+      24
+    ],
+    "statuses": [
+      8,
+      32,
+      16
+    ],
+    "marks": [
+      8,
+      16,
+      8
+    ],
+    "hand": [
+      16,
+      32
+    ],
+    "skills": [
+      16,
+      20
+    ],
+    "public_skills": [
+      8,
+      16,
+      8
+    ],
+    "pending_cards": [
+      16,
+      8
+    ],
+    "revealed_history": [
+      8,
+      16,
+      3
+    ],
+    "variables": [
+      128,
+      14
+    ],
+    "records": [
+      8,
+      8
+    ],
+    "candidates": [
+      64,
+      80
+    ],
+    "action_mask": [
+      64
+    ]
+  },
+  "scales": {
+    "hp": 4000,
+    "mp": 32,
+    "stat": 1000,
+    "count": 64,
+    "round": 64,
+    "id": 65535
+  },
+  "definitionRegistryRevision": 1,
+  "paging": {
+    "previous": 0,
+    "next": 1,
+    "firstCandidate": 2
+  }
+}

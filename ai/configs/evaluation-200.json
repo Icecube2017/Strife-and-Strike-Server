@@ -1,0 +1,54 @@
+{
+  "suiteVersion": 1,
+  "seeds": [
+    3000001,
+    3000998,
+    3001995,
+    3002992,
+    3003989,
+    3004986,
+    3005983,
+    3006980,
+    3007977,
+    3008974,
+    3009971,
+    3010968,
+    3011965,
+    3012962,
+    3013959,
+    3014956,
+    3015953,
+    3016950,
+    3017947,
+    3018944,
+    3019941,
+    3020938,
+    3021935,
+    3022932,
+    3023929
+  ],
+  "opponents": [
+    "rules",
+    "random"
+  ],
+  "deterministic": false,
+  "maximumLearnerSteps": 10000,
+  "cases": [
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "a"
+    },
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "b"
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "a"
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "b"
+    }
+  ]
+}

@@ -2,15 +2,11 @@ class RegisterUserRequest {
   final String username;
   final String password;
   final String? email;
-  final String? phoneNumber;
-  final String? pronoun;
 
   RegisterUserRequest({
     required this.username,
     required this.password,
     this.email,
-    this.phoneNumber,
-    this.pronoun,
   });
 
   factory RegisterUserRequest.fromJson(Map<String, dynamic> json) =>
@@ -18,8 +14,6 @@ class RegisterUserRequest {
         username: json['username'] as String,
         password: json['password'] as String,
         email: json['email'] as String?,
-        phoneNumber: json['phoneNumber'] as String?,
-        pronoun: json['pronoun'] as String?,
       );
 }
 
@@ -49,11 +43,10 @@ class RefreshTokenRequest {
 }
 
 class UserView {
+  final String? nickname;
   final int id;
   final String username;
   final String? email;
-  final String? phoneNumber;
-  final String? pronoun;
   final int permission;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -62,19 +55,15 @@ class UserView {
     required this.id,
     required this.username,
     required this.permission,
+    this.nickname,
     this.email,
-    this.phoneNumber,
-    this.pronoun,
     this.createdAt,
     this.updatedAt,
   });
 
   Map<String, dynamic> toJson() => {
     'id': id,
-    'username': username,
-    if (email != null) 'email': email,
-    if (phoneNumber != null) 'phoneNumber': phoneNumber,
-    if (pronoun != null) 'pronoun': pronoun,
+    'nickname': nickname ?? username,
     'permission': permission,
     if (createdAt != null) 'createdAt': createdAt!.toIso8601String(),
     if (updatedAt != null) 'updatedAt': updatedAt!.toIso8601String(),

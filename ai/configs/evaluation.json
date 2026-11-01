@@ -1,0 +1,32 @@
+{
+  "suiteVersion": 1,
+  "seeds": [
+    2000003,
+    2000033,
+    2000081
+  ],
+  "opponents": [
+    "rules",
+    "random"
+  ],
+  "deterministic": false,
+  "maximumLearnerSteps": 10000,
+  "cases": [
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "a"
+    },
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "b"
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "a"
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "b"
+    }
+  ]
+}

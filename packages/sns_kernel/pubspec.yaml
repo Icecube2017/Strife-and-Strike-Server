@@ -1,0 +1,10 @@
+name: sns_kernel
+description: Shared pure Dart Strife and Strike kernel and previews.
+version: 2.0.0
+publish_to: none
+environment:
+  sdk: ^3.11.0
+dependencies:
+  crypto: ^3.0.7
+dev_dependencies:
+  test: ^1.0.0

@@ -1,4 +1,3 @@
-import 'package:postgres/postgres.dart';
 import 'package:sns_server/infrastructure/db/db_connection.dart';
 
 class RefreshTokenRecord {
@@ -78,78 +77,50 @@ class InMemoryRefreshTokenRepo implements RefreshTokenRepo {
   }
 }
 
-class PgRefreshTokenRepo implements RefreshTokenRepo {
-  PgRefreshTokenRepo(this._db);
-
+class SqliteRefreshTokenRepo implements RefreshTokenRepo {
+  SqliteRefreshTokenRepo(this._db);
   final DbConnection _db;
-
   @override
   Future<RefreshTokenRecord> create({
     required int userId,
     required String tokenHash,
     required DateTime expiresAt,
   }) async {
-    final result = await _db.pool.execute(
-      Sql.named('''
-        INSERT INTO refresh_tokens (user_id, token_hash, expires_at)
-        VALUES (@userId, @tokenHash, @expiresAt)
-        RETURNING
-          id,
-          user_id,
-          token_hash,
-          expires_at,
-          revoked_at,
-          created_at,
-          updated_at
-      '''),
-      parameters: {
-        'userId': userId,
-        'tokenHash': tokenHash,
-        'expiresAt': expiresAt,
-      },
+    final now = DateTime.now().toUtc().toIso8601String();
+    _db.database.execute(
+      'INSERT INTO refresh_tokens (user_id, token_hash, expires_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?)',
+      [userId, tokenHash, expiresAt.toUtc().toIso8601String(), now, now],
     );
-    return _fromRow(result.first);
+    return (await findByTokenHash(tokenHash))!;
   }
 
   @override
   Future<RefreshTokenRecord?> findByTokenHash(String tokenHash) async {
-    final result = await _db.pool.execute(
-      Sql.named('''
-        SELECT
-          id,
-          user_id,
-          token_hash,
-          expires_at,
-          revoked_at,
-          created_at,
-          updated_at
-        FROM refresh_tokens
-        WHERE token_hash = @tokenHash
-        LIMIT 1
-      '''),
-      parameters: {'tokenHash': tokenHash},
+    final rows = _db.database.select(
+      'SELECT * FROM refresh_tokens WHERE token_hash = ?',
+      [tokenHash],
     );
-    if (result.isEmpty) return null;
-    return _fromRow(result.first);
+    if (rows.isEmpty) return null;
+    final row = rows.first;
+    return RefreshTokenRecord(
+      id: row['id']! as int,
+      userId: row['user_id']! as int,
+      tokenHash: row['token_hash']! as String,
+      expiresAt: DateTime.parse(row['expires_at']! as String),
+      revokedAt: row['revoked_at'] == null
+          ? null
+          : DateTime.parse(row['revoked_at']! as String),
+      createdAt: DateTime.parse(row['created_at']! as String),
+      updatedAt: DateTime.parse(row['updated_at']! as String),
+    );
   }
 
   @override
-  Future<void> revokeByTokenHash(String tokenHash) => _db.pool.execute(
-    Sql.named('''
-          UPDATE refresh_tokens
-          SET revoked_at = now(), updated_at = now()
-          WHERE token_hash = @tokenHash AND revoked_at IS NULL
-        '''),
-    parameters: {'tokenHash': tokenHash},
-  );
-
-  RefreshTokenRecord _fromRow(ResultRow row) => RefreshTokenRecord(
-    id: row[0]! as int,
-    userId: row[1]! as int,
-    tokenHash: row[2]! as String,
-    expiresAt: row[3]! as DateTime,
-    revokedAt: row[4] as DateTime?,
-    createdAt: row[5] as DateTime?,
-    updatedAt: row[6] as DateTime?,
-  );
+  Future<void> revokeByTokenHash(String tokenHash) async {
+    final now = DateTime.now().toUtc().toIso8601String();
+    _db.database.execute(
+      'UPDATE refresh_tokens SET revoked_at = ?, updated_at = ? WHERE token_hash = ? AND revoked_at IS NULL',
+      [now, now, tokenHash],
+    );
+  }
 }

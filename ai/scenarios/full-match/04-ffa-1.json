@@ -1,0 +1,30 @@
+{
+  "scenarioVersion": 1,
+  "id": "mixed-ffa-4-1",
+  "description": "正式完整对局；正式201张牌堆、完整通用技能池、默认开局与摸牌规则。",
+  "trainingMode": "fullMatch",
+  "players": [
+    {
+      "id": "a",
+      "characterId": "character_andrenin",
+      "teamId": "solo-a"
+    },
+    {
+      "id": "b",
+      "characterId": "character_chinro",
+      "teamId": "solo-b"
+    },
+    {
+      "id": "c",
+      "characterId": "character_fan_qiu",
+      "teamId": "solo-c"
+    },
+    {
+      "id": "d",
+      "characterId": "character_neko",
+      "teamId": "solo-d"
+    }
+  ],
+  "deck": "default",
+  "skillPool": "default"
+}

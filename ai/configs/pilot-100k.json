@@ -1,0 +1,61 @@
+{
+  "configVersion": 1,
+  "device": "cpu",
+  "workers": 2,
+  "torchThreads": 1,
+  "seed": 7,
+  "totalDecisionSteps": 100000,
+  "policyHiddenSizes": [
+    128,
+    128
+  ],
+  "learningRate": 0.0003,
+  "rolloutSteps": 1024,
+  "batchSize": 128,
+  "optimizationEpochs": 5,
+  "gamma": 0.999,
+  "gaeLambda": 0.95,
+  "entropyCoefficient": 0.01,
+  "checkpointEveryUpdates": 5,
+  "evaluateEveryUpdates": 5,
+  "maximumKernelDecisions": 100000,
+  "maximumLearnerSteps": 10000,
+  "opponent": "rules",
+  "trainingSeedStart": 1000,
+  "trainingSeedStop": 999999,
+  "cases": [
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "a"
+    },
+    {
+      "scenarioId": "rondo-encouragement-1v1",
+      "learnerId": "b"
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "a"
+    },
+    {
+      "scenarioId": "ranger-observer-1v1",
+      "learnerId": "b"
+    }
+  ],
+  "evaluation": {
+    "seeds": [
+      1000001,
+      1000019
+    ],
+    "opponents": [
+      "rules",
+      "random"
+    ],
+    "deterministic": false,
+    "maximumLearnerSteps": 10000
+  },
+  "scenarioSet": "ai/scenarios/full-match",
+  "taskName": "full-match-four-character-v2",
+  "reward": {
+    "mode": "winLoss"
+  }
+}

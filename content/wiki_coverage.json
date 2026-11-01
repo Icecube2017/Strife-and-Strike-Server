@@ -1,0 +1,2098 @@
+{
+  "wikiRevision": 41,
+  "implemented": {
+    "characters": [
+      {
+        "uuid": "06e5d564-6595-40ce-8b65-3822378ea2ba",
+        "wikiId": "character_andrenin",
+        "name": "安德宁"
+      },
+      {
+        "uuid": "360aa0aa-90c3-4b34-a101-cfdeb105e797",
+        "wikiId": "character_chinro",
+        "name": "茵竹"
+      },
+      {
+        "uuid": "961092b3-bae5-4bee-bcf4-60e18c3c20e9",
+        "wikiId": "character_windflutter",
+        "name": "岚"
+      },
+      {
+        "uuid": "26e70835-163c-416e-8247-be819a9520fd",
+        "wikiId": "character_viento",
+        "name": "观风"
+      },
+      {
+        "uuid": "bb383d40-b059-420c-bd66-61cdd0468b9f",
+        "wikiId": "character_ember_blade",
+        "name": "焰心剑"
+      },
+      {
+        "uuid": "673cb5a5-1043-4343-a8ef-da535a8770f1",
+        "wikiId": "character_tower_guardian",
+        "name": "守塔人"
+      },
+      {
+        "uuid": "650ff904-e2ed-4f56-812d-3cf7a3562a1b",
+        "wikiId": "character_fang_han",
+        "name": "方寒"
+      },
+      {
+        "uuid": "2fae8423-88c7-41cf-8a82-27bc64ebd698",
+        "wikiId": "character_yu_mengde",
+        "name": "余梦得"
+      },
+      {
+        "uuid": "ac06b627-e781-4e88-9287-8f849b6ffc16",
+        "wikiId": "character_lancelot",
+        "name": "兰斯洛特"
+      },
+      {
+        "uuid": "b75488a2-b085-497e-aadb-5ea20b335445",
+        "wikiId": "character_engine_4",
+        "name": "EnGine-4"
+      },
+      {
+        "uuid": "b05dfd36-4156-4c8d-ab34-b6adc04de756",
+        "wikiId": "character_defen_5",
+        "name": "DeFen-5"
+      },
+      {
+        "uuid": "016739a7-1b7b-4e9b-928e-d84b8d14371b",
+        "wikiId": "character_ennoia",
+        "name": "埃诺雅"
+      },
+      {
+        "uuid": "1cb1c34c-2f8b-4e6a-b84c-22c0fba64bf3",
+        "wikiId": "character_cimme",
+        "name": "赐弥"
+      },
+      {
+        "uuid": "532a8940-fbb7-4be8-a0b5-0d0c60f49113",
+        "wikiId": "character_lin_aixue",
+        "name": "林叆雪"
+      },
+      {
+        "uuid": "1726e6ca-5aaf-4ea4-b4e4-251dc487a9b3",
+        "wikiId": "character_starcondon",
+        "name": "星凝"
+      },
+      {
+        "uuid": "5a810b01-8f74-4702-8af0-f11bc55550a5",
+        "wikiId": "character_an_shanding",
+        "name": "安山定"
+      },
+      {
+        "uuid": "0e575463-ebaa-483c-bb69-74919a75e95e",
+        "wikiId": "character_ophelia",
+        "name": "奥菲莉娅"
+      },
+      {
+        "uuid": "a233f53d-8dfb-4f8c-b3b9-6eae1dee0731",
+        "wikiId": "character_starduster",
+        "name": "星尘"
+      },
+      {
+        "uuid": "7cae8def-3867-45f8-82ec-5d488506ad5c",
+        "wikiId": "character_froth",
+        "name": "沫"
+      },
+      {
+        "uuid": "50816f6f-7107-48a3-827b-b4dc28846813",
+        "wikiId": "character_gentou",
+        "name": "舸灯"
+      },
+      {
+        "uuid": "04ae7c34-cb6a-4b4e-995e-997632ef224e",
+        "wikiId": "character_yun",
+        "name": "云云子"
+      },
+      {
+        "uuid": "ba7d0486-988d-4444-b0bd-9c48cbaa39c1",
+        "wikiId": "character_nepst",
+        "name": "奈普斯特"
+      },
+      {
+        "uuid": "b115ef09-396c-49c0-a437-01b9d4d0e5e7",
+        "wikiId": "character_tussiu",
+        "name": "图西乌·那错天"
+      },
+      {
+        "uuid": "9574116c-69c0-4aeb-af62-6847d7053c58",
+        "wikiId": "character_fan_qiu",
+        "name": "樊求"
+      },
+      {
+        "uuid": "7f9ef6ab-2321-4364-9062-d8b96ba3c2a6",
+        "wikiId": "character_zephyr",
+        "name": "湍云"
+      },
+      {
+        "uuid": "ded63836-f374-4872-978e-9c33d3f8b588",
+        "wikiId": "character_pi_123",
+        "name": "π123"
+      },
+      {
+        "uuid": "eba61aab-059d-443a-940b-d5e7e8478f56",
+        "wikiId": "character_neko",
+        "name": "妮卡欧"
+      },
+      {
+        "uuid": "a0f6f7a5-e37c-4517-873d-98a91b489bc7",
+        "wikiId": "character_tang_jingyan",
+        "name": "唐菁延"
+      },
+      {
+        "uuid": "cf233f57-781b-4cbd-99ca-41937e22724b",
+        "wikiId": "character_lor",
+        "name": "洛尔"
+      },
+      {
+        "uuid": "a332a530-e103-476c-9f46-3a876cea47fb",
+        "wikiId": "character_pigeon",
+        "name": "恪玥"
+      },
+      {
+        "uuid": "92a3e2d4-1932-4e9d-a85f-5c0691e5b90c",
+        "wikiId": "character_clouddamp",
+        "name": "云津"
+      },
+      {
+        "uuid": "47904bdf-6e58-46d7-8f5f-7b7eb510ad8a",
+        "wikiId": "character_refre_3",
+        "name": "ReFre-3"
+      },
+      {
+        "uuid": "8a522467-31dd-423c-8e44-731da694daa1",
+        "wikiId": "character_antithesis",
+        "name": "安提忒斯"
+      },
+      {
+        "uuid": "45b2ec2b-8d16-4659-b78d-c198fc6a3ef7",
+        "wikiId": "character_stonehoof",
+        "name": "石蹄"
+      },
+      {
+        "uuid": "671b75cb-d93d-4a79-8671-08421a5619f1",
+        "wikiId": "character_vivace",
+        "name": "红跃"
+      },
+      {
+        "uuid": "9197be7b-ce5e-4f96-bf69-9c055c4146de",
+        "wikiId": "character_shigure",
+        "name": "时雨"
+      },
+      {
+        "uuid": "85c93d89-3ff3-41af-8181-18dede774ae4",
+        "wikiId": "character_enkan",
+        "name": "炎焕"
+      },
+      {
+        "uuid": "1c5fda6e-2d67-4a37-bafa-e5e8502b81ec",
+        "wikiId": "character_zhu_yecheng",
+        "name": "祝烨诚"
+      },
+      {
+        "uuid": "1949192f-9d93-4eb9-809b-8fa4f24baba4",
+        "wikiId": "character_quetzalcoatl",
+        "name": "科亚特尔"
+      },
+      {
+        "uuid": "048c86f8-6d8e-4436-a74b-e9a41a560ed4",
+        "wikiId": "character_valedictus",
+        "name": "卿别"
+      },
+      {
+        "uuid": "b530e9d3-ab9d-4cae-a525-6cc76d9335d5",
+        "wikiId": "character_fu_ying",
+        "name": "符楹"
+      },
+      {
+        "uuid": "af4ea4aa-4fdb-4f23-ae44-0a788ffdc01a",
+        "wikiId": "character_steelshell",
+        "name": "钢壳"
+      },
+      {
+        "uuid": "99ceafea-7d61-4fcf-8704-ad237840ed5d",
+        "wikiId": "character_othello",
+        "name": "奥赛罗"
+      },
+      {
+        "uuid": "fd18a91d-0413-4af2-837e-087deae3ee98",
+        "wikiId": "character_normal_12",
+        "name": "NorMal-12"
+      },
+      {
+        "uuid": "c72376de-95d0-4d5b-8fb7-dc3338a79acf",
+        "wikiId": "character_dr_min",
+        "name": "敏博士"
+      },
+      {
+        "uuid": "c7b68ed0-5cba-4832-8d2f-65bc7b3fce4e",
+        "wikiId": "character_dimpsy",
+        "name": "红黎"
+      },
+      {
+        "uuid": "771fe61e-03d0-423f-8d4b-521493a72c96",
+        "wikiId": "character_zhu_yeming",
+        "name": "祝烨明"
+      },
+      {
+        "uuid": "1c228ef6-24b8-4875-aa3e-f48796740dd3",
+        "wikiId": "character_seiwaku",
+        "name": "星惑"
+      },
+      {
+        "uuid": "b12e70ae-0767-4ab0-8010-94ae62e1b77d",
+        "wikiId": "character_yan_ruoqing",
+        "name": "颜若卿"
+      },
+      {
+        "uuid": "827488e7-5ab7-4431-b03a-038685123c82",
+        "wikiId": "character_moonseek",
+        "name": "向月"
+      },
+      {
+        "uuid": "738f1032-2f72-439a-a506-3fe253b48ee6",
+        "wikiId": "character_darkstar",
+        "name": "黯星"
+      },
+      {
+        "uuid": "c76173c7-70d9-44be-929d-1483d22635e9",
+        "wikiId": "character_loveless",
+        "name": "恋慕"
+      },
+      {
+        "uuid": "31d4a2cd-6087-45a1-b47e-858df8d565df",
+        "wikiId": "character_k97",
+        "name": "K97"
+      },
+      {
+        "uuid": "cadbcd87-5fa5-4faa-ac0c-d281f733f6ea",
+        "wikiId": "character_flowwind",
+        "name": "扶风"
+      },
+      {
+        "uuid": "8dec1b37-f223-48b5-8269-19a46882798d",
+        "wikiId": "character_gao_miao",
+        "name": "高淼"
+      },
+      {
+        "uuid": "42b9e1b1-df5e-4703-9bb9-ceb386aef49b",
+        "wikiId": "character_sumoggu",
+        "name": "长霾"
+      },
+      {
+        "uuid": "c226731b-2dab-44df-866b-04b6d2babea0",
+        "wikiId": "character_kiyu",
+        "name": "晖夕"
+      },
+      {
+        "uuid": "5e15fec7-0fff-4e77-b246-5d01c9e54add",
+        "wikiId": "character_sweven",
+        "name": "斯威芬"
+      },
+      {
+        "uuid": "4fbbdcdf-2636-42eb-95d2-f63a8cf42656",
+        "wikiId": "character_mr_nice",
+        "name": "“好好先生”"
+      },
+      {
+        "uuid": "290990ca-31b2-4c36-965c-cb6277d432db",
+        "wikiId": "character_mondrian",
+        "name": "蒙德里安"
+      },
+      {
+        "uuid": "796a814a-c999-48f9-8d94-13d9ddb79f80",
+        "wikiId": "character_apophis",
+        "name": "阿波菲斯"
+      },
+      {
+        "uuid": "f0d653ab-49b1-4911-99e2-9bdf56f07258",
+        "wikiId": "character_long_yuche",
+        "name": "龙宇澈"
+      },
+      {
+        "uuid": "85b1656b-a14c-4aaf-8b97-38e5c636c14c",
+        "wikiId": "character_eris_make",
+        "name": "祝言夙"
+      },
+      {
+        "uuid": "0dea29a9-c1bb-4957-926e-cf9a2174cd08",
+        "wikiId": "character_tang_yade",
+        "name": "唐亚德"
+      },
+      {
+        "uuid": "37485258-2c7f-4dc4-b5e7-e06458985776",
+        "wikiId": "character_lei_gang",
+        "name": "雷刚"
+      },
+      {
+        "uuid": "c520f603-05cb-4c48-93ae-ff7264fffa4b",
+        "wikiId": "character_lu_feng",
+        "name": "陆风"
+      },
+      {
+        "uuid": "17175eee-9c0d-4056-a9a5-26f6ab36ff4e",
+        "wikiId": "character_ting_xinyu",
+        "name": "亭歆雨"
+      },
+      {
+        "uuid": "c63f8225-a812-4c1b-83d7-eeadfc1173eb",
+        "wikiId": "character_ran_xu",
+        "name": "染序"
+      },
+      {
+        "uuid": "40bc0f16-ea1e-4998-8c9c-7d8722378f36",
+        "wikiId": "character_karak",
+        "name": "卡拉卡"
+      },
+      {
+        "uuid": "055dcd81-56cf-4b5f-8118-bcfa57f18317",
+        "wikiId": "character_daybreak",
+        "name": "曙光"
+      },
+      {
+        "uuid": "7bcd3631-be24-4a51-815d-f7098324e6e3",
+        "wikiId": "character_si_ku",
+        "name": "司库"
+      },
+      {
+        "uuid": "2a47ed78-c2f8-415e-9837-a2eb3c29e338",
+        "wikiId": "character_trifolawn",
+        "name": "枳芒"
+      },
+      {
+        "uuid": "440a9de2-79a2-43b2-a338-1c02ff6d3675",
+        "wikiId": "character_ember",
+        "name": "红烬"
+      },
+      {
+        "uuid": "75ae7110-d23d-41e6-96a0-71d05b8b967e",
+        "wikiId": "character_ye",
+        "name": "叶姬"
+      },
+      {
+        "uuid": "2762a90e-8e7a-419e-8d44-592de26f8625",
+        "wikiId": "character_nyxumbra",
+        "name": "太夕"
+      },
+      {
+        "uuid": "604ec845-e634-4ae0-9c2f-399abb3a1b3e",
+        "wikiId": "character_phantos",
+        "name": "方塔索"
+      },
+      {
+        "uuid": "3219c961-343d-49e7-9c56-9c0d6e9c750b",
+        "wikiId": "character_bai_xie",
+        "name": "白谢"
+      },
+      {
+        "uuid": "c6854f61-470b-4eb9-9e45-49face31b64f",
+        "wikiId": "character_shen_shuhua",
+        "name": "沈姝华"
+      },
+      {
+        "uuid": "728435c6-e382-46c3-bb92-d6ef288e0116",
+        "wikiId": "character_turbach",
+        "name": "翠灵"
+      },
+      {
+        "uuid": "29ac759b-292b-4f9b-a820-891985cf890a",
+        "wikiId": "character_lan_wence",
+        "name": "蓝文策"
+      },
+      {
+        "uuid": "c151dea3-94cb-4e42-8350-db359ec72476",
+        "wikiId": "character_lan_wenxi",
+        "name": "蓝文曦"
+      },
+      {
+        "uuid": "0cb485b6-2c7b-4192-b466-fdc44219d405",
+        "wikiId": "character_zhu_yanhuang",
+        "name": "祝炎凰"
+      },
+      {
+        "uuid": "2a78a93d-1dd4-40e5-afee-1457190a1efd",
+        "wikiId": "character_yukimura",
+        "name": "雪村"
+      }
+    ],
+    "traits": [
+      {
+        "uuid": "5ffcef17-ff49-4203-a74d-5691169692b3",
+        "wikiId": "trait_rondo",
+        "name": "回旋曲"
+      },
+      {
+        "uuid": "e9670db2-b968-4314-bbfc-f9153575ce6c",
+        "wikiId": "trait_tireless_observer",
+        "name": "不倦的观测者"
+      },
+      {
+        "uuid": "40674f44-84ad-4e0e-8209-149b28274846",
+        "wikiId": "trait_smoldering_rage",
+        "name": "不断燃烧的愤怒"
+      },
+      {
+        "uuid": "1352f726-fc9f-415f-a006-db300652fc0e",
+        "wikiId": "trait_loss_gain_equilibrium",
+        "name": "盈亏相济"
+      },
+      {
+        "uuid": "b07737df-cd8d-445a-82cc-0c08a755a270",
+        "wikiId": "trait_resonance_of_dreams",
+        "name": "梦的共鸣"
+      },
+      {
+        "uuid": "cf661ce8-d374-4d55-a816-c7ef3638ab83",
+        "wikiId": "trait_introductory_gift",
+        "name": "“见面礼”"
+      },
+      {
+        "uuid": "8139fc72-64a0-414c-acfb-66b79daa9115",
+        "wikiId": "trait_self_encouragement",
+        "name": "自勉"
+      },
+      {
+        "uuid": "316bfea3-1c28-4010-8444-e768d8caaeca",
+        "wikiId": "trait_demonic_avatar",
+        "name": "天魔体"
+      },
+      {
+        "uuid": "f680ea2c-1aa9-4d9f-b20d-777ca62cf549",
+        "wikiId": "trait_hema_slash",
+        "name": "血灵斩"
+      },
+      {
+        "uuid": "8d447fac-d8ad-4ced-b5c4-af8d1ef30dbc",
+        "wikiId": "trait_icy_stillness",
+        "name": "凛息"
+      },
+      {
+        "uuid": "87fa15fa-3f5e-4a77-a14b-848bc87194a2",
+        "wikiId": "trait_weathers_unfold",
+        "name": "气象万千"
+      },
+      {
+        "uuid": "09b29a23-08f5-41d9-8871-23507fdf4a9f",
+        "wikiId": "trait_normalization",
+        "name": "<01>归一化"
+      },
+      {
+        "uuid": "f165d3f7-1ed5-4601-8d7c-35c5cccced79",
+        "wikiId": "trait_ephemeral",
+        "name": "须臾"
+      },
+      {
+        "uuid": "a8cad703-7564-4aba-964f-fc9048f2273f",
+        "wikiId": "trait_lightfall_blade",
+        "name": "陨光之刃"
+      },
+      {
+        "uuid": "7cbdcbc9-fa13-4457-8c57-83a8425265c8",
+        "wikiId": "trait_lands_grace_swords_soul",
+        "name": "山河剑意"
+      },
+      {
+        "uuid": "c696bd22-11eb-4f72-8fc0-154ee060e3a0",
+        "wikiId": "trait_tide_beacon",
+        "name": "潮海明灯"
+      },
+      {
+        "uuid": "7d049c24-32ef-4910-b487-f20f67c738d9",
+        "wikiId": "trait_radiant_blast",
+        "name": "耀光爆裂"
+      },
+      {
+        "uuid": "15c408a6-0704-42f6-aac2-f0fe43484dfe",
+        "wikiId": "trait_guardian_of_dreams",
+        "name": "梦的守护"
+      },
+      {
+        "uuid": "48071bcb-f135-4691-896f-caae1f22ff4e",
+        "wikiId": "trait_plucking_pouch",
+        "name": "探囊取物"
+      },
+      {
+        "uuid": "fa7f073d-f1b8-44a3-8030-a23ebc208e72",
+        "wikiId": "trait_tit_for_tat",
+        "name": "针锋相对"
+      },
+      {
+        "uuid": "c7213b84-5124-4888-8e6f-f6b83bb310d9",
+        "wikiId": "trait_innocent_love",
+        "name": "纯洁之爱"
+      },
+      {
+        "uuid": "f5d46fb7-d2d7-4b94-b2e2-9d396f80437b",
+        "wikiId": "trait_balance_of_light_and_shadow",
+        "name": "善恶天平"
+      },
+      {
+        "uuid": "e1bb7706-817a-46e7-8038-c16452f66c2c",
+        "wikiId": "trait_upon_the_clouds",
+        "name": "在云端"
+      },
+      {
+        "uuid": "df9fb80b-1645-4838-87c8-4ea3b890c4b1",
+        "wikiId": "trait_mass_energy_conversion",
+        "name": "<04>质能转换"
+      },
+      {
+        "uuid": "6c9c4bd9-3f14-4586-b88e-2cc769bf1575",
+        "wikiId": "trait_force_field_simulation",
+        "name": "<15>力场模拟"
+      },
+      {
+        "uuid": "db249f92-10b6-44c9-bbff-b7f9fd2c8751",
+        "wikiId": "trait_primordial_horologe",
+        "name": "原初时计"
+      },
+      {
+        "uuid": "8881df62-e69a-4716-abe5-33fec55cef10",
+        "wikiId": "trait_quintal_genesis",
+        "name": "五度相生"
+      },
+      {
+        "uuid": "a1899600-0a64-4c44-b738-e0f5021cad42",
+        "wikiId": "trait_octmelo_harmony",
+        "name": "八音克谐"
+      },
+      {
+        "uuid": "32d4149f-9744-4ada-b993-23c72dc049f3",
+        "wikiId": "trait_yearning",
+        "name": "希冀"
+      },
+      {
+        "uuid": "a20794ae-26d8-4d0a-812a-a712a55a3d58",
+        "wikiId": "trait_blessing",
+        "name": "祝愿"
+      },
+      {
+        "uuid": "3edde2a7-47dc-4a29-a083-7a7967d16751",
+        "wikiId": "trait_utopia_of_upspring",
+        "name": "后发的乌托邦"
+      },
+      {
+        "uuid": "810c6cf9-c623-4101-b222-e9577e53734f",
+        "wikiId": "trait_hydromancy",
+        "name": "控水"
+      },
+      {
+        "uuid": "8026fa73-688b-4862-8fe5-67e1c773addf",
+        "wikiId": "trait_water_torture",
+        "name": "水之刑"
+      },
+      {
+        "uuid": "f2fa597a-64ed-4ba4-9e8d-984ac2db9e5c",
+        "wikiId": "trait_lucky_shield",
+        "name": "幸运壁垒"
+      },
+      {
+        "uuid": "cb74bc85-aa7c-4ea9-9575-81028ffda953",
+        "wikiId": "trait_ghost_ferry",
+        "name": "引渡"
+      },
+      {
+        "uuid": "b64d4575-9ea5-48b1-9a37-2c76fc69cd03",
+        "wikiId": "trait_annihilative_cycle",
+        "name": "湮灭性轮回"
+      },
+      {
+        "uuid": "4176f15d-a5b8-48c2-9656-27d31d531367",
+        "wikiId": "trait_conflagration_avatar",
+        "name": "烈焰之体"
+      },
+      {
+        "uuid": "2caef1a5-fabf-4ec1-9850-f9ec4cdcf390",
+        "wikiId": "trait_life_breath",
+        "name": "生息"
+      },
+      {
+        "uuid": "66e7cbb7-da44-4a53-8b5f-22d5ec14cd58",
+        "wikiId": "trait_core_meltdown",
+        "name": "炉心融解"
+      },
+      {
+        "uuid": "882e37a9-c703-4a70-a9e1-5fb66677f99a",
+        "wikiId": "trait_dusk_void",
+        "name": "晨昏寥落"
+      },
+      {
+        "uuid": "bdbd3bc9-dbc9-401e-bec8-1f5b2e10731f",
+        "wikiId": "trait_spectralization",
+        "name": "幽魂化"
+      },
+      {
+        "uuid": "a6315b24-2b32-4b9b-b314-ccbb28580904",
+        "wikiId": "trait_little_spook",
+        "name": "小惊吓"
+      },
+      {
+        "uuid": "25df253e-758a-43c9-9070-e30dfaffd395",
+        "wikiId": "trait_transit",
+        "name": "凌日"
+      },
+      {
+        "uuid": "ce24065d-851c-4e21-9fdb-f3aa87dccee7",
+        "wikiId": "trait_eclipse",
+        "name": "蚀月"
+      },
+      {
+        "uuid": "404c7e53-7c4c-4c69-b0ce-18da74e907f2",
+        "wikiId": "trait_ranger",
+        "name": "游侠"
+      },
+      {
+        "uuid": "7dce4759-dcf8-4f93-aa6f-ef49455431dd",
+        "wikiId": "trait_precision",
+        "name": "精准"
+      },
+      {
+        "uuid": "c0683b39-befa-46a4-b280-17c4f636a2a5",
+        "wikiId": "trait_hold_breath",
+        "name": "屏息"
+      },
+      {
+        "uuid": "99294379-e1db-43c9-b536-959fbb1bff08",
+        "wikiId": "trait_gun_shy",
+        "name": "惊弓"
+      },
+      {
+        "uuid": "ad79f161-e9fd-43d8-9237-54c96512b1e9",
+        "wikiId": "trait_binary_dyad",
+        "name": "二进制成对"
+      },
+      {
+        "uuid": "3628f651-7531-4190-9d62-1047b887c32f",
+        "wikiId": "trait_distinct_road",
+        "name": "明晰的来时路"
+      },
+      {
+        "uuid": "9834f33c-1cf8-4b5e-8a5b-3613bb98a4f4",
+        "wikiId": "trait_lingering_light",
+        "name": "延光"
+      },
+      {
+        "uuid": "5512f907-5a02-4999-9253-838d760414fe",
+        "wikiId": "trait_radiant_fullness",
+        "name": "盈光"
+      },
+      {
+        "uuid": "790edd75-38f2-443b-a49a-57b5b8c805f1",
+        "wikiId": "trait_chaotic_strikes",
+        "name": "毫无章法的进攻"
+      },
+      {
+        "uuid": "0efdc69a-ee13-4756-a89c-fc1d06bd0b62",
+        "wikiId": "trait_escaping",
+        "name": "咕尘散"
+      },
+      {
+        "uuid": "bfa46737-e478-4239-8560-9e9b0c459fe2",
+        "wikiId": "trait_renouncing",
+        "name": "歇尘凡"
+      },
+      {
+        "uuid": "ff9da67a-764b-4e9c-ae27-e68ee9c19a2d",
+        "wikiId": "trait_celestial_joy",
+        "name": "云系祝乐"
+      },
+      {
+        "uuid": "4b637de4-e01c-4207-852b-6e817780086e",
+        "wikiId": "trait_defensive_protocol",
+        "name": "<06>自卫协议"
+      },
+      {
+        "uuid": "3414c2c4-e20f-4277-88e4-0d7c34f448d9",
+        "wikiId": "trait_thermal_recovery",
+        "name": "<0C>热能回收"
+      },
+      {
+        "uuid": "c5a61e67-bd76-4374-a5d5-d194d354d1ca",
+        "wikiId": "trait_ice_and_fire",
+        "name": "冰与火之歌"
+      },
+      {
+        "uuid": "5a40a490-c46a-426b-b2fe-562d4846f846",
+        "wikiId": "trait_boing_spell",
+        "name": "蹦蹦咒语"
+      },
+      {
+        "uuid": "dbc98c8c-5273-4aa5-9ec0-c66bbe4d8027",
+        "wikiId": "trait_vulcans_protection",
+        "name": "火神的加护"
+      },
+      {
+        "uuid": "9606a5d6-ab03-4d77-bbf6-7e2512ce3ab0",
+        "wikiId": "trait_arctic_seal",
+        "name": "天霜封印"
+      },
+      {
+        "uuid": "1ba6229b-4617-4a3b-9995-419239f1dbe6",
+        "wikiId": "trait_icy_blood",
+        "name": "寒冰血脉"
+      },
+      {
+        "uuid": "b9ac8782-5fef-4c01-ab26-28f929b0425d",
+        "wikiId": "trait_cardio_blaze",
+        "name": "心炎"
+      },
+      {
+        "uuid": "3427ed76-4a77-4318-a237-4c5072ff3d4d",
+        "wikiId": "trait_artificial_eden",
+        "name": "拟造“伊甸园”"
+      },
+      {
+        "uuid": "efb95836-d1ee-43e5-a8a9-44b02d4e30df",
+        "wikiId": "trait_nightmare_refrain",
+        "name": "夜魇游吟"
+      },
+      {
+        "uuid": "5369e6de-c275-4408-82ba-69a2711046c3",
+        "wikiId": "trait_lumen_umbra_gemini",
+        "name": "光暗双生"
+      },
+      {
+        "uuid": "04d07a2a-3f25-45df-95b1-401ffec3c254",
+        "wikiId": "trait_shield_bash",
+        "name": "盾击"
+      },
+      {
+        "uuid": "cd8fb8ca-2654-49da-b6b3-9ae5088633c6",
+        "wikiId": "trait_reversi",
+        "name": "黑白棋"
+      },
+      {
+        "uuid": "d75892c0-47e5-4bd1-964f-565dfa612ba4",
+        "wikiId": "trait_dark_dissolution",
+        "name": "黯灭"
+      },
+      {
+        "uuid": "34790576-e52b-4cf2-ab78-a979cbf8c5df",
+        "wikiId": "trait_devouring_lock",
+        "name": "吞噬之锁"
+      },
+      {
+        "uuid": "32283632-d830-4883-9f0e-2ffdeba3416e",
+        "wikiId": "trait_astral_projection",
+        "name": "神游"
+      },
+      {
+        "uuid": "ab8b55a9-7bab-4b07-b272-5376e1ffd03b",
+        "wikiId": "trait_glacial_circle",
+        "name": "极寒环域"
+      },
+      {
+        "uuid": "771a1f59-a0ee-408f-ac55-246703912d32",
+        "wikiId": "trait_mapping",
+        "name": "映射"
+      },
+      {
+        "uuid": "336db6ca-6690-416e-8aa6-c87ec527bea8",
+        "wikiId": "trait_lotus_flame",
+        "name": "红莲业火"
+      },
+      {
+        "uuid": "05c47390-70d7-4a3b-a429-c9fb489874dd",
+        "wikiId": "trait_ice_fire_fusion",
+        "name": "冰火相融"
+      },
+      {
+        "uuid": "378332e6-e7bb-4345-8539-f7a710d4f01a",
+        "wikiId": "trait_cryo_fissuring",
+        "name": "八裂"
+      },
+      {
+        "uuid": "463f1bf5-64c0-42ae-8a1b-56b5d4ece6a2",
+        "wikiId": "trait_collective_utopia",
+        "name": "众人的乌托邦"
+      },
+      {
+        "uuid": "66d92b2b-cae1-486d-b6fe-91acf4867821",
+        "wikiId": "trait_utopia_of_concord",
+        "name": "调和的乌托邦"
+      },
+      {
+        "uuid": "569d968f-3183-4db4-9e69-b7cf6934f351",
+        "wikiId": "trait_mental_sorcery",
+        "name": "心灵魔术"
+      },
+      {
+        "uuid": "0a80251a-b30a-42d8-a2eb-c77028ae12be",
+        "wikiId": "trait_resolution",
+        "name": "决心"
+      },
+      {
+        "uuid": "5da58d9b-849b-41a6-9a8f-4a0690c9167a",
+        "wikiId": "trait_dont_forget_me",
+        "name": "勿忘我"
+      },
+      {
+        "uuid": "59fb3e69-8c1d-4cc2-841b-cd6d9c87bc46",
+        "wikiId": "trait_binary",
+        "name": "二进制噪声"
+      },
+      {
+        "uuid": "7c68bbc9-5225-4ac4-ace9-5142240e9eb3",
+        "wikiId": "trait_grand_prophecy",
+        "name": "大预言"
+      },
+      {
+        "uuid": "dc2f7a92-50f0-4fa3-b717-0cda87e579ab",
+        "wikiId": "trait_deft_touch",
+        "name": "轻捷妙手"
+      },
+      {
+        "uuid": "7d5dd008-fb21-43d6-b124-22be57b2a1b7",
+        "wikiId": "trait_im_drunk",
+        "name": "我还能喝"
+      },
+      {
+        "uuid": "424cb411-1470-46b8-aff3-c2c42a5c3611",
+        "wikiId": "trait_decree",
+        "name": "律令"
+      },
+      {
+        "uuid": "8cfb8245-301e-48b3-bab5-0f6f1a8888fd",
+        "wikiId": "trait_discerning",
+        "name": "挑拣"
+      },
+      {
+        "uuid": "a9699e15-d1f7-4aa0-a624-12e97a37f561",
+        "wikiId": "trait_crafting_of_dreams",
+        "name": "梦的塑造"
+      },
+      {
+        "uuid": "cc2481bd-9280-4f92-82ba-f4c78b11c7e0",
+        "wikiId": "trait_imposing_favor",
+        "name": "“深重情谊”"
+      },
+      {
+        "uuid": "aad9dd12-2577-46fb-b84d-4b7e07b36515",
+        "wikiId": "trait_taboo_lore",
+        "name": "禁忌知识"
+      },
+      {
+        "uuid": "f9f212d3-3bf3-4daa-b3b8-4a75e8833f82",
+        "wikiId": "trait_ruinous_shade",
+        "name": "毁灭暗影"
+      },
+      {
+        "uuid": "5fa89caf-07d3-4730-a5e6-59853754a425",
+        "wikiId": "trait_endless_night",
+        "name": "永夜无终"
+      },
+      {
+        "uuid": "1e6feb37-4dca-49bc-b199-a1b0a0c14b1a",
+        "wikiId": "trait_radiance",
+        "name": "光耀"
+      },
+      {
+        "uuid": "af84424d-c290-441f-a5fd-c9f2ee4b550d",
+        "wikiId": "trait_soul_burning",
+        "name": "燃魂"
+      },
+      {
+        "uuid": "6b49cc6b-9a03-4c32-802a-186dfe5d6634",
+        "wikiId": "trait_mental_disruption",
+        "name": "精神干扰"
+      },
+      {
+        "uuid": "c312d398-ec18-47f4-b6e0-d12a69c83499",
+        "wikiId": "trait_utopia_of_clarity",
+        "name": "清心的乌托邦"
+      },
+      {
+        "uuid": "2b0c124d-c806-4f12-a482-dea93ea0f3fe",
+        "wikiId": "trait_utopia_of_resolve",
+        "name": "决意的乌托邦"
+      },
+      {
+        "uuid": "2f2b4082-bf2d-443d-94a6-ee6bbd9d604f",
+        "wikiId": "trait_utopia_of_celerity",
+        "name": "追猎的乌托邦"
+      },
+      {
+        "uuid": "60a0f5d2-1212-49d7-97e0-1a770e5e48f2",
+        "wikiId": "trait_aurelysium",
+        "name": "彼岸之金"
+      },
+      {
+        "uuid": "5acc3b86-046d-420e-a315-d442d5f93682",
+        "wikiId": "trait_iridescent_hue",
+        "name": "五采"
+      },
+      {
+        "uuid": "f23983f7-8759-4e64-98cf-6a815668e14d",
+        "wikiId": "trait_buddy_block",
+        "name": "友情防守"
+      },
+      {
+        "uuid": "0ef56a71-5920-4c6a-b8da-0ddb4a7e4d64",
+        "wikiId": "trait_unquestioning_trust",
+        "name": "不容置疑的信任"
+      },
+      {
+        "uuid": "b26f1251-8403-4dd1-9421-6f940e3a08a1",
+        "wikiId": "trait_danshari",
+        "name": "断、舍、离"
+      },
+      {
+        "uuid": "4e19a070-8fdf-412e-9dba-42a081e89b81",
+        "wikiId": "trait_essence_over_illusion",
+        "name": "裁虚留要"
+      },
+      {
+        "uuid": "eaa3fe2f-67bc-4a5b-b5cf-291c034f66b6",
+        "wikiId": "trait_anachronic_prologue",
+        "name": "错时引序"
+      },
+      {
+        "uuid": "c43de68a-8c22-41c3-8a45-6273d3a01462",
+        "wikiId": "trait_mars",
+        "name": "荧惑"
+      },
+      {
+        "uuid": "be43a7cc-bcda-490b-b3fe-ff1c477bac42",
+        "wikiId": "trait_antares",
+        "name": "流火"
+      }
+    ],
+    "cards": [
+      {
+        "uuid": "26878df8-26bb-4075-90da-e3563297e0e6",
+        "wikiId": "card_octastal",
+        "name": "八重镜"
+      },
+      {
+        "uuid": "abe01579-8e4d-430e-a2ab-40d8cbeda198",
+        "wikiId": "card_hexastal",
+        "name": "六方棱"
+      },
+      {
+        "uuid": "39f8cfc7-addd-4f17-814b-1e6f6e26b16f",
+        "wikiId": "card_decastal",
+        "name": "十面璃"
+      },
+      {
+        "uuid": "29a503a2-ba39-4a55-a8e8-2fb146f01ced",
+        "wikiId": "card_rapier",
+        "name": "长剑"
+      },
+      {
+        "uuid": "f955eb8b-f788-4925-bdd2-cf3c91b45449",
+        "wikiId": "card_blade",
+        "name": "短刀"
+      },
+      {
+        "uuid": "bbd0b3a5-4615-485e-82c6-0d93e137de6c",
+        "wikiId": "card_slowness_spell",
+        "name": "钝化术"
+      },
+      {
+        "uuid": "c57ff4a6-f928-4b65-a411-16ef23c1de17",
+        "wikiId": "card_high_cap",
+        "name": "高帽子"
+      },
+      {
+        "uuid": "2e845be5-d58f-471f-ae31-a66bbba7d3e6",
+        "wikiId": "card_high_energy_can",
+        "name": "高能罐头"
+      },
+      {
+        "uuid": "19254248-ae48-497e-9eea-025f0468a5a7",
+        "wikiId": "card_inspire",
+        "name": "鼓舞"
+      },
+      {
+        "uuid": "cac9ceee-4d29-4026-8e93-f19b66dfb458",
+        "wikiId": "card_cryotheum",
+        "name": "寒绝凝冰"
+      },
+      {
+        "uuid": "57586787-4dc6-4e76-b83d-54a18b420494",
+        "wikiId": "card_amulet",
+        "name": "护身符"
+      },
+      {
+        "uuid": "430c757f-6029-484b-ad8e-bba553c111e9",
+        "wikiId": "card_regenerating",
+        "name": "缓生"
+      },
+      {
+        "uuid": "d2340228-771f-40bf-9f5e-d0d4cbeba5a0",
+        "wikiId": "card_chaotic_drill",
+        "name": "混沌电钻"
+      },
+      {
+        "uuid": "f3d17897-0a1d-4fe4-8f3f-db2d82cfae28",
+        "wikiId": "card_arctic_heart",
+        "name": "极北之心"
+      },
+      {
+        "uuid": "efda34f3-7477-4971-a27e-07bd549628d1",
+        "wikiId": "card_arrow",
+        "name": "箭"
+      },
+      {
+        "uuid": "9dab7bc9-31c7-41bb-a87d-cd772ed10b37",
+        "wikiId": "card_mace",
+        "name": "狼牙棒"
+      },
+      {
+        "uuid": "7d1ef72a-1b40-439b-8466-babbb3fb4f88",
+        "wikiId": "card_echo_glimpse",
+        "name": "聆音掠影"
+      },
+      {
+        "uuid": "04a71ae6-aa03-414c-9ef3-1cbae41a3332",
+        "wikiId": "card_strength_spell",
+        "name": "蛮力术"
+      },
+      {
+        "uuid": "9cce5bd6-af5f-4f1c-be70-aca28fcd8c18",
+        "wikiId": "card_strength_spell_ii",
+        "name": "蛮力术II"
+      },
+      {
+        "uuid": "e6cdfa20-66bc-4849-817f-96e6924c7f1f",
+        "wikiId": "card_nano_permeation",
+        "name": "纳米渗透"
+      },
+      {
+        "uuid": "cfa07b86-644c-45c6-84e2-d2898f5f1bc6",
+        "wikiId": "card_clover_blessing",
+        "name": "三叶草之祝"
+      },
+      {
+        "uuid": "1d20d472-2244-4afa-bab3-800c7820927a",
+        "wikiId": "card_flover_wish",
+        "name": "四叶草之愿"
+      },
+      {
+        "uuid": "c61e0c3b-1305-4a82-bd2a-73d88f362ccb",
+        "wikiId": "card_rippling_water",
+        "name": "水波荡漾"
+      },
+      {
+        "uuid": "650685d3-bd4d-4118-bc3e-a5ca70e978b7",
+        "wikiId": "card_curing",
+        "name": "瞬疗"
+      },
+      {
+        "uuid": "a5812cee-a0ce-46ea-a63f-6b156de23b50",
+        "wikiId": "card_critical_strike",
+        "name": "无敌贯通"
+      },
+      {
+        "uuid": "632149cc-1c67-4688-938b-aa33e47b9c7e",
+        "wikiId": "card_sisyphus_stone",
+        "name": "西西弗斯之石头"
+      },
+      {
+        "uuid": "cb47e1b8-64aa-4387-8cde-8f5e488c3e25",
+        "wikiId": "card_swift_spell",
+        "name": "迅捷术"
+      },
+      {
+        "uuid": "3001894e-f302-409b-8943-80d0203b2bef",
+        "wikiId": "card_pyrotheum",
+        "name": "炎极烈火"
+      },
+      {
+        "uuid": "2055b599-b5ef-4ca8-bb8e-56b519ea0f85",
+        "wikiId": "card_fragment",
+        "name": "遗失碎片"
+      },
+      {
+        "uuid": "86ddc8ce-1f67-4772-9a4c-b742a95d08d8",
+        "wikiId": "card_invisibility_spell",
+        "name": "隐身术"
+      },
+      {
+        "uuid": "61aa82fd-422d-42b8-84a7-dcb1df32b92b",
+        "wikiId": "card_shield",
+        "name": "圆盾"
+      },
+      {
+        "uuid": "4c26a0fd-6efd-4ec9-b330-620630dd63c9",
+        "wikiId": "card_end_halberd",
+        "name": "终焉长戟"
+      },
+      {
+        "uuid": "3533c722-806f-447c-bc54-55a96c6d2a8d",
+        "wikiId": "card_apollo_arrow",
+        "name": "阿波罗之箭"
+      },
+      {
+        "uuid": "dc0053cb-c0e6-4909-bc52-32316b9a8d57",
+        "wikiId": "card_violent_violet",
+        "name": "飞鸟·紫烈"
+      },
+      {
+        "uuid": "3d480cec-0920-4fd5-980b-cb0984934d1a",
+        "wikiId": "card_crimson_swoop",
+        "name": "林鸟·赤掠"
+      },
+      {
+        "uuid": "6c0691df-9aac-41cd-82a5-9d47c40f587e",
+        "wikiId": "card_rest",
+        "name": "休憩"
+      },
+      {
+        "uuid": "dc386216-897a-4d92-8f8c-36950f9ae867",
+        "wikiId": "card_passing_gaze",
+        "name": "过往凝视"
+      },
+      {
+        "uuid": "fa6f3472-f83c-491d-b750-287f2ba035f0",
+        "wikiId": "card_glory_road",
+        "name": "荣光循途"
+      },
+      {
+        "uuid": "3c852bbb-7038-4b3e-a5b0-0d1c96516bf3",
+        "wikiId": "card_babel_tower",
+        "name": "巴别塔"
+      },
+      {
+        "uuid": "98515587-c2f5-4070-b2e4-03533dc8d0f1",
+        "wikiId": "card_filching",
+        "name": "抽薪"
+      },
+      {
+        "uuid": "09919fcb-28be-44d6-b707-58432a92a326",
+        "wikiId": "card_damocles_sword",
+        "name": "达摩克利斯之剑"
+      },
+      {
+        "uuid": "a3f3d63c-9af8-4156-8993-72ba2cb551d2",
+        "wikiId": "card_corrupt_pendant",
+        "name": "堕灵吊坠"
+      },
+      {
+        "uuid": "cc1e030f-3e93-42c7-9067-249f75f81873",
+        "wikiId": "card_bow",
+        "name": "复合弓"
+      },
+      {
+        "uuid": "c9662173-4d61-4762-bc7d-835e7941e445",
+        "wikiId": "card_epilogue",
+        "name": "后日谈"
+      },
+      {
+        "uuid": "87f467e6-7d75-44bd-a2dc-01e46ef15fe7",
+        "wikiId": "card_disruption_field",
+        "name": "混乱力场"
+      },
+      {
+        "uuid": "82d29f8e-6584-4ac0-9887-572141f05da4",
+        "wikiId": "card_aurora_concussion",
+        "name": "极光震荡"
+      },
+      {
+        "uuid": "b7bced63-bb5a-4d21-ae24-b52051e1154b",
+        "wikiId": "status_shelter",
+        "name": "加护"
+      },
+      {
+        "uuid": "3511f94b-7d40-47af-9c0b-bfd4cafd4eda",
+        "wikiId": "card_demon_hunter_blade",
+        "name": "猎魔灵刃"
+      },
+      {
+        "uuid": "cbcd0246-89ed-4598-9a9c-cfece640a041",
+        "wikiId": "card_pandora_box",
+        "name": "潘多拉魔盒"
+      },
+      {
+        "uuid": "dcde7373-4bed-42b7-873b-112a75ec5101",
+        "wikiId": "card_shard_crystal",
+        "name": "破片水晶"
+      },
+      {
+        "uuid": "128c4d9b-b258-4459-888a-a5d71f59605c",
+        "wikiId": "card_hologram",
+        "name": "全息投影"
+      },
+      {
+        "uuid": "7daa4c2d-9598-42b0-8b32-212bbf155227",
+        "wikiId": "card_melt_orb",
+        "name": "融甲宝珠"
+      },
+      {
+        "uuid": "07738eca-eeac-49d4-84a9-676130d565ed",
+        "wikiId": "card_refreshment",
+        "name": "刷新"
+      },
+      {
+        "uuid": "3a2b30ee-093a-4d8c-8f0d-7f52c9d09425",
+        "wikiId": "card_aether_shroud",
+        "name": "天穹尘埃"
+      },
+      {
+        "uuid": "d251ba17-bf71-4de8-b770-68db6b3d2e5b",
+        "wikiId": "card_homology",
+        "name": "同调"
+      },
+      {
+        "uuid": "5100512a-e73b-4bdc-a537-672a26ae32ba",
+        "wikiId": "card_eden_garden",
+        "name": "失乐园"
+      },
+      {
+        "uuid": "bc6733dd-4a61-451a-b221-3d6db6a8c649",
+        "wikiId": "card_flame_spear",
+        "name": "炎枪"
+      },
+      {
+        "uuid": "a51abc90-ee64-4dec-ba57-254bb8693d91",
+        "wikiId": "card_frost_shield",
+        "name": "霜御"
+      },
+      {
+        "uuid": "e66f9571-728e-4b9d-aea8-b6ce1ce6870f",
+        "wikiId": "card_declaration",
+        "name": "昭示"
+      },
+      {
+        "uuid": "160226c8-3f5a-4266-91fd-70956759f13c",
+        "wikiId": "card_refraction_crystal",
+        "name": "折射水晶"
+      },
+      {
+        "uuid": "c46e6e1a-a212-4d40-abc6-e86b50066126",
+        "wikiId": "card_cyan_arrow",
+        "name": "青矢"
+      },
+      {
+        "uuid": "d377457b-2e8d-4663-b468-48070eec1aca",
+        "wikiId": "card_amber_blade",
+        "name": "芒刀"
+      },
+      {
+        "uuid": "c65866bc-01b0-46cb-9f94-d48940706660",
+        "wikiId": "card_pale_sword",
+        "name": "素剑"
+      },
+      {
+        "uuid": "78b74215-b4ec-4694-abfa-4c5ba426f07d",
+        "wikiId": "card_black_darts",
+        "name": "玄镖"
+      },
+      {
+        "uuid": "b9a6a5f4-badf-413d-8116-6e681defd447",
+        "wikiId": "card_scarlet_darts",
+        "name": "赤镖"
+      },
+      {
+        "uuid": "025ce6d9-0178-4c72-b08f-bfdb5cbdca87",
+        "wikiId": "card_mending_stone",
+        "name": "补天石"
+      },
+      {
+        "uuid": "433fc3a2-5b77-47b5-9ed6-2da451ca6ade",
+        "wikiId": "card_illusory_spell",
+        "name": "幻形术"
+      },
+      {
+        "uuid": "b7bced63-bb5a-4d21-ae24-b52051e1154b",
+        "wikiId": "card_shelter",
+        "name": "加护"
+      },
+      {
+        "uuid": "2657a37e-1fbe-4b98-8426-b8dab2b6cd6f",
+        "wikiId": "card_mandala_timepiece",
+        "name": "曼陀罗怀表"
+      },
+      {
+        "uuid": "5152e214-d392-4871-a853-d845553efdf0",
+        "wikiId": "card_concentration_spell",
+        "name": "凝神术"
+      },
+      {
+        "uuid": "ad9ec3dc-e89b-4396-92a9-8cf914350e88",
+        "wikiId": "card_flow_deflection",
+        "name": "流向偏转"
+      },
+      {
+        "uuid": "40f837da-a3fb-45b1-b16b-41c8d7425a12",
+        "wikiId": "card_cardiotonic",
+        "name": "强心剂"
+      },
+      {
+        "uuid": "880e3e0d-5de5-4f67-9026-b584f512f11f",
+        "wikiId": "card_shackles",
+        "name": "枷锁"
+      },
+      {
+        "uuid": "6c933e01-bbc1-46f9-8ab2-0edc39d44a25",
+        "wikiId": "card_irreversible",
+        "name": "覆水难收"
+      },
+      {
+        "uuid": "4305e733-75fb-4db3-972d-28c4b9f31497",
+        "wikiId": "card_burn_the_boats",
+        "name": "破釜沉舟"
+      }
+    ],
+    "skills": [
+      {
+        "uuid": "0d7bd1f7-15b6-4bdb-9923-27b21f97949e",
+        "wikiId": "skill_nebula",
+        "name": "氤氲"
+      },
+      {
+        "uuid": "071a49fb-977f-4a54-b828-44d501695309",
+        "wikiId": "skill_crimson_inferno",
+        "name": "赤焱炼狱"
+      },
+      {
+        "uuid": "eb5b3797-54d5-4629-91ca-decd2340e219",
+        "wikiId": "skill_dream_keeper",
+        "name": "护梦者"
+      },
+      {
+        "uuid": "541cdc8d-292c-4d9f-9d41-145e09cb1ace",
+        "wikiId": "skill_sacrificial_love",
+        "name": "奉献之爱"
+      },
+      {
+        "uuid": "45a88b7c-9ef7-4ef7-bf13-0832361d6c91",
+        "wikiId": "skill_rage_pilot",
+        "name": "怒海引路"
+      },
+      {
+        "uuid": "7ec4cd12-083a-480e-a396-20a29f633f19",
+        "wikiId": "skill_purification",
+        "name": "净化"
+      },
+      {
+        "uuid": "d2ab3e9b-40fa-4227-823e-ba794e9e3a53",
+        "wikiId": "skill_blood_thirst",
+        "name": "嗜血"
+      },
+      {
+        "uuid": "1ae94376-edbb-4374-9fd7-a2ad85f90afd",
+        "wikiId": "skill_stellar",
+        "name": "外星人"
+      },
+      {
+        "uuid": "70751515-15bf-428b-b395-3bb752f395da",
+        "wikiId": "skill_barrier",
+        "name": "屏障"
+      },
+      {
+        "uuid": "f2e5b5bd-edec-4ef2-848f-2e7c30ebc21d",
+        "wikiId": "skill_laser",
+        "name": "镭射"
+      },
+      {
+        "uuid": "b6da3d1f-ce04-4e10-bdd8-df5bc14b2e6f",
+        "wikiId": "skill_burn_out",
+        "name": "透支"
+      },
+      {
+        "uuid": "21c754f8-a873-4b99-9060-c47c1e7ba691",
+        "wikiId": "skill_singularity",
+        "name": "奇点"
+      },
+      {
+        "uuid": "54ff5efb-3aca-4838-9a99-4e7c9320fdd8",
+        "wikiId": "skill_corroded",
+        "name": "侵蚀"
+      },
+      {
+        "uuid": "4042f339-e403-4781-a6ab-84d4e3cf0659",
+        "wikiId": "skill_data_transmit",
+        "name": "数据传输"
+      },
+      {
+        "uuid": "027eec18-7299-405e-8010-c2f774080540",
+        "wikiId": "skill_anabasis",
+        "name": "溯洄"
+      },
+      {
+        "uuid": "5280fd26-bac1-4291-95e6-66e2e0265664",
+        "wikiId": "skill_ice_splinter",
+        "name": "冰芒"
+      },
+      {
+        "uuid": "23971b8a-ea82-4931-9012-95cc5ce24a17",
+        "wikiId": "skill_frost_shatter",
+        "name": "裁冰裂霜"
+      },
+      {
+        "uuid": "34178392-4f96-4190-94fe-35cd81a7589b",
+        "wikiId": "skill_apocalyptic_court",
+        "name": "天启之庭"
+      },
+      {
+        "uuid": "92c3833f-078a-4e60-b7b7-39de865caaad",
+        "wikiId": "skill_requiem",
+        "name": "安魂乐章"
+      },
+      {
+        "uuid": "a2b4ada7-801e-4709-97ed-3624d0afceac",
+        "wikiId": "skill_order_aegis",
+        "name": "秩序结界"
+      },
+      {
+        "uuid": "e411720b-f031-47a5-911f-2cfef1c87741",
+        "wikiId": "skill_chaos_incursion",
+        "name": "邪能侵袭"
+      },
+      {
+        "uuid": "ef9fd9e1-8f40-4a73-8e51-294b7fd72579",
+        "wikiId": "skill_shield_dance",
+        "name": "盾舞"
+      },
+      {
+        "uuid": "b8387bac-a909-4f82-986f-5fb3b5bc6e72",
+        "wikiId": "skill_spare_move",
+        "name": "余裕手"
+      },
+      {
+        "uuid": "0305b4d3-bdf1-4a88-b410-a35777dc911c",
+        "wikiId": "skill_mass_energy_conversion_gamma",
+        "name": "<04>质能转换-γ"
+      },
+      {
+        "uuid": "1dae6086-c73d-4518-807d-85749a415a92",
+        "wikiId": "skill_inversion",
+        "name": "镜像"
+      },
+      {
+        "uuid": "a5aefa40-17e8-416f-8e0d-4b97268fc664",
+        "wikiId": "skill_phase_transition",
+        "name": "相转移"
+      },
+      {
+        "uuid": "1a978fb5-f0ca-48cd-a982-3d9e7602d165",
+        "wikiId": "skill_heaven_delivery",
+        "name": "天国邮递员"
+      },
+      {
+        "uuid": "ef4850a1-95b4-4454-b6fa-39ef79412e76",
+        "wikiId": "skill_trading",
+        "name": "交易"
+      },
+      {
+        "uuid": "8937ae0c-b25a-43b1-bb7c-ddcd4e5571c0",
+        "wikiId": "skill_lunar",
+        "name": "太阴"
+      },
+      {
+        "uuid": "506fe435-8c09-417f-98e2-954e3d6e65d9",
+        "wikiId": "skill_flash_shade",
+        "name": "瞬影"
+      },
+      {
+        "uuid": "3786058e-770b-4f3f-a7b6-1ecb27d937de",
+        "wikiId": "skill_anti_gravity",
+        "name": "反重力"
+      },
+      {
+        "uuid": "895524e0-d6f6-4568-bd67-b5a849a49a24",
+        "wikiId": "skill_velocity",
+        "name": "极速"
+      },
+      {
+        "uuid": "d6d1008f-1f1f-41df-89d1-43cbfe1a647c",
+        "wikiId": "skill_reticence",
+        "name": "沉默"
+      },
+      {
+        "uuid": "794694ab-a36b-4720-9e52-c6b64945306e",
+        "wikiId": "skill_mizar",
+        "name": "开阳"
+      },
+      {
+        "uuid": "6fc9909a-c34a-464c-9599-003b6ef2f39d",
+        "wikiId": "skill_perusing",
+        "name": "博览"
+      },
+      {
+        "uuid": "11c9fd45-a96d-4d76-ab36-d2c882177d61",
+        "wikiId": "skill_soul_rancor",
+        "name": "魂怨"
+      },
+      {
+        "uuid": "3001fb3b-c043-4157-bef4-39f5c94dc4dc",
+        "wikiId": "skill_airstrike",
+        "name": "空袭"
+      },
+      {
+        "uuid": "e2895d6e-2556-4905-b59d-515c2e570c6b",
+        "wikiId": "skill_karma_reversal",
+        "name": "逆转乾坤"
+      },
+      {
+        "uuid": "d8bde610-e53c-4761-bce1-d170d869b7df",
+        "wikiId": "skill_psionia",
+        "name": "灵能注入"
+      },
+      {
+        "uuid": "0fbc3bd1-3dda-4e46-b92e-67b04b1ed06d",
+        "wikiId": "skill_kill_ceasing",
+        "name": "止杀"
+      },
+      {
+        "uuid": "ccf0f767-5191-4cd5-b493-7f8197d665a8",
+        "wikiId": "skill_reinforcement",
+        "name": "强化"
+      },
+      {
+        "uuid": "791faa9f-362b-43e3-a430-41fece6d6c88",
+        "wikiId": "skill_blender",
+        "name": "破壁机"
+      },
+      {
+        "uuid": "934b872c-c6b4-47cd-8c89-7931949501df",
+        "wikiId": "skill_benevolence",
+        "name": "仁慈"
+      },
+      {
+        "uuid": "20ec95c9-6802-47aa-b734-ca3aa521faf0",
+        "wikiId": "skill_intimidation",
+        "name": "恐吓"
+      },
+      {
+        "uuid": "99efa1e1-f5c8-4095-9677-f23fcbb147ea",
+        "wikiId": "skill_threshold",
+        "name": "阈限"
+      },
+      {
+        "uuid": "79a87283-283c-4b67-971d-660dc76c114b",
+        "wikiId": "skill_chase",
+        "name": "追击"
+      },
+      {
+        "uuid": "7667ab5a-a9c7-418c-98be-54ec5e0e4934",
+        "wikiId": "skill_final_hope",
+        "name": "最后的希望"
+      },
+      {
+        "uuid": "689d093f-20ca-4da5-a798-89173c0e4cc0",
+        "wikiId": "skill_devotion",
+        "name": "奉献"
+      },
+      {
+        "uuid": "b147943b-1ef7-45b0-b6e3-96ea7ec13db7",
+        "wikiId": "skill_undying",
+        "name": "不死"
+      },
+      {
+        "uuid": "21387aa0-e4c6-48ca-a5dc-35d0532a5d4e",
+        "wikiId": "skill_fission",
+        "name": "分裂"
+      },
+      {
+        "uuid": "fe1f06eb-3227-49a3-a32b-276e4bde079f",
+        "wikiId": "skill_last_stand",
+        "name": "背水一战"
+      },
+      {
+        "uuid": "4070c2fb-b936-40c3-8c5a-f53351109d42",
+        "wikiId": "skill_massacre",
+        "name": "屠杀"
+      },
+      {
+        "uuid": "e0c01356-6ec4-4e21-97ec-33d914fc070a",
+        "wikiId": "skill_deconstruction",
+        "name": "异镜解构"
+      },
+      {
+        "uuid": "ede811ab-2c6b-4a41-a7f6-3f61949f2050",
+        "wikiId": "skill_dream_weaver",
+        "name": "造梦者"
+      },
+      {
+        "uuid": "074104e6-6595-44eb-abc3-39449b5d0871",
+        "wikiId": "skill_sealed_flame_135_seconds",
+        "name": "封焰的135秒"
+      },
+      {
+        "uuid": "b5baf7a0-09ab-4ea2-b588-a2158c97d7a3",
+        "wikiId": "skill_give_and_take",
+        "name": "“礼尚往来”"
+      },
+      {
+        "uuid": "e1ca0a26-8d64-4347-85b9-3cf5486f93c6",
+        "wikiId": "skill_eternity",
+        "name": "永恒"
+      },
+      {
+        "uuid": "0475a252-3e7f-48be-93e6-216c64de8b09",
+        "wikiId": "skill_abyssal_whirl",
+        "name": "谜渊漩涡"
+      },
+      {
+        "uuid": "d2ebf2f3-c88a-4f2b-9d5c-6e5c52b3d56c",
+        "wikiId": "skill_seventh_frost",
+        "name": "八寒之七"
+      },
+      {
+        "uuid": "5c10bb38-0959-4506-b9cf-662d4ea77062",
+        "wikiId": "skill_dream_grasp",
+        "name": "入梦之手"
+      },
+      {
+        "uuid": "2a0f2f8c-3308-4696-85ce-6c6f71e0a5ab",
+        "wikiId": "skill_sacrifice",
+        "name": "牺牲"
+      },
+      {
+        "uuid": "3fc8f8a5-683b-4506-8f8f-934a5daa7a7a",
+        "wikiId": "skill_soul_tremor",
+        "name": "灵魂震荡"
+      },
+      {
+        "uuid": "d8b2ce75-db51-49f6-a498-963c8897822b",
+        "wikiId": "skill_deicide",
+        "name": "斩神"
+      },
+      {
+        "uuid": "fb3e11c2-1919-4da4-a098-58f46cfcba53",
+        "wikiId": "skill_replenishment",
+        "name": "补给"
+      },
+      {
+        "uuid": "876c0e7d-6b0c-4665-be49-dc336efb77b7",
+        "wikiId": "skill_icy_oblivion_135_bars",
+        "name": "冰灭的135小节"
+      },
+      {
+        "uuid": "ac4251b5-2a64-46f7-af89-526d6b104e98",
+        "wikiId": "skill_earth_break",
+        "name": "破土"
+      },
+      {
+        "uuid": "d2243dd0-5485-43a2-a0b3-1014dbb0d939",
+        "wikiId": "skill_three_immortals_return",
+        "name": "三仙归洞"
+      },
+      {
+        "uuid": "298089af-4ec3-479f-970b-c30974193aed",
+        "wikiId": "skill_kindle_eye",
+        "name": "点睛"
+      },
+      {
+        "uuid": "ae201d83-8bb2-43e6-b61a-087d75600083",
+        "wikiId": "skill_timber_sheep",
+        "name": "木头羊"
+      },
+      {
+        "uuid": "92b00a73-fdd0-4786-8cb0-9b2a4936fdc4",
+        "wikiId": "skill_unwavering_guard",
+        "name": "不可动摇的守护"
+      },
+      {
+        "uuid": "d6d4df7e-d1a5-421c-971c-a9366c6d0460",
+        "wikiId": "skill_veritas_non_falsitas",
+        "name": "去伪存真"
+      },
+      {
+        "uuid": "23a28e1b-f114-4b6a-aabe-ed3d39884d55",
+        "wikiId": "skill_wildfire_momentum",
+        "name": "燎原之势"
+      },
+      {
+        "uuid": "d100fe90-0266-424c-bef0-f0a6bd0233b2",
+        "wikiId": "skill_heart_vigil",
+        "name": "守心"
+      }
+    ],
+    "statuses": [
+      {
+        "uuid": "0247215b-6c6b-45c3-80ab-d4dc658dc11a",
+        "wikiId": "status_strength",
+        "name": "力量"
+      },
+      {
+        "uuid": "91147272-58df-4ff9-8922-0aa24daa0e2f",
+        "wikiId": "status_regeneration",
+        "name": "再生"
+      },
+      {
+        "uuid": "f7c399f6-0b79-4499-8348-8ac5f9f3c1f5",
+        "wikiId": "status_exhausted",
+        "name": "脱力"
+      },
+      {
+        "uuid": "32b70c9e-170f-4f6e-b5fa-838ba165e40b",
+        "wikiId": "status_flaming",
+        "name": "灼炎"
+      },
+      {
+        "uuid": "fc670e1a-a277-4250-a87f-b70e445bd07c",
+        "wikiId": "status_frost",
+        "name": "霜冻"
+      },
+      {
+        "uuid": "987dadd7-d4b0-4c40-bcee-99e9bd9410b8",
+        "wikiId": "status_frozen",
+        "name": "冰封"
+      },
+      {
+        "uuid": "dcf9ddc8-a058-49b1-953f-c2fc0c2e8e7e",
+        "wikiId": "status_dissociated",
+        "name": "游离"
+      },
+      {
+        "uuid": "7b4c2709-d2d5-4680-84a2-5e4a96003e97",
+        "wikiId": "status_fractured",
+        "name": "破盾"
+      },
+      {
+        "uuid": "4abadafc-2ac1-4bd7-9428-f767fb3afad2",
+        "wikiId": "status_gugu",
+        "name": "咕咕"
+      },
+      {
+        "uuid": "7da88117-abbb-453a-8b8a-4496f59d7762",
+        "wikiId": "status_burn_out",
+        "name": "透支"
+      },
+      {
+        "uuid": "d89e9ef8-cf00-4bdf-a484-6c275a06e495",
+        "wikiId": "status_fragility",
+        "name": "脆弱"
+      },
+      {
+        "uuid": "cc68ac6f-91c9-46d8-bfda-af69a773522f",
+        "wikiId": "status_nebula",
+        "name": "氤氲"
+      },
+      {
+        "uuid": "b7fbdb4d-bdbe-46ee-9754-fddf6afe30a9",
+        "wikiId": "status_barrier",
+        "name": "屏障"
+      },
+      {
+        "uuid": "b9bbc5a1-3ea5-4236-8bc6-af73a6f8299b",
+        "wikiId": "status_dodge",
+        "name": "闪避"
+      },
+      {
+        "uuid": "a155ed0b-71ef-4003-9258-e48056cd9e51",
+        "wikiId": "status_slowness",
+        "name": "迟缓"
+      },
+      {
+        "uuid": "83740116-edb0-487c-9035-a2d57d8e65cb",
+        "wikiId": "status_swift",
+        "name": "迅捷"
+      },
+      {
+        "uuid": "081794c3-39d0-4a50-bdb2-a718d96302c7",
+        "wikiId": "status_grind",
+        "name": "消磨"
+      },
+      {
+        "uuid": "422b2ff7-e3d5-4e67-8936-b50635eec4b9",
+        "wikiId": "status_weakness",
+        "name": "虚弱"
+      },
+      {
+        "uuid": "db436a6b-3ea3-4512-ad16-880ec2372a5f",
+        "wikiId": "status_corroded",
+        "name": "侵蚀"
+      },
+      {
+        "uuid": "b0825cc8-3f39-421a-a34b-755ed6c46449",
+        "wikiId": "status_drowsy",
+        "name": "困倦"
+      },
+      {
+        "uuid": "2255b8bc-eff8-4729-b051-92600fb936bf",
+        "wikiId": "status_dehydration",
+        "name": "脱水"
+      },
+      {
+        "uuid": "5a0b222f-125f-4efa-b31f-706b850ccf40",
+        "wikiId": "status_submerged",
+        "name": "浸没"
+      },
+      {
+        "uuid": "f2dd237e-d450-426b-8111-d27847c603d1",
+        "wikiId": "status_poised",
+        "name": "蓄势"
+      },
+      {
+        "uuid": "33ac049b-a76c-4ae9-9c5f-81eacdb7003e",
+        "wikiId": "status_shelter",
+        "name": "加护"
+      },
+      {
+        "uuid": "d53fb959-7918-4cd2-80c4-74b19aebdc2b",
+        "wikiId": "status_confusion",
+        "name": "混乱"
+      },
+      {
+        "uuid": "b76292a6-7503-48b5-a86c-d3c662525b16",
+        "wikiId": "status_stellar_cage",
+        "name": "星牢"
+      },
+      {
+        "uuid": "6cad7211-3fbd-4547-99b9-0e6fb5d94d83",
+        "wikiId": "status_tigris_dilemma",
+        "name": "骑虎难下"
+      },
+      {
+        "uuid": "df473f9c-2920-4ba6-88ba-796201765790",
+        "wikiId": "status_constraint",
+        "name": "束缚"
+      },
+      {
+        "uuid": "9603a858-7790-4c04-8671-a78a7c347981",
+        "wikiId": "status_distant",
+        "name": "恍惚"
+      },
+      {
+        "uuid": "1fe93eb9-a71e-461f-9553-9b2a8c1dc2a3",
+        "wikiId": "status_tenebrae",
+        "name": "堕暗"
+      },
+      {
+        "uuid": "639ea7cc-6e24-42e6-a354-a3d5379a7d65",
+        "wikiId": "status_wounded",
+        "name": "重伤"
+      },
+      {
+        "uuid": "4d590b90-5ab3-4d2a-b473-98b2c22a730d",
+        "wikiId": "status_teroxis",
+        "name": "磨砺"
+      },
+      {
+        "uuid": "9f78778b-db5b-40d6-92e0-15516807d3f4",
+        "wikiId": "status_lumen_flare",
+        "name": "烛焱"
+      },
+      {
+        "uuid": "1cab0c47-b251-47dd-b3ec-9a14bad34408",
+        "wikiId": "status_erode_gelid",
+        "name": "蚀凛"
+      },
+      {
+        "uuid": "1a4d7673-ec63-44c9-a0f3-b0e7f16407f8",
+        "wikiId": "status_oculus_veil",
+        "name": "障目"
+      },
+      {
+        "uuid": "587f7b64-ceb8-46df-8629-f6d3abe40a1d",
+        "wikiId": "status_inferno_fire",
+        "name": "狱焱"
+      },
+      {
+        "uuid": "1c06b017-2221-42a7-91fb-bd45e11b8f16",
+        "wikiId": "status_dream_crafting",
+        "name": "造梦"
+      },
+      {
+        "uuid": "222e4e56-7d04-4bcf-855c-907351ccbd28",
+        "wikiId": "status_mirror",
+        "name": "镜映"
+      },
+      {
+        "uuid": "183a085b-991b-4e8a-b242-3c21facd18ad",
+        "wikiId": "status_soul_flare",
+        "name": "灵曜"
+      },
+      {
+        "uuid": "68bcb290-6d63-4804-a76a-c1157552b992",
+        "wikiId": "status_moisturize",
+        "name": "润化"
+      },
+      {
+        "uuid": "a442ba11-41dd-486a-9523-9d6769f3ca64",
+        "wikiId": "status_asphyxia",
+        "name": "窒息"
+      },
+      {
+        "uuid": "8f9b1f5c-b726-450b-b5f9-86ee16d3427b",
+        "wikiId": "status_dream_guarding",
+        "name": "护梦"
+      },
+      {
+        "uuid": "51104ed1-ff0f-4615-b372-cbf5fac398af",
+        "wikiId": "status_tear",
+        "name": "撕裂"
+      },
+      {
+        "uuid": "5eb2663e-2f67-4bcf-8af7-e513130e4c65",
+        "wikiId": "status_unbalanced",
+        "name": "失衡"
+      },
+      {
+        "uuid": "40573e6d-e7a1-4566-ad44-7a230fda9817",
+        "wikiId": "status_uneasiness",
+        "name": "不安"
+      },
+      {
+        "uuid": "99a82e27-28c0-4e40-9637-2b8f0ba54125",
+        "wikiId": "status_i行动点assioned",
+        "name": "激昂"
+      },
+      {
+        "uuid": "7f68baa1-dee0-4429-8757-165aed31d158",
+        "wikiId": "status_charge",
+        "name": "蓄力"
+      },
+      {
+        "uuid": "76c516f5-a4d8-468a-8e6a-0fc07d441684",
+        "wikiId": "status_sanctify",
+        "name": "圣化"
+      },
+      {
+        "uuid": "90a3c81b-c30c-41a8-b234-2bbc3bbdabb2",
+        "wikiId": "status_eden",
+        "name": "伊甸园"
+      },
+      {
+        "uuid": "644d5f00-c14c-4b8f-a614-0889dd9ef355",
+        "wikiId": "status_gift",
+        "name": "见面礼"
+      },
+      {
+        "uuid": "3ba3ca5e-624a-49d1-ac25-2a796824db34",
+        "wikiId": "status_nightmare",
+        "name": "夜魇"
+      },
+      {
+        "uuid": "dc323c6b-3b5d-4cd0-92c0-7ce28808f378",
+        "wikiId": "status_sword_heart",
+        "name": "剑心"
+      },
+      {
+        "uuid": "163c3815-5f81-4f55-b07c-a73b4709e8b5",
+        "wikiId": "status_luminance",
+        "name": "凝光"
+      },
+      {
+        "uuid": "50bb1cdb-e176-418f-967d-518b35a1c208",
+        "wikiId": "status_silence",
+        "name": "静默"
+      },
+      {
+        "uuid": "b95779c9-0506-4e93-93d0-334f49bc73b4",
+        "wikiId": "status_nausea",
+        "name": "反胃"
+      },
+      {
+        "uuid": "67d7c253-4758-4bb4-ad8c-e855141cf43c",
+        "wikiId": "status_dreaming",
+        "name": "梦境"
+      },
+      {
+        "uuid": "status_anti_gravity_cost_cap",
+        "wikiId": "status_anti_gravity_cost_cap",
+        "name": "反重力行动费用上限"
+      },
+      {
+        "uuid": "status_velocity_discount",
+        "wikiId": "status_velocity_discount",
+        "name": "极速减费"
+      },
+      {
+        "uuid": "status_velocity_surcharge",
+        "wikiId": "status_velocity_surcharge",
+        "name": "极速补偿费用"
+      },
+      {
+        "uuid": "status_psionia_dice",
+        "wikiId": "status_psionia_dice",
+        "name": "灵能注入骰面"
+      },
+      {
+        "uuid": "status_reinforcement_ready",
+        "wikiId": "status_reinforcement_ready",
+        "name": "强化待用"
+      },
+      {
+        "uuid": "5459ea56-7edc-4725-87ab-0956692a4ff1",
+        "wikiId": "status_magical_dodge",
+        "name": "法术闪避"
+      }
+    ],
+    "marks": [
+      {
+        "id": "mark_prey",
+        "uuid": "4d294568-c6e2-4cd5-a5f0-f0a7540014fc",
+        "wikiId": "status_prey",
+        "name": "猎物"
+      }
+    ]
+  },
+  "pending": {
+    "characters": [],
+    "traits": [
+      {
+        "uuid": "7b480c70-e7e6-4a18-9540-f5f693504032",
+        "wikiId": "trait_gamblers_mentality",
+        "name": "赌徒心理",
+        "reason": "用户确认无限期搁置赌场特质。"
+      }
+    ],
+    "cards": [],
+    "skills": [],
+    "statuses": []
+  },
+  "notes": [
+    "2026-10-23：修复石蹄等最终攻击骰点日志，将既有damageCalculated安全派生为attackDiceFinalized，显示对象、最终净修正和前后值，响应替换不重复计算，目标限制与多目标分别按实际结果显示；不改变内部战斗事件、RNG、sequence或严格恢复。兰斯洛特对决公开defenderPoints／nextBonus，客户端与调试文本显示当前累计加成、最终点数与下次修正。damage_resource新增四项可选状态层数／强度字段，当前反胃1层、自身虚弱1层强度3，省略时保持历史默认值；保留酒水及阈值现行数值、独立禁律令自然回合计时，客户端离线说明仅同步反胃层数。新增19项服务端、3项客户端回归，相关服务端89项与客户端43项通过，修改内核／日志模块及新增测试静态检查通过。交互版本仍15，兼容标识kernel-v2-preview-19；未构建应用、重启服务或修改远端Wiki。",
+    "2026-10-23：按用户确认，颜若卿调和的乌托邦改为单次生命损失≥200时附加1层强度3再生并摸1张牌；攻击主伤害／附伤按实际生命损失合算一次，护盾吸收不计，独立伤害、生命流失及生命偷取按各次判断。新增lifePaid触发覆盖技能费用、payLife及出牌生命费用，使补给支付250生命也触发，含技能本身共摸2张；未改变既有hpLost监听的费用语义。两端共享内核及客户端内置文案同步，旧内容保持原规则和严格恢复。新增24项集成，相关服务端119项、客户端22项通过，静态检查通过；对齐谜渊漩涡现行150上限对应的旧测试断言，未改其数值。交互版本仍15，兼容标识kernel-v2-preview-18；未构建应用、重启服务或修改远端Wiki。",
+    "2026-10-23：按用户确认，长霾呕吐后通过独立内部计数vomit_decree_lock禁止律令1个自然回合，不再依赖虚弱；免疫、净化、转移虚弱不解除该计时，普通虚弱不禁用律令。自然开始／结束节点、额外行动、反重力相对座次、严格恢复均沿用现有机制，再次呕吐替换计时，防止到期结束阶段的旧衰减误删新计时。damage_resource新增可选reactionLockStatusId，旧配置保持原行为；两端内核及客户端离线文案同步，执行数值保留。新增14项服务端、1项客户端回归，相关服务端86项和客户端22项通过。交互版本仍15，兼容标识kernel-v2-preview-17；未构建应用、重启服务或修改远端Wiki。",
+    "2026-10-23：按用户确认，夜魇固定回复及实际扣血60%的额外回复均归给毁灭暗影持有者，以阿波菲斯为治疗来源；禁忌知识不再接收夜魇治疗，原禁果伤害机制和当前数值保留。增加通用heal来源／目标特质筛选及nightmare可选归属字段，旧配置保持历史行为。确认行动、技能、特质共用每轮次3次上限，生机牌额外结算仍绕过额度；修正其tags:[tag_vital]筛选。余裕手改为翻色后摸1张，移除棋子+1，保留当前2.5偷取系数。客户端取消技能响应后切换响应卡会重新登记；超时、登记失败和窗口变化有实际内核回归。新增服务端9项、客户端4项，完整服务端1462项和客户端207项通过。交互版本仍15，内容／预览兼容标识kernel-v2-preview-16；未构建应用或修改远端Wiki。",
+    "2026-10-23：按用户新增观风气象万千，每打出1张秘法标签卡牌可选择获得1个风或云；通过cardPlayed和tags:[tag_mystique]逐张筛选，真实幻形术触发、魔能tag_magic不触发，达到风云合计3个上限时不弹新选择。确认攻击强化不预选目标，跟随下一次实际攻击；非攻击技能／约束卡不消耗准备，携带秘法攻击牌先获标再强化。新增14项内核集成、2项客户端离线选项解码及手机／Windows2项操作验证；完整服务端1453项和客户端203项通过，旧内容严格恢复保留。使用既有通用操作，兼容标识仍为kernel-v2-preview-15。未修改远端Wiki。",
+    "2026-10-23：迅捷／迟缓改用anchorMpRecovery，持有者自己的种族回复节点结算行动点增减，附加者对应相对座次的回复节点才减层；同一人时先自然回复、再状态效果、最后减层。新增20项集成回归，覆盖额外行动、封锁回复、死亡／跳过、结束回复种族、非本人轮次附加、节点中新附加、续层、转移、反重力、预览和严格恢复。新局交互版本15、内容／预览兼容标识kernel-v2-preview-15；旧局0～14保留固定内容和原规则。",
+    "implemented means executable base effects, not a claim that every wiki interaction is complete.",
+    "See CONTENT_AUTHORING.md for partial semantics and design decisions.",
+    "冰火相消按用户明确规则：层数1:1抵消，强度不参与且不改变。上家暂按逆座次最近存活角色解释。",
+    "2026-10-02：星牢使用行为禁令保留轮次节点；已实现异常互斥、强度元数据和状态双时钟。",
+    "2026-10-04：猎物迁移到独立 mark；状态定义已全部分类接入，关联角色技能尚未全部迁移。标记不自身承载效果。",
+    "2026-10-06：接入茵竹、祝烨诚、岚、观风、NorMal-12 的六项特质；专属技能仍独立迁移。",
+    "叶姬的须臾已实现；专属技能永恒尚未实现，因此暂不加入完整可选角色。焰心剑、守塔人已加入。版本保持 kernel-v2。",
+    "方寒、余梦得的全部特质已接入；余梦得复用已有护梦者技能，两人均进入完整可选角色目录。",
+    "蓝文策：探囊取物已实现；临时托管不触发失去手牌，攻击牌免费完整附加并在结算后归还。三仙归洞尚未实现，因此角色仍未加入可选阵容。",
+    "兰斯洛特及针锋相对已实现：响应结束后、攻击伤害前同面骰对决；平局失败，失败累计+2；胜利先永久攻击+5，再以含累计点数反击，不另开打断。攻击者被反击杀死则取消原攻击。",
+    "纯洁之爱与善恶天平特质已录入并测试；角色其他能力未完成，暂不加入可选角色。善恶天平的两状态共存入口受伊甸园清除/免疫负面规则限制，尚待角色剩余机制明确。",
+    "2026-10-08：在云端、<04>质能转换、<15>力场模拟、原初时计已接入并测试；EnGine-4 与 DeFen-5 已可选。赐弥的数据传输、埃诺雅的溯洄尚未实现，二者尚未加入完整可选阵容。",
+    "数据传输与溯洄已实现：公开技能历史、复制费用/时机/一次性资格，时计记录消费及正反向卡牌重放。埃诺雅已加入完整可选阵容；赐弥仍待程序种族备注明确初始与自然 MP 回复规则。",
+    "Program race verified against Wiki revision 11: initial MP 4, refill at next own start after exhaustion. Other coverage remains based on revision 6.",
+    "Lin Aixue traits use reusable attack dice sequence and generic variables; confirmed card dice sides are preserved with fixed sequence points; provisional tag default: distinct new tags, nonattack items also recorded. Text reviewed against Wiki revision 11.",
+    "2026-10-08: Starcondon, Ophelia and An Shanding traits implemented using generic variables, effect options, target filters, status exclusive groups and expiry policies. Rules confirmed by user; texts reviewed against Wiki revision 11.",
+    "2026-10-08: Starduster, Froth and Gentou traits implemented with shared probability guards, per-target attack damage aggregation, schedule value snapshots and action MP discounts. Gentou character is selectable: Oni initial MP 2, recovery at own personal turn end. Texts reviewed against Wiki revision 11.",
+    "2026-10-08: Ember, Zhu Yanhuang and Turbach traits implemented using per-target attackReceived, shared attack modifiers and stealLife. Exclusive skills remain pending, so character entries remain pending. Rules confirmed by user; texts reviewed against Wiki revision 11.",
+    "Six characters reviewed against local Wiki revision 11: Yun, Pi123, Tussiu, Nepst, Zephyr, Fan Qiu. Odd binary remainder is fixed at one; Eclipse caps final settlement dice, preserving the nominal attack roll. Global-round history uses declarative variables.",
+    "Neko, Tang Jingyan and Lor completed against local Wiki revision 11. Opening skill bonus is validated before dealing; skill CD is captured after commitment, including cooldownValue; Lor uses per-target frozen base attack damage, excluding final bonuses and multipliers.",
+    "2026-10-09: Pigeon, Clouddamp, Stonehoof, Antithesis, Vivace and ReFre-3: six characters/eight traits implemented using generic variables, actual MP counters, staged selections, status gain multipliers and attack auras. User-confirmed rules; texts reviewed against Wiki revision 11; kernel-v2 retained.",
+    "2026-10-09: All six remaining cards implemented: Cyan Arrow, Amber Blade, Pale Sword, Black Darts, Scarlet Darts and Mending Stone. Generic companion attack, on-hit stack multipliers, played-card condition and physical hand swap added. Default deck composition unchanged; kernel-v2 retained.",
+    "2026-10-09: Shigure, Enkan and Zhu Yecheng selectable. Arctic Seal, Icy Blood, Cardio Blaze, Ice Splinter and Frost Shatter implemented; existing Icy Stillness and Crimson Inferno reused. User confirmed attachment reduction, absent frost creation and personal-round active limit. Wiki revision 11; kernel-v2 retained.",
+    "2026-10-09: Quetzalcoatl, Steelshell, Fu Ying, Othello, NorMal-12 and Valedictus added against Wiki revision 11. Shared stat costs, skill requirements, mark flipping, numeric comparisons/modulo, activation-time branch snapshots, variable storageSubject and forced attack targets; kernel-v2 retained. Dream target protection remains pending explicit confirmation.",
+    "Valedictus uses the explicit race_lucifer_valedictus variant (initial 2, maximum 8, recovery 2/own turn), with Wiki note implemented via shared Race.triggers at global round end: one bonus MP per living dream holder. The generic race_lucifer has -404 placeholders and is not executable.",
+    "2026-10-09 confirmed: Burn-out and Corroded support summed intensity; the Wiki flags are incorrect. Dream targets may be attacked by everyone; Valedictus exception text is obsolete. Silence retained without invented expiry. Inversion implemented and pooled: 3 Mirror layers, CD 10, MP 1, expiry on 300 cumulative settled damage; absorbed damage and life loss excluded. Shared ApplyStatus.damageLimit follows status transfer and saves.",
+    "2026-10-09: 15 public skills completed against Wiki revision 11 and confirmed phase-transition rules. Reinforcement partially implemented pending attack-parameter amplification scope. Default public pool now contains 24 completed types, 3 copies each; 10 public skills unimplemented plus 1 partial. Shared global damage history, preselected public card choices, multi-target preparation, resource swaps, skill life costs and action cost statuses added; kernel-v2 retained.",
+    "2026-10-09: Full reinforcement amplification confirmed and implemented; Blender cancels a selected attached card, rerolls changed die sides and opens a fresh response window. Default public pool now contains 26 completed types, 3 copies each. Damage/death checkpoints and all-roll Final Hope scope confirmed; implementation still pending. Kernel-v2 retained.",
+    "2026-10-09: All 35 common skills implemented and pooled, three copies each. Shared damage/death checkpoints, universal supported dice responses, numeric skill parameters, armed attack modifiers/reciprocal dice, temporary shield expiry and chase-restricted extra action phases. User-confirmed rules; 22 exclusive skills remain pending; kernel-v2 retained.",
+    "2026-10-09：太夕（黯灭、吞噬之锁）、白谢（极寒环域）、方塔索（神游）的4个特质已完成；3人的专属技能仍待制作，暂未加入完整可选角色。",
+    "2026-10-10: 完成敏博士、星惑、祝烨明、红黎、颜若卿、向月共7项特质。星惑的永久骰点增益不作用于本次攻击，向月选择隐藏牌背。增加通用抽技能数量、卡牌效果替换、状态转换、标签禁用、手牌禁用及到期、无伤害行动费用返还；专属技能仍单列待办。",
+    "2026-10-10：黯星、恋慕、K97、扶风、高淼、长霾已加入可选角色；完成决心、勿忘我、二进制噪声、大预言、轻捷妙手、我还能喝、律令七项特质。战斗续行生命锁定，真实伤害/贯通可致死；失败判定死亡。随机生成牌按初始卡包权重，不消耗牌堆，免费行动独立结算；借技能原实例禁用并独立计算CD/次数。律令按获得轮次锚点衰减。高淼赌徒心理按用户要求暂缓；专属技能仍单列。版本保持kernel-v2。",
+    "2026-10-10：完成晖夕、斯威芬、好好先生、蒙德里安、阿波菲斯、龙宇澈的8项剩余特质，复用已完成的见面礼和梦的共鸣。伤害骰先选模式再双掷择一；造梦转换先于衰减与回复，费用先选牌确认；宣告攻击记录跨全局回合限制直接目标。禁果分支在打断后处理；生机逐牌主动结算夜魇，零伤害也计九次；光灵实体不占轮次，动态容量和永久禁疗。专属技能仍单列；kernel-v2不变。",
+    "2026-10-10：完成染序、卡拉卡、曙光、司库、枳芒共6项特质。轮换攻击特效、目标费用光环、MP边界净化、支援目标改写及免费攻击、弃牌储备、技能全费用与效果无效化、MP转时印及逐点溢出收集均使用配置模块；历史记录使用通用变量。负MP在来源死亡后立即归零；专属技能仍单列待办。kernel-v2不变。",
+    "2026-10-10：完成雪村荧惑、流火及剩余22项专属技能，所有83名Wiki角色均已接入可选角色。高淼赌徒心理继续按用户确认暂缓，其余特质和专属技能无待制作项。动态数值费用、技能被动触发器、手牌预选、生成牌、攻击附加与拦截采用通用操作，kernel-v2不变。",
+    "2026-10-12：亭歆雨初始MP正式确定为5；赌场特质和静默解除规则无限期搁置。",
+    "2026-10-20：接入幻形术与法术闪避；默认牌堆2张，逐次法术伤害消耗一层，可叠加层数，无强度；强化获得4层。Wiki修订29。",
+    "2026-10-22：按用户确认，枳芒开场获得1枚时印，改为个人轮次内主动使用，保留每全局回合一次及原有回复／溢出转化；安提忒斯发动冰与火之歌时只选择自身负面状态，目标跟随下一次攻击。旧内容通过可选配置字段保留原流程。",
+    "2026-10-22：交互版本12将附加座次结束阶段新获得的正式anchoredRound状态标记为结束衰减，从该座次下一次结束阶段起、全部结束结算之后减层；其他附加时机与专用衰减规则不变。状态续层保留已有节点，转移按原策略重设附加节点，存档复原与预览保留衰减阶段；旧局0～11保留原重放。内容／预览兼容标识kernel-v2-preview-12。",
+    "2026-10-22：用户纠正向月心灵魔术的禁用期限，交互版本13改为附加座次的自然周期；普通行动后附加至该座次下一次自然轮次开始，结束阶段附加至下一次相同座次结束结算完成后。额外行动不推进期限，死亡／跳过座次与强制弃牌保留到期，恢复与预览同步。旧局0～12保留历史全局期限；内容／预览兼容标识kernel-v2-preview-13。其他全局计时逐项核查记录于docs/round-timing-audit.md，本次未批量修改。",
+    "2026-10-23：按用户要求，反重力后自然衰减绑定反转后的相对行动位置，重映射现有状态、屏蔽、手牌锁定、标签限制、技能借用、临时护盾及存档状态的锚点，保留来源、持有者和剩余周期。希冀攻防改为自然结束阶段衰减，保持内部效果；红莲业火、轻捷妙手与不死护盾配置为自然周期。通用clock默认保留globalRound，可选anchoredRound；内部效果可配置followApplicationPhase。新局交互版本14、内容／预览兼容标识kernel-v2-preview-14；旧局0～13保留历史规则严格恢复。",
+    "2026-10-28：核对 Wiki revision 41；已实现74种道具卡，默认牌堆201张。补齐本次7张新卡；会话中确认的自然轮次、夜魇治疗归属、负面/异常清除等规则优先于较旧Wiki文案。"
+  ],
+  "partial": [
+    {
+      "wikiId": "status_silence",
+      "reason": "用户确认无限期搁置自动解除规则；保留禁止技能，不虚构自动消耗。"
+    }
+  ]
+}

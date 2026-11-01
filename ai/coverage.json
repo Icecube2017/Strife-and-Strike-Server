@@ -1,0 +1,115 @@
+{
+  "coverageVersion": 1,
+  "rulesVersion": "sns-ai-full-match-2",
+  "balanceRevision": "2026-10-30.1",
+  "scope": "fullMatchFourCharacterFlowValidation",
+  "fullContentCertified": false,
+  "trainedModelAvailable": false,
+  "excludedCharacters": [
+    {
+      "id": "c76173c7-70d9-44be-929d-1483d22635e9",
+      "wikiId": "character_loveless",
+      "name": "恋慕",
+      "temporary": true,
+      "scope": "offlineAiTrainingAndEvaluationScenarios",
+      "roles": [
+        "learner",
+        "ally",
+        "opponent"
+      ],
+      "reason": "用户要求暂时禁用；后续扩展测试角色池时排除，直到用户明确解除。"
+    }
+  ],
+  "characters": [
+    {
+      "wikiId": "character_andrenin",
+      "name": "安德宁",
+      "coverage": "restrictedScenarios"
+    },
+    {
+      "wikiId": "character_chinro",
+      "name": "茵竹",
+      "coverage": "restrictedScenarios"
+    },
+    {
+      "wikiId": "character_fan_qiu",
+      "name": "樊求",
+      "coverage": "restrictedScenarios"
+    },
+    {
+      "wikiId": "character_neko",
+      "name": "妮卡欧",
+      "coverage": "restrictedScenarios"
+    }
+  ],
+  "cards": "productionDefaultDeck201Cards",
+  "skills": "productionCommonSkillPool",
+  "adapterCapabilities": [
+    "normalAttack",
+    "orderedCardBatches",
+    "skillTargetsAndNumbers",
+    "visibleSkillCopy",
+    "ownRecordReplay",
+    "traitAndStatusActions",
+    "preparationAndCancellation",
+    "mandatoryAndBlindChoices",
+    "nestedResponses",
+    "responseReservation",
+    "dodgeAndCounterDodge",
+    "attachedCardSelection",
+    "diceResultSelection",
+    "discard",
+    "endTurn",
+    "idleAnytimeOpportunity",
+    "candidatePaging",
+    "numericObservationEncoder",
+    "gymnasiumWrapper",
+    "parallelWorkerBenchmark",
+    "opponentPolicyCheckpoint",
+    "declarationMpCostQuote",
+    "modelTraining",
+    "optimizerResume",
+    "independentSeedEvaluation",
+    "gracefulTrainingStop",
+    "weightsOnlyWarmStart",
+    "weightedMixedCurriculum",
+    "modeSeparatedEvaluation",
+    "workflowOnlyLegacyImport",
+    "orderedStagedCardSelection",
+    "boundedClientRatingReward",
+    "productionFullMatchInitialization"
+  ],
+  "limits": {
+    "maximumCandidateProposals": 100000,
+    "maximumResponseDiceResult": 256,
+    "numericObservationSchema": 3,
+    "encoderVersion": 3,
+    "defaultActionCapacity": 64,
+    "defaultRealCandidatesPerPage": 62,
+    "numericPlayers": 8,
+    "numericStatusesPerPlayer": 32,
+    "numericMarksPerPlayer": 16,
+    "numericHandPerPlayer": 256,
+    "numericSkillsPerPlayer": 16,
+    "numericVisibleVariableLeaves": 128,
+    "numericOwnRecords": 8,
+    "entityOverflowHandling": "explicitEncodingOverflowWithReproductionCase",
+    "defaultMaximumDecisionsPerEpisode": 100000,
+    "candidateBudgetHandling": "technicalFailureWithReproductionCase",
+    "unlistedContent": "experimentalNotCertified",
+    "numericCarriedCards": 256,
+    "numericRevealedHandPerPlayer": 256,
+    "numericRecordCards": 256,
+    "candidateFeatureWidth": 320
+  },
+  "notImplemented": [
+    "bpPolicy",
+    "liveRoomBots",
+    "multiModelPlayers",
+    "selfPlay",
+    "multiEnemyTeamRelations"
+  ],
+  "modelStatus": "oldModelsDeletedFreshTrainingRequired",
+  "trainingAlgorithm": "CPU-MaskablePPO-MultiInputPolicy",
+  "trainingCases": "ai/configs/full-match-winloss.json"
+}

@@ -1,0 +1,15 @@
+# Runtime/test versions verified with the existing Python 3.14 installation.
+# Run from the server project root; no virtual environment is required.
+gymnasium==1.4.0
+numpy==2.4.0
+cloudpickle==3.1.2
+typing_extensions==4.16.0
+Farama-Notifications==0.0.6
+pytest==9.0.2
+psutil==6.1.1
+iniconfig==2.3.0
+packaging==26.3
+pluggy==1.6.0
+Pygments==2.19.2
+colorama==0.4.6
+-e ./ai
